@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS story_keywords CASCADE;
+CREATE TABLE story_keywords (
+  id SERIAL PRIMARY KEY NOT NULL,
+  keyword_id INTEGER REFERENCES keywords(id) ON DELETE CASCADE,
+  story_id INTEGER REFERENCE stories(id) ON DELETE CASCADE,
+  branch_id INTEGER REFERENCE branches(id) ON DELETE CASCADE
+);
