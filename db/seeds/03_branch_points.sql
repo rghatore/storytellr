@@ -1,4 +1,4 @@
-INSERT INTO TABLE branch_points (story_id, title)
+INSERT INTO branch_points (story_id, title)
 VALUES (1, 'the part with the trolls'),
 (1, 'the time he ran into gollum'),
 (2, 'Mr Toad'),
