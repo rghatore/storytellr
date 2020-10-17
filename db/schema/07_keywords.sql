@@ -1,0 +1,5 @@
+DROP TABLE IF EXISTS story_keywords CASCADE;
+CREATE TABLE keywords (
+  id SERIAL PRIMARY KEY NOT NULL,
+  keyword VARCHAR(255)
+);
