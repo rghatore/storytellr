@@ -1,9 +1,10 @@
 DROP TABLE IF EXISTS stories CASCADE;
 CREATE TABLE stories (
   id SERIAL PRIMARY KEY NOT NULL,
-  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
-  title VARCHAR(255),
-  content TEXT,
-  date_started TIMESTAMPTZ,
-  date_completed TIMESTAMPTZ
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE NOT NULL,
+  title VARCHAR(255) NOT NULL,
+  content TEXT NOT NULL,
+  summary TEXT NOT NULL,
+  date_started TIMESTAMPTZ NOT NULL,
+  date_completed TIMESTAMPTZ DEFAULT NULL
 );
