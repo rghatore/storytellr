@@ -1,0 +1,11 @@
+.nav {
+  &_home {
+    border-bottom: 0.5rem solid $col-pink;
+  }
+  &_story {
+    border-bottom: 0.5rem solid $col-blue;
+  }
+  &_branch {
+    border-bottom: 0.5rem solid $col-orange;
+  }
+}
