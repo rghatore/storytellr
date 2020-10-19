@@ -8,12 +8,18 @@
     flex-direction: row;
     justify-content: space-between;
   }
+  &_top_branch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   &_bottom {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
   }
-  &_story {
+  &_story,
+  &_branch {
     width: 95%;
     display: flex;
     flex-direction: column;
