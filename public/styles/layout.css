@@ -1,0 +1,18 @@
+body {
+  background-color: #EEE;
+}
+
+body h1 {
+  color: #244751;
+}
+
+body nav {
+  background-color: #c4c4c4;
+}
+
+body .nav-options {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
