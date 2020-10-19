@@ -4,14 +4,17 @@ const dbParams = require('./lib/db.js'); // getting data from .env file and pass
 const db = new Pool(dbParams); // in our exammples we gave it the name pool
 db.connect(); // this is basically to check if there are any errors
 
-const queryString = `
-SELECT *
-FROM users
-LIMIT $1;
-`;
 
-const queryParams = [3];
+const getUserFromEmail = (email) => {
+  const queryString = `
+  SELECT *
+  FROM users
+  WHERE email = $1;
+  `;
 
-db.query(queryString, queryParams)
-.then(response => console.log(response.rows))
-.error(error => console.log(error.message));
+  const queryParams = [email];
+
+  return db.query(queryString, queryParams)
+  .then(response => response.rows[0]);
+}
+exports.getUserFromEmail = getUserFromEmail;
