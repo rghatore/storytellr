@@ -32,15 +32,22 @@ module.exports = (database) => {
     login(email, password, database)
     .then((user) => {
       if(!user) {
+        console.log({error: "Please register!"});
         res.send({error: "Please register!"});
         return;
       }
       //  assign cookie
       // send user object to ajax request
-      console.log({user: {name: user.name, email: user.email, id: user.id}});
-      // res.send({user: {name, email, id}});
+      // console.log({user: {name: user.name, email: user.email, id: user.id}});
+      res.send(user);
     })
-    .catch((error) => console.log(error.message));
+    // .catch((error) => res.send(error.message));
+    .catch((error) => {
+      console.log(error)
+      res.send(error.message)
+
+    });
+
 
     // database.getUserFromEmail(email)
     // .then((data) => {
