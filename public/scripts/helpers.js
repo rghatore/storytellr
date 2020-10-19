@@ -25,3 +25,4 @@ const loginForm = (type) => {
 
   return form;
 }
+
