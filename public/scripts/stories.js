@@ -9,7 +9,18 @@ $(document).ready(() => {
   // target is .container .content
 
   for (const story of stories){
-    $('.container .content').append(`<h1>${story.title}</h1><h3>${story.name}</h3><p>${story.summary}</p>`);
+    $('.container').append(`
+    <section class="content content_home card card_home">
+    <div class="card_top">
+      <p>${story.title}</p>
+      <p>${story.name}</p>
+      <p>Tags</p>
+    </div>
+    <div class="card_bottom">
+      <p>${story.summary}</p>
+    </div>
+  </section>
+  `);
   }
   })
 });
