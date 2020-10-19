@@ -1,11 +1,13 @@
 @import "abstracts/variables";
 // @import "base/animations";
 @import "base/base";
-// @import "base/typography";
+@import "base/typography";
 // @import "base/utilities";
 // @import "components/buttons";
 // @import "components/headers";
-// @import "components/navbar";
+@import "components/navbar";
+@import "components/cards";
+@import "layout/container";
 // @import "pages/branch";
 // @import "pages/profile";
 // @import "pages/story";

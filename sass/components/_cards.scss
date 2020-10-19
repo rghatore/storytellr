@@ -1,0 +1,15 @@
+.card {
+  width: 95%;
+  border: 2px dashed pink;
+  display: flex;
+  flex-direction: column;
+  .story_card {
+    &_top {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    &_bottom {
+    }
+  }
+}
