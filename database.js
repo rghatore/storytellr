@@ -18,3 +18,17 @@ const getUserFromEmail = (email) => {
   .then(response => response.rows[0]);
 }
 exports.getUserFromEmail = getUserFromEmail;
+
+const getAllStories = () => {
+  const queryString = `
+  SELECT *, users.name
+  FROM stories
+  JOIN users ON users.id = user_id
+  LIMIT 2;
+  `;
+
+  return db.query(queryString)
+  .then(response => response.rows);
+}
+
+exports.getAllStories = getAllStories;
