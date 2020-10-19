@@ -3,7 +3,7 @@
 
 <head>
   <!-- Meta Information -->
-  <title>story</title>
+  <title>storytellr - story</title>
 
   <!-- Disable viewport zooming for mobile devices -->
   <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
@@ -34,7 +34,7 @@
 
 <body>
   <!-- Top nav bar (fixed) -->
-  <nav>
+  <nav class="nav nav_home">
     <h2>storytellr</h2>
     <div class='nav-options'>
       <p>let your <em>imagination</em> guide the <b>stories</b></p>
@@ -45,11 +45,50 @@
   </nav>
   <!-- Header: perhaps to show that user is logged in? -->
   <header id="top-header">
+    <form action="#"><label for="search">search</label><input type="text" name="search"></form>
+    <a href="#">filter</a>
   </header>
   <!-- Page-specific (main) content here -->
-  <main class="container">
-    <section class="content">
-      stories and stories and stories
+  <main class="container container_home">
+    <section class="content content_home card">
+      <div class="story_card_top">
+        <p>Some story title</p>
+        <p>Author</p>
+        <p>Tags</p>
+      </div>
+      <div class="story_card_bottom">
+        <p>Some sort of description ....</p>
+      </div>
+    </section>
+    <section class="content content_home card">
+      <div class="story_card_top">
+        <p>Some story title</p>
+        <p>Author</p>
+        <p>Tags</p>
+      </div>
+      <div class="story_card_bottom">
+        <p>Some sort of description ....</p>
+      </div>
+    </section>
+    <section class="content content_home card">
+      <div class="story_card_top">
+        <p>Some story title</p>
+        <p>Author</p>
+        <p>Tags</p>
+      </div>
+      <div class="story_card_bottom">
+        <p>Some sort of description ....</p>
+      </div>
+    </section>
+    <section class="content content_home card">
+      <div class="story_card_top">
+        <p>Some story title</p>
+        <p>Author</p>
+        <p>Tags</p>
+      </div>
+      <div class="story_card_bottom">
+        <p>Some sort of description ....</p>
+      </div>
     </section>
   </main>
 </body>
