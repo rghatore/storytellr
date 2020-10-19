@@ -23,7 +23,6 @@ $(document).ready(() => {
       method: "POST",
       data: $(event.target).serialize()
     })
-
   })
 
   // $('#submit-login').click((event) => {
