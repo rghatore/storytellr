@@ -9,3 +9,15 @@
     border-bottom: 0.5rem solid $col-orange;
   }
 }
+
+#sidebar {
+  position: absolute;
+  width: 75vw;
+  min-height: 100vh;
+  margin-left: -75vw;
+}
+
+#sidebar.active {
+  transition: all 3s ease;
+  transform: translateX(75vw);
+}

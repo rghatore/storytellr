@@ -26,6 +26,16 @@ a {
 .nav_branch {
   border-bottom: 0.5rem solid #ea9010; }
 
+#sidebar {
+  position: absolute;
+  width: 75vw;
+  min-height: 100vh;
+  margin-left: -75vw; }
+
+#sidebar.active {
+  transition: all 3s ease;
+  transform: translateX(75vw); }
+
 .card_home {
   border: 2px dashed pink; }
 
