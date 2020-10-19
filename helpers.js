@@ -7,8 +7,8 @@ const login = (email, password, database) => {
   return database.getUserFromEmail(email)
   .then(existingUser => {
     // console.log(data);
-    // if (bcrypt.compareSync(password, existingUser.password)) {
-    if (password = 'password') {
+    if (existingUser && bcrypt.compareSync(password, existingUser.password)) {
+    // if (password = 'password') {
       return existingUser;
     } else {
       return null;
