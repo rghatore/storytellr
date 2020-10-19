@@ -22,7 +22,7 @@ db.connect();
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
 app.use(morgan("dev"));
 
-// app.set("view engine", "ejs");
+app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 // app.use("/styles", sass({
 //   src: __dirname + "/styles",
@@ -48,6 +48,12 @@ app.use("/stories", storiesRoutes(database));
 // Separate them into separate routes files (see above).
 app.get("/", (req, res) => {
   res.send("./public/index.html");
+});
+app.get("/story", (req, res) => {
+  res.render("story");
+});
+app.get("/branch", (req, res) => {
+  res.render("branch");
 });
 
 app.listen(PORT, () => {
