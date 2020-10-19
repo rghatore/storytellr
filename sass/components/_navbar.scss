@@ -1,3 +1,8 @@
-.nav_home {
-  border-bottom: 0.5rem solid $col-pink;
+.nav {
+  &_home {
+    border-bottom: 0.5rem solid $col-pink;
+  }
+  &_story {
+    border-bottom: 0.5rem solid $col-blue;
+  }
 }

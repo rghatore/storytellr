@@ -34,7 +34,7 @@
 
 <body>
   <!-- Top nav bar (fixed) -->
-  <nav class="nav nav_home">
+  <nav class="nav nav_story">
     <h2>storytellr</h2>
     <div class='nav-options'>
       <p>let your <em>imagination</em> guide the <b>stories</b></p>
@@ -44,52 +44,41 @@
     </div>
   </nav>
   <!-- Header: perhaps to show that user is logged in? -->
-  <header id="top-header">
-    <form action="#"><label for="search">search</label><input type="text" name="search"></form>
-    <a href="#">filter</a>
+  <header class="header header_story container">
+    <h3>TITLE</h3>
+  <section class="card card_story">
+  <div class="card_top">
+    <p>author</p>
+    <p>view count</p>
+    <p>fav count</p>
+  </div>
+  <div class="card_bottom">
+    <p>tags</p>
+    <p>jump to latest branch</p>
+  </div>
+  </section>
   </header>
   <!-- Page-specific (main) content here -->
-  <main class="container container_home">
-    <section class="content content_home card">
-      <div class="story_card_top">
-        <p>Some story title</p>
-        <p>Author</p>
-        <p>Tags</p>
-      </div>
-      <div class="story_card_bottom">
-        <p>Some sort of description ....</p>
+  <main class="container content content_story">
+    <section class="story">
+      <div class="story_body">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos nihil a commodi eum adipisci fugiat impedit dolor tempora quam voluptatibus numquam, nesciunt consectetur molestiae perspiciatis provident accusamus sapiente nemo amet.
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repudiandae, dolor nesciunt fugit beatae quam facere modi amet autem ducimus sequi laboriosam maiores voluptatem blanditiis eaque consequatur natus placeat tempore quibusdam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum vitae tempora quisquam ratione ipsa ullam provident obcaecati voluptatum enim quas? Expedita quisquam nostrum repellendus qui sit sapiente distinctio consequuntur possimus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat velit veniam dignissimos iure animi temporibus repellat! Fuga modi exercitationem, provident ea perspiciatis tempora asperiores vel maxime, ducimus vero harum dicta!
+        </p>
       </div>
     </section>
-    <section class="content content_home card">
-      <div class="story_card_top">
-        <p>Some story title</p>
-        <p>Author</p>
-        <p>Tags</p>
-      </div>
-      <div class="story_card_bottom">
-        <p>Some sort of description ....</p>
-      </div>
-    </section>
-    <section class="content content_home card">
-      <div class="story_card_top">
-        <p>Some story title</p>
-        <p>Author</p>
-        <p>Tags</p>
-      </div>
-      <div class="story_card_bottom">
-        <p>Some sort of description ....</p>
-      </div>
-    </section>
-    <section class="content content_home card">
-      <div class="story_card_top">
-        <p>Some story title</p>
-        <p>Author</p>
-        <p>Tags</p>
-      </div>
-      <div class="story_card_bottom">
-        <p>Some sort of description ....</p>
-      </div>
-    </section>
+
+    <div class="branch_marker">
+      <p>BRANCHED view all suggested branches</p>
+    </div>
+
+      <section class="story">
+        <div class="story_body">
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos nihil a commodi eum adipisci fugiat impedit
+            dolor tempora quam voluptatibus numquam, nesciunt consectetur molestiae perspiciatis provident accusamus sapiente
+            nemo amet.</p>
+        </div>
+      </section>
   </main>
 </body>
 
