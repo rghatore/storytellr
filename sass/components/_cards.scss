@@ -7,17 +7,22 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    width: 100%;
   }
+
   &_top_branch {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
+
   &_bottom {
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
   }
+
   &_story,
   &_branch {
     width: 95%;
