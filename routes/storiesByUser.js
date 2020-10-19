@@ -3,8 +3,8 @@ const express = require('express'); // move this into server eventually
 const router  = express.Router(); // move this into server enentually and pass as an argument
 
 module.exports = (database) => {
-  router.get('/', (req, res) => {
-    database.getAllStories()
+  router.get('/users:userId', (req, res) => {
+    database.getStoriesByUser()
     .then(stories => {
       if(!stories) {
         res.send({error: 'empty library'});

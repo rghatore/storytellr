@@ -24,7 +24,7 @@ const getAllStories = () => {
   SELECT *, users.name
   FROM stories
   JOIN users ON users.id = user_id
-  LIMIT 2;
+  LIMIT 5;
   `;
 
   return db.query(queryString)
@@ -32,3 +32,46 @@ const getAllStories = () => {
 }
 
 exports.getAllStories = getAllStories;
+
+const getStoriesByUser = (user) => {
+  const queryString = `
+  SELECT *, users.name
+  FROM stories
+  JOIN users ON users.id = user_id
+  WHERE users.name = $1
+  LIMIT 5;
+  `;
+
+  const queryParams = [user];
+
+  return db.query(queryString, queryParams)
+  .then(response => response.rows);
+}
+
+exports.getStoriesByUser = getStoriesByUser;
+
+
+// const getAllStories = (options) => {
+//   const queryParams = [];
+//   // basic getting all stories + authors/users
+//   let queryString = `
+//   SELECT *, users.name
+//   FROM stories
+//   JOIN users ON users.id = user_id
+//   `;
+
+//   // for a specific author/user
+//   if (options.user_name) {
+//     queryParams.push(`%${options.user_name}%`);
+//     queryString += `WHERE users.name LIKE $${queryParams.length} `;
+//   }
+
+//   queryString += `
+//   LIMIT 2;
+//   `;
+
+//   return db.query(queryString, queryParams)
+//   .then(response => response.rows);
+// }
+
+// exports.getAllStories = getAllStories;
