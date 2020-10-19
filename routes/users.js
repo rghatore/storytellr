@@ -6,9 +6,12 @@
  */
 
 const express = require('express'); // move this into server eventually
+// const { database } = require('pg/lib/defaults');
 const router  = express.Router(); // move this into server enentually and pass as an argument
 
-module.exports = (db) => {
+const { login } = require('../helpers');
+
+module.exports = (database) => {
   // router.get("/", (req, res) => {
   //   db.query(`SELECT * FROM users;`)
   //     .then(data => {
@@ -23,8 +26,29 @@ module.exports = (db) => {
   // });
   router.post('/login', (req, res) => {
     console.log('hello');
-    console.log(req.body);
-    res.send('hello');
+    // console.log(req.body);
+    const {email, password} = req.body;
+
+    login(email, password, database)
+    .then((user) => {
+      if(!user) {
+        res.send({error: "Please register!"});
+        return;
+      }
+      //  assign cookie
+      // send user object to ajax request
+      console.log({user: {name: user.name, email: user.email, id: user.id}});
+      // res.send({user: {name, email, id}});
+    })
+    .catch((error) => console.log(error.message));
+
+    // database.getUserFromEmail(email)
+    // .then((data) => {
+    //   console.log(data);
+    // })
+    // .catch((error) => console.log(error.message));
+
+    // res.send('hello');
   });
 
   return router;

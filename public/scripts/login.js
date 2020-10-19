@@ -17,15 +17,18 @@ $(document).ready(() => {
   $(document).on('submit', 'nav .nav-options form', (event) => {
     // alert("it's working!");
     event.preventDefault();
+    console.log($(event.target).serialize());
+    $.ajax({
+      url: 'users/login',
+      method: "POST",
+      data: $(event.target).serialize()
+    })
+
   })
 
   // $('#submit-login').click((event) => {
     // event.preventDefault(); // this does not seem to work!
-    // console.log(event);
     // $.ajax({
-    //   url: 'users/login',
-    //   method: "POST",
-    //   data: $(event)
     // });
   // });
 
