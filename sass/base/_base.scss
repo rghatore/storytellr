@@ -1,14 +1,12 @@
-// See: https://sass-lang.com/
-
 body {
-  background-color: #EEE;
+  background-color: $col-white;
 
   h1 {
-    color: #244751;
+    color: $col-black;
   }
 
   nav {
-    background-color: #c4c4c4;
+    background-color: $col-white;
   }
 
   .nav-options {
