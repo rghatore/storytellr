@@ -1,5 +1,4 @@
 $(document).ready(() => {
-
   $.ajax({
     url: '/stories',
     method: 'GET'

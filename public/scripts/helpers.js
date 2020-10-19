@@ -18,3 +18,4 @@ const loginForm = () => {
 
   return form;
 }
+
