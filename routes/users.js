@@ -66,6 +66,7 @@ module.exports = (database) => {
         return;
       }
       //  assign cookie
+      req.session['user_id'] = newUser.id;
       // send user object to ajax request
       res.send(newUser);
     })

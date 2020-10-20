@@ -1,32 +1,6 @@
 // accessing login form from the client side
 
 $(document).ready(() => {
-  // testing show a login page
-  // show registration form
-
-  // $('nav #profile').click(() => {
-
-    // $('#top-header .error').remove();
-
-    // if($('nav #profile').html() !== 'register') {
-    //   // logout functionality
-    //   // alert('profile page!');
-    //   $.ajax({
-    //     url: 'users/profile',
-    //     method: "GET"
-    //   }).then((data) => {
-    //     console.log(data);
-    //     $('.container').empty();
-    //     $('.container').append(`<p>${data}</p>`)
-    //   })
-
-  //     // $('nav .nav-options').append(loginForm('register'));
-
-  //   } else {
-
-  //   }
-
-  // })
 
   $(document).on('click', '#register', () => {
     if($('#form-register').html()) {
@@ -43,7 +17,7 @@ $(document).ready(() => {
 
     $('nav .nav-options #form-register').remove();
 
-    console.log($(event.target).serialize());
+    // console.log($(event.target).serialize());
     $.ajax({
       url: 'users/register',
       method: "POST",
@@ -52,17 +26,14 @@ $(document).ready(() => {
     .then(user => {
 
       if (user.error) {
-        // console.log(error);
-        $('#top-header').prepend(`<span></span>`);
-        $('#top-header span').addClass('error').hide();
-        $('#top-header .error').prepend(`${user.error}`);
-        $('#top-header .error').slideDown();
+        console.log(user.error);
+
       } else {
-        $('nav #login').html('logout');
-        $('nav #profile').html(user.name);
+
+        $(".sidebar_content form").remove();
+        $(".sidebar_content").append(`<span id="user">${user.name}</span>`);
+        $(".sidebar_content").append(`<button type="button" id="logout">Logout</button>`);
       }
-      $('nav #login').fadeIn();
-      $('nav #profile').fadeIn();
       // console.log(user);
       // console.log(user.user);
       // console.log(user.name);

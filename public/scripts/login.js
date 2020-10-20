@@ -37,7 +37,7 @@ $(document).ready(() => {
 
     // $('nav .nav-options #form-login').remove();
 
-    console.log($(event.target).serialize());
+    // console.log($(event.target).serialize());
     $.ajax({
       url: "users/login",
       method: "POST",
