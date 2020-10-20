@@ -3,7 +3,17 @@
   top: 0;
   width: 100%;
   transition: all 0.5s ease;
-  height: 20vh;
+  height: $height-nav;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  &_top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    margin-bottom: -1rem;
+  }
 
   &_home {
     border-bottom: 0.5rem solid $col-pink;
@@ -14,9 +24,6 @@
   &_branch {
     border-bottom: 0.5rem solid $col-black;
   }
-}
-
-#nav.passive {
 }
 
 #sidebar {
