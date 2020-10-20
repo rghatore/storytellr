@@ -6,9 +6,9 @@
  */
 
 const express = require('express'); // move this into server eventually
-// const { database } = require('pg/lib/defaults');
+const app = express();
 const router  = express.Router(); // move this into server enentually and pass as an argument
-const { login } = require('../helpers');
+const { login, register } = require('../helpers');
 const cookieSession = require('cookie-session');
 router.use(cookieSession({
   name: 'session',
@@ -36,8 +36,8 @@ module.exports = (database) => {
     req.session.user_id = login(email, password, database)
     .then((user) => {
       if(!user) {
-        console.log({error: "Please register!"});
-        res.send({error: "Please register!"});
+        console.log({error: "User not found! Please register."});
+        res.send({error: "User not found! Please register."});
         return;
       }
       //  assign cookie
@@ -50,16 +50,33 @@ module.exports = (database) => {
       console.log(error)
       res.send(error.message)
     });
-
-
-    // database.getUserFromEmail(email)
-    // .then((data) => {
-    //   console.log(data);
-    // })
-    // .catch((error) => console.log(error.message));
-
-    // res.send('hello');
   });
+
+  router.post('/register', (req, res) => {
+    const {name, email, password} = req.body;
+
+    register(name, email, password, database)
+    .then(newUser => {
+      console.log('newUser: ', newUser);
+      if(!newUser) {
+        // console.log({error: 'User already registered! Please login.'});
+        res.send({error: 'User already registered! Please login.'});
+        return;
+      }
+      //  assign cookie
+      // send user object to ajax request
+      res.send(newUser);
+    })
+    .catch((error) => {
+      console.log(error)
+      res.send(error.message)
+    })
+  });
+
+  router.get('/profile', (req, res) => {
+    // console.log('ajax request: ', req.body)
+    res.send('profilePage');
+  })
 
   return router;
 };

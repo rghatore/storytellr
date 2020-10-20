@@ -1,48 +1,51 @@
 // accessing login form from the client side
 
 $(document).ready(() => {
-  // add content to the sidebar
-  $(".sidebar_content").append(loginForm());
+  // testing show a login page
+  // show registration form
 
-  // handling clicks on the user icon
-
-  $('nav #login').click((event) => {
+  $('nav #profile').click(() => {
 
     $('#top-header .error').remove();
 
-    if($('nav #login').html() === 'logout') {
+    if($('nav #profile').html() !== 'register') {
       // logout functionality
-      alert('logout!');
+      // alert('profile page!');
+      $.ajax({
+        url: 'users/profile',
+        method: "GET"
+      }).then((data) => {
+        console.log(data);
+        $('.container').empty();
+        $('.container').append(`<p>${data}</p>`)
+      })
+
+
     } else {
-      $("#sidebar").addClass("active");
-      $(".overlay").addClass("active");
-      event.stopPropagation();
+      $('nav #profile').hide();
+      $('nav #login').hide();
+      $('nav .nav-options').append(loginForm('registration'));
+      $('nav .nav-options form').hide();
+      $('nav .nav-options form').slideDown();
     }
+
   })
 
-  // handling hiding the sidebar
-  $(".wrapper").on("click", function () {
-    // $('nav .nav-options #form-login').remove();
-    $("#sidebar").removeClass("active");
-    $(".overlay").removeClass("active");
-
-  });
-
-  $(document).on('submit', 'nav .nav-options #form-login', (event) => {
+  $(document).on('submit', 'nav .nav-options #form-registration', (event) => {
     // alert("it's working!");
     event.preventDefault();
     // show login button and change to logout
 
-    $('nav .nav-options #form-login').remove();
+    $('nav .nav-options #form-registration').remove();
 
     console.log($(event.target).serialize());
     $.ajax({
-      url: "users/login",
+      url: 'users/register',
       method: "POST",
       data: $(event.target).serialize()
     })
     .then(user => {
-      // console.log(user);
+
       if (user.error) {
         // console.log(error);
         $('#top-header').prepend(`<span></span>`);
@@ -55,9 +58,9 @@ $(document).ready(() => {
       }
       $('nav #login').fadeIn();
       $('nav #profile').fadeIn();
+      // console.log(user);
       // console.log(user.user);
       // console.log(user.name);
-
     })
 
   })
@@ -68,17 +71,4 @@ $(document).ready(() => {
     // });
   // });
 
-
-  //handles the disappear / reappear of the nav
-  let lastScrollTop = 0;
-
-  $(window).scroll(function () {
-    let st = $(this).scrollTop();
-    if (st < lastScrollTop) {
-      $(".nav ").css("transform", "translateY(0vh)");
-    } else {
-      $(".nav").css("transform", "translateY(-30vh)");
-    }
-    lastScrollTop = st;
-  });
 });
