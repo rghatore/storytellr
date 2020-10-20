@@ -2,12 +2,22 @@
 
 $(document).ready(() => {
   // testing show a login page
+  // show registration form
+  $('nav #profile').click(() => {
+    $('nav #profile').hide();
+    $('nav #login').hide();
+    $('nav .nav-options').append(loginForm('registration'));
+    $('nav .nav-options form').hide();
+    $('nav .nav-options form').slideDown();
 
-  $('#login-form').hide();
+  })
+
+  // show login form
+  // $('#login-form').hide();
   // on clicking login button
-  $('#login').click(() => {
-    $('#login').hide();
-    $('#profile').hide();
+  $('nav #login').click(() => {
+    $('nav #login').hide();
+    $('nav #profile').hide();
     $('nav .nav-options').append(loginForm());
     $('nav .nav-options form').hide();
     $('nav .nav-options form').slideDown();
@@ -32,11 +42,11 @@ $(document).ready(() => {
       console.log(user);
       // console.log(user.user);
       // console.log(user.name);
-      $('#login').fadeIn();
-      $('#login').html('logout');
+      $('nav #login').fadeIn();
+      $('nav #login').html('logout');
 
-      $('#profile').html(user.name);
-      $('#profile').fadeIn();
+      $('nav #profile').html(user.name);
+      $('nav #profile').fadeIn();
 
     })
 

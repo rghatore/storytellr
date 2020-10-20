@@ -1,8 +1,15 @@
 //  client side helper functions
 
 // appending form on clicking login
-const loginForm = () => {
+const loginForm = (type) => {
   let form = `<form action="/users/login" method="POST">
+
+                ${type === 'registration' ?
+                              `<div class="test-form">
+                                <label for="name">Enter your name: </label>
+                                <input type="text" name="name" id="name" placeholder="name" required>
+                              </div>` : ''}
+
                 <div class="test-form">
                   <label for="email">Enter your email: </label>
                   <input type="email" name="email" id="email" placeholder="email" required>
@@ -18,3 +25,4 @@ const loginForm = () => {
 
   return form;
 }
+
