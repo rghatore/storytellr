@@ -9,7 +9,7 @@ const express = require('express'); // move this into server eventually
 // const { database } = require('pg/lib/defaults');
 const router  = express.Router(); // move this into server enentually and pass as an argument
 
-const { login } = require('../helpers');
+const { login, register } = require('../helpers');
 
 module.exports = (database) => {
   // router.get("/", (req, res) => {
@@ -47,15 +47,27 @@ module.exports = (database) => {
       res.send(error.message)
 
     });
+  });
 
+  router.post('/register', (req, res) => {
+    const {name, email, password} = req.body;
 
-    // database.getUserFromEmail(email)
-    // .then((data) => {
-    //   console.log(data);
-    // })
-    // .catch((error) => console.log(error.message));
-
-    // res.send('hello');
+    register(name, email, password, database)
+    .then(newUser => {
+      console.log('newUser: ', newUser);
+      if(!newUser) {
+        console.log({error: 'User already registered! Please login.'});
+        res.send({error: 'User already registered! Please login.'});
+        return;
+      }
+      //  assign cookie
+      // send user object to ajax request
+      res.send(newUser);
+    })
+    .catch((error) => {
+      console.log(error)
+      res.send(error.message)
+    })
   });
 
   return router;

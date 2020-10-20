@@ -2,7 +2,7 @@
 
 // appending form on clicking login
 const loginForm = (type) => {
-  let form = `<form action="/users/login" method="POST">
+  let form = `<form id="form-${type}" action="/users/${type}" method="POST">
 
                 ${type === 'registration' ?
                               `<div class="test-form">
@@ -19,7 +19,7 @@ const loginForm = (type) => {
                   <input type="password" name="password" id="password" placeholder="password" required>
                 </div>
                 <div class="test-form">
-                  <button id ="submit-login" type="submit">Login</button>
+                  <button id ="submit" type="submit">Login</button>
                 </div>
               </form>`;
 

@@ -2,25 +2,24 @@
 
 $(document).ready(() => {
   // testing show a login page
+  // show registration form
 
-  // show login form
-  $('nav #login').click(() => {
+  $('nav #profile').click(() => {
 
     if($('nav #login').html() === 'logout') {
       // logout functionality
       alert('logout!');
     } else {
-      $('nav #login').hide();
       $('nav #profile').hide();
-      $('nav .nav-options').append(loginForm('login'));
+      $('nav #login').hide();
+      $('nav .nav-options').append(loginForm('registration'));
       $('nav .nav-options form').hide();
       $('nav .nav-options form').slideDown();
     }
-    // $('#top-header').append(loginForm()).hide();
-    // $('#top-header').slideDown();
+
   })
 
-  $(document).on('submit', 'nav .nav-options #form-login', (event) => {
+  $(document).on('submit', 'nav .nav-options #form-registration', (event) => {
     // alert("it's working!");
     event.preventDefault();
     // show login button and change to logout
@@ -29,14 +28,14 @@ $(document).ready(() => {
 
     console.log($(event.target).serialize());
     $.ajax({
-      url: 'users/login',
+      url: 'users/register',
       method: "POST",
       data: $(event.target).serialize()
     })
     .then(user => {
       console.log(user);
       // console.log(user.user);
-      // console.log(user.name);
+      console.log(user.name);
       $('nav #login').fadeIn();
       $('nav #login').html('logout');
 
