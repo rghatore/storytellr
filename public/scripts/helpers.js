@@ -4,11 +4,14 @@
 const loginForm = (type) => {
   let form = `<form action="/users/login" method="POST">
 
-                ${type === 'registration' ?
-                              `<div class="test-form">
+                ${
+                  type === "registration"
+                    ? `<div class="test-form">
                                 <label for="name">Enter your name: </label>
                                 <input type="text" name="name" id="name" placeholder="name" required>
-                              </div>` : ''}
+                              </div>`
+                    : ""
+                }
 
                 <div class="test-form">
                   <label for="email">Enter your email: </label>
@@ -24,5 +27,53 @@ const loginForm = (type) => {
               </form>`;
 
   return form;
-}
+};
 
+const generateStoryPage = (storyObj) => {
+  let storyPage = `
+  <header class="header header_story container">
+    <h3>${storyObj.title}</h3>
+  <section class="card card_story">
+  <div class="card_top">
+    <p>${storyObj.user_name}</p>
+    <p>view count</p>
+    <p>${storyObj.times_favourited}</p>
+  </div>
+  <div class="card_bottom">
+    <p>${JSON.stringify(storyObj.keywords)}</p>
+    <p>jump to latest branch</p>
+  </div>
+  </section>
+  </header>
+  <!-- Page-specific (main) content here -->
+  <main class="container content content_story">
+    <section class="story">
+      <div class="story_body">
+        <p>${storyObj.content}
+        </p>
+      </div>
+    </section>
+
+    <div class="branch_marker">
+      <p>BRANCHED view all suggested branches</p>
+    </div>
+
+      <section class="story">
+        <div class="story_body">
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos nihil a commodi eum adipisci fugiat impedit
+            dolor tempora quam voluptatibus numquam, nesciunt consectetur molestiae perspiciatis provident accusamus sapiente
+            nemo amet.</p>
+        </div>
+      </section>
+
+      <div class="writing_box">
+        <form action="#">
+          <textarea name="writing_box" id="writing_box" cols="30" rows="10">Write in me ...</textarea>
+          <button>Submit</button>
+        </form>
+      </div>
+  </main>
+  `;
+
+  return storyPage;
+};
