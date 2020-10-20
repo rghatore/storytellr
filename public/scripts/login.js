@@ -1,61 +1,54 @@
 // accessing login form from the client side
 
 $(document).ready(() => {
-  // testing show a login page
-  // show registration form
-  $('nav #profile').click(() => {
-    $('nav #profile').hide();
-    $('nav #login').hide();
-    $('nav .nav-options').append(loginForm('registration'));
-    $('nav .nav-options form').hide();
-    $('nav .nav-options form').slideDown();
+  // add content to the sidebar
+  $(".sidebar_content").append(loginForm());
 
-  })
+  // handling clicks on the user icon
+  $("#login").on("click", function (event) {
+    $("#sidebar").addClass("active");
+    $(".overlay").addClass("active");
+    event.stopPropagation();
+  });
 
-  // show login form
-  // $('#login-form').hide();
-  // on clicking login button
-  $('nav #login').click(() => {
-    $('nav #login').hide();
-    $('nav #profile').hide();
-    $('nav .nav-options').append(loginForm());
-    $('nav .nav-options form').hide();
-    $('nav .nav-options form').slideDown();
-    // $('#top-header').append(loginForm()).hide();
-    // $('#top-header').slideDown();
-  })
+  // handling hiding the sidebar
+  $(".wrapper").on("click", function () {
+    $("#sidebar").removeClass("active");
+    $(".overlay").removeClass("active");
+  });
 
-  $(document).on('submit', 'nav .nav-options form', (event) => {
+  $(document).on("submit", ".nav-options form", (event) => {
     // alert("it's working!");
     event.preventDefault();
     // show login button and change to logout
 
-    $('nav .nav-options form').hide();
+    $("nav .nav-options form").hide();
 
     console.log($(event.target).serialize());
     $.ajax({
-      url: 'users/login',
+      url: "users/login",
       method: "POST",
-      data: $(event.target).serialize()
-    })
-    .then(user => {
+      data: $(event.target).serialize(),
+    }).then((user) => {
       console.log(user);
-      // console.log(user.user);
-      // console.log(user.name);
-      $('nav #login').fadeIn();
-      $('nav #login').html('logout');
+      $("#login").fadeIn();
+      $("#login").html("logout");
 
-      $('nav #profile').html(user.name);
-      $('nav #profile').fadeIn();
+      $("#profile").html(user.name);
+      $("#profile").fadeIn();
+    });
+  });
 
-    })
+  //handles the disappear / reappear of the nav
+  let lastScrollTop = 0;
 
-  })
-
-  // $('#submit-login').click((event) => {
-    // event.preventDefault(); // this does not seem to work!
-    // $.ajax({
-    // });
-  // });
-
+  $(window).scroll(function () {
+    let st = $(this).scrollTop();
+    if (st < lastScrollTop) {
+      $(".nav ").css("transform", "translateY(0vh)");
+    } else {
+      $(".nav").css("transform", "translateY(-30vh)");
+    }
+    lastScrollTop = st;
+  });
 });
