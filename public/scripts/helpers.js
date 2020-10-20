@@ -2,11 +2,12 @@
 
 // appending form on clicking login
 const loginForm = (type) => {
-  let form = `<form action="/users/login" method="POST">
+  let form = `<form id="form-${type}" action="/users/${type}" method="POST">
 
-                ${
-                  type === "registration"
-                    ? `<div class="test-form">
+
+
+                ${type === 'register' ?
+                              `<div class="test-form">
                                 <label for="name">Enter your name: </label>
                                 <input type="text" name="name" id="name" placeholder="name" required>
                               </div>`
@@ -22,11 +23,12 @@ const loginForm = (type) => {
                   <input type="password" name="password" id="password" placeholder="password" required>
                 </div>
                 <div class="test-form">
-                  <button id ="submit-login" type="submit">Login</button>
+                  <button id ="submit" type="submit">${type}</button>
                 </div>
               </form>`;
 
   return form;
+
 };
 
 const generateStoryPage = (storyObj) => {
@@ -77,3 +79,4 @@ const generateStoryPage = (storyObj) => {
 
   return storyPage;
 };
+

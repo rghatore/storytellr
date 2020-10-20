@@ -7,6 +7,7 @@ $(document).ready(() => {
     console.log(stories);
     // target is .container .content
 
+
     for (const story of stories) {
       $("#main").append(`
     <section id="${story.id}" class="content content_home card card_home">
@@ -40,4 +41,5 @@ $(document).ready(() => {
       });
     });
   });
+
 });

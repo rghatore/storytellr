@@ -19,6 +19,21 @@ const getUserFromEmail = (email) => {
 };
 exports.getUserFromEmail = getUserFromEmail;
 
+// add registration data to the database
+const addUser = (user) => {
+  const queryString = `
+  INSERT INTO users (name, email, password)
+  VALUES ($1, $2, $3)
+  RETURNING *
+  `;
+
+  const queryParams = [user.name, user.email, user.password];
+
+  return db.query(queryString, queryParams)
+  .then(response => response.rows[0]);
+}
+exports.addUser = addUser;
+
 const getUsernameFromUserId = (user_id) => {
   const queryString = `
   SELECT name
