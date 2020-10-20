@@ -30,7 +30,7 @@ $(document).ready(() => {
 
       } else {
 
-        $(".sidebar_content form").remove();
+        $(".sidebar_content").empty();
         $(".sidebar_content").append(`<span id="user">${user.name}</span>`);
         $(".sidebar_content").append(`<button type="button" id="logout">Logout</button>`);
       }

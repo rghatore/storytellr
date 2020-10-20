@@ -48,7 +48,7 @@ $(document).ready(() => {
       if (user.error) {
         console.log(user.error);
       } else {
-        $(".sidebar_content form").remove();
+        $(".sidebar_content").empty();
         $(".sidebar_content").append(`<span id="user">${user.name}</span>`);
         $(".sidebar_content").append(`<button type="button" id="logout">Logout</button>`);
       }
@@ -60,10 +60,12 @@ $(document).ready(() => {
   $(document).on('click', '#logout', () => {
     //  ajax request to POST users/logout
     // console.log(req.session['user_id']);
-    $(".sidebar_content").remove();
+    $(".sidebar_content").empty();
+    $(".sidebar_content").append(loginForm('login'));
+    $(".sidebar_content").append(`<button type="button" id="register">Register</button>`);
+
     // $("#sidebar").removeClass("active");
     // $(".overlay").removeClass("active");
-    // $(".sidebar_content").append(loginForm('login'));
 
     // $(".sidebar_content").append(loginForm('login'));
 
