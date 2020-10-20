@@ -1,4 +1,3 @@
-
 body {
   background-color: $col-white;
 
@@ -16,4 +15,10 @@ body {
     justify-content: space-around;
     align-items: center;
   }
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

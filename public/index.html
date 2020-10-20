@@ -18,8 +18,11 @@
     <!-- External JS jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-  <!-- Font awesome -->
+  <!-- Fonts -->
   <script src="https://kit.fontawesome.com/ec0d36d8d5.js" crossorigin="anonymous"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Roboto:ital,wght@0,300;0,400;1,300;1,400&display=swap"
+    rel="stylesheet">
 
   <!-- External JS jQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -60,20 +63,24 @@
   <!-- Top nav bar (fixed) -->
   <div class="wrapper">
   <nav id="nav" class="nav nav_home">
-    <i id="login" class="fas fa-user"></i>
-    <h2>storytellr</h2>
-    <div class='nav-options'>
+
+    <div class="nav_top">
+      <i id="login" class="fas fa-user"></i>
+      <h2 class="storytellr">storytellr</h2>
+    </div>
+    <div class='nav-options storytellr'>
+
       <p>let your <em>imagination</em> guide the <b>stories</b></p>
 
     </div>
   </nav>
   <!-- Header: perhaps to show that user is logged in? -->
-  <header id="top-header">
-    <form action="#"><label for="search">search</label><input type="text" name="search"></form>
-    <a href="#">filter</a>
-  </header>
   <!-- Page-specific (main) content here -->
-  <main class="container container_home">
+  <main id="main" class="container container_home">
+      <header id="top-header" class="header_home">
+        <form action="#"><label for="search">search</label><input type="text" name="search"></form>
+        <a href="#">filter</a>
+      </header>
   </main>
 
   <div class="overlay">

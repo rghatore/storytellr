@@ -1,4 +1,11 @@
-// .header_story {
-//   display: flex;
-//   justify-content: center;
-// }
+.header {
+  &_story {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  &_home {
+    margin: 1rem;
+  }
+}

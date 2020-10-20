@@ -1,3 +1,7 @@
+body {
+  font-family: $font-body;
+}
+
 a {
   text-decoration: none;
   color: $col-black;
@@ -5,4 +9,14 @@ a {
 
 .col_branch {
   color: $col-orange;
+}
+
+.storytellr {
+  font-family: $font-headings;
+}
+
+.nav {
+  &_top {
+    font-size: 2rem;
+  }
 }
