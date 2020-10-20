@@ -31,7 +31,7 @@ const loginForm = (type) => {
 
 const generateStoryPage = (storyObj) => {
   let storyPage = `
-  <header class="header header_story container">
+  <header class="header header_story">
     <h3>${storyObj.title}</h3>
   <section class="card card_story">
   <div class="card_top">
@@ -46,7 +46,7 @@ const generateStoryPage = (storyObj) => {
   </section>
   </header>
   <!-- Page-specific (main) content here -->
-  <main class="container content content_story">
+  <main class="content content_story">
     <section class="story">
       <div class="story_body">
         <p>${storyObj.content}

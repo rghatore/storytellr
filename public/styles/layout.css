@@ -26,6 +26,12 @@ a {
 .nav_top {
   font-size: 2rem; }
 
+.header_story {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%; }
+
 .nav {
   position: fixed;
   top: 0;
@@ -52,6 +58,7 @@ a {
   position: fixed;
   width: 75vw;
   min-height: 100vh;
+  top: 0;
   margin-left: -75vw;
   z-index: 1000; }
 

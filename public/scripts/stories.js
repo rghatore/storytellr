@@ -8,7 +8,7 @@ $(document).ready(() => {
     // target is .container .content
 
     for (const story of stories) {
-      $(".container").append(`
+      $("#main").append(`
     <section id="${story.id}" class="content content_home card card_home">
     <div class="card_top">
       <p>${story.title}</p>
@@ -34,9 +34,9 @@ $(document).ready(() => {
         const storyObj = response[0];
         // generateStoryPage is in scripts/helpers
         const storyPage = generateStoryPage(storyObj);
-        $(".container").empty();
         $("#nav").removeClass("nav_home").addClass("nav_story");
-        $(".container").append(storyPage);
+        $("#main").empty();
+        $("#main").append(storyPage);
       });
     });
   });
