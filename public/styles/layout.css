@@ -36,9 +36,14 @@ a {
   margin-left: -75vw;
   z-index: 1000; }
 
+<<<<<<< HEAD
 #sidebar.active {
   transition: all 3s ease;
   transform: translateX(75vw); }
+=======
+.nav_branch {
+  border-bottom: 0.5rem solid #0c090d; }
+>>>>>>> master
 
 .card_home {
   border: 2px dashed pink; }
