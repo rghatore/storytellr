@@ -2,9 +2,10 @@
 
 $(document).ready(() => {
   // testing show a login page
+  $(".sidebar_content").append(loginForm('login'));
 
   // show login form
-  $('nav #login').click(() => {
+  $('nav #login').click((event) => {
 
     $('#top-header .error').remove();
 
@@ -12,30 +13,18 @@ $(document).ready(() => {
       // logout functionality
       alert('logout!');
     } else {
-      $('nav #login').hide();
-      $('nav #profile').hide();
-      $('nav .nav-options').append(loginForm('login'));
-      $('nav .nav-options form').hide();
-      $('nav .nav-options form').slideDown();
+      $("#sidebar").addClass("active");
+      $(".overlay").addClass("active");
+      event.stopPropagation();
     }
-    // $('#top-header').append(loginForm()).hide();
-    // $('#top-header').slideDown();
   })
-
-  // add content to the sidebar
-  $(".sidebar_content").append(loginForm());
-
-  // handling clicks on the user icon
-  $("#login").on("click", function (event) {
-    $("#sidebar").addClass("active");
-    $(".overlay").addClass("active");
-    event.stopPropagation();
-  });
 
   // handling hiding the sidebar
   $(".wrapper").on("click", function () {
+    // $('nav .nav-options #form-login').remove();
     $("#sidebar").removeClass("active");
     $(".overlay").removeClass("active");
+
   });
 
   $(document).on('submit', 'nav .nav-options #form-login', (event) => {
