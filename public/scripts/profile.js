@@ -16,19 +16,23 @@ $(document).ready(() => {
       for (const story of data){
         $('.container').append(storyBox(story));
       }
-      $(".container").append(`
-      <section class="newStory">
-        <label for="newTitle">Title</label>
-        <input type="newTitle" name="newTitle" id="newTitle" placeholder="Title" required>
-        <label for="newSummary">Title</label>
-        <input type="newSummary" name="newSummary" id="newSummary" placeholder="Summary" required>
-        <label for="newContent">Your Story</label>
-        <input type="newContent" name="newContent" id="newContent" placeholder="Once upon a time ..." required>
-        <button id ="submit" type="submit">Publish</button>
-      </section>
-      `
-      )
+      $(".container").append(newStory());
     })
   })
 
+// submit request for publishing new story
+$(document).on('submit', '.container .newStory', (event) => {
+  event.preventDefault();
+  const username = $('#user').html();
+  console.log(username)
+  console.log($(event.target).serialize());
+  $.ajax({
+    url: `stories/`,
+    method: "POST",
+    data: $(event.target).serialize()
+  })
+  .then()
+  })
+// INSERT INTO stories (user_id, title, content, summary, date_started, date_completed)
+// VALUES (data.user_id, data.newTitle, data.newContent, )
 })

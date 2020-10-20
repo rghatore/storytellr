@@ -34,6 +34,21 @@ const addUser = (user) => {
 }
 exports.addUser = addUser;
 
+// add new story to the database
+const addStory = (story) => {
+  const queryString = `
+  INSERT INTO stories (user_id, title, summary, content)
+  VALUES ($1, $2, $3, $4)
+  RETURNING *
+  `;
+
+  const queryParams = [story.user_id, story.newTitle, story.newSummary, story.newContent];
+
+  return db.query(queryString, queryParams)
+  .then(response => response.rows[0]);
+}
+exports.addStory = addStory;
+
 const getUsernameFromUserId = (user_id) => {
   const queryString = `
   SELECT name
@@ -105,7 +120,7 @@ const getAllStories = (options) => {
   }
 
   queryString += `
-  LIMIT 3;
+  LIMIT 10;
   `;
 
   return db.query(queryString, queryParams)

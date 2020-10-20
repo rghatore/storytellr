@@ -40,3 +40,18 @@ let box = `<section class="content content_home card card_home">
           </section>`;
 return box;
 }
+
+// new story box
+const newStory = () => {
+  const textBox = `<form class="newStory">
+    <label for="newTitle">Title</label>
+    <input type="newTitle" name="newTitle" id="newTitle" placeholder="Title" required>
+    <label for="newSummary">Title</label>
+    <input type="newSummary" name="newSummary" id="newSummary" placeholder="Summary" required>
+    <label for="newContent">Your Story</label>
+    <input type="newContent" name="newContent" id="newContent" placeholder="Once upon a time ..." required>
+    <button id ="submit" type="submit">Publish</button>
+  </form>`;
+  return textBox;
+}
+
