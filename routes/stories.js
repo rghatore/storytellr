@@ -2,6 +2,7 @@ const express = require('express'); // move this into server eventually
 // const { database } = require('pg/lib/defaults');
 const router  = express.Router(); // move this into server enentually and pass as an argument
 
+
 module.exports = (database) => {
   // get all stories
   router.get('/', (req, res) => {

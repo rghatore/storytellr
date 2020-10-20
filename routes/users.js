@@ -8,8 +8,13 @@
 const express = require('express'); // move this into server eventually
 // const { database } = require('pg/lib/defaults');
 const router  = express.Router(); // move this into server enentually and pass as an argument
-
 const { login } = require('../helpers');
+const cookieSession = require('cookie-session');
+router.use(cookieSession({
+  name: 'session',
+  keys: ["this is a very good key thank you", "nfjklasdfiasjudpfnonfniju2o3r94ruj123mn45rji42bn580423jnro"]
+}));
+
 
 module.exports = (database) => {
   // router.get("/", (req, res) => {
@@ -26,10 +31,9 @@ module.exports = (database) => {
   // });
   router.post('/login', (req, res) => {
     console.log('hello');
-    // console.log(req.body);
     const {email, password} = req.body;
 
-    login(email, password, database)
+    req.session.user_id = login(email, password, database)
     .then((user) => {
       if(!user) {
         console.log({error: "Please register!"});
@@ -45,7 +49,6 @@ module.exports = (database) => {
     .catch((error) => {
       console.log(error)
       res.send(error.message)
-
     });
 
 
