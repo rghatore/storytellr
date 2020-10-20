@@ -3,25 +3,34 @@
   top: 0;
   width: 100%;
   transition: all 0.5s ease;
+  height: $height-nav;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  &_top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1.5rem 0 1.5rem;
+    margin-bottom: -3rem;
+  }
 
   &_home {
-    border-bottom: 0.5rem solid $col-pink;
+    border-bottom: 2rem solid $col-pink;
   }
   &_story {
-    border-bottom: 0.5rem solid $col-blue;
+    border-bottom: 2rem solid $col-blue;
   }
   &_branch {
-    border-bottom: 0.5rem solid $col-black;
+    border-bottom: 2rem solid $col-black;
   }
-}
-
-#nav.passive {
 }
 
 #sidebar {
   position: fixed;
   width: 75vw;
   min-height: 100vh;
+  top: 0;
   margin-left: -75vw;
   z-index: 1000;
 }
