@@ -6,9 +6,9 @@ $(document).ready(() => {
 
   $('nav #profile').click(() => {
 
-    if($('nav #login').html() === 'logout') {
+    if($('nav #profile').html() !== 'registration') {
       // logout functionality
-      alert('logout!');
+      alert('profile page!');
     } else {
       $('nav #profile').hide();
       $('nav #login').hide();
