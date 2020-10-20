@@ -1,6 +1,9 @@
 .card {
   &_home {
-    border: 2px dashed pink;
+    border-bottom: 2px solid $col-black;
+    &:first-of-type {
+      border-top: 2px solid $col-black;
+    }
   }
 
   &_top {
