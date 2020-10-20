@@ -29,6 +29,38 @@ const loginForm = (type) => {
 
   return form;
 
+}
+
+// stories box
+const storyBox = (story) => {
+let box = `<section class="content content_home card card_home">
+            <div class="card_top">
+              <p>${story.title}</p>
+              <p>${story.name}</p>
+              <p>Tags</p>
+            </div>
+            <div class="card_bottom">
+              <p>${story.summary}</p>
+            </div>
+          </section>`;
+return box;
+}
+
+// new story box
+const newStory = () => {
+  const textBox = `<form class="newStory">
+    <label for="newTitle">Title</label>
+    <input type="newTitle" name="newTitle" id="newTitle" placeholder="Title" required>
+    <label for="newSummary">Title</label>
+    <input type="newSummary" name="newSummary" id="newSummary" placeholder="Summary" required>
+    <label for="newContent">Your Story</label>
+    <input type="newContent" name="newContent" id="newContent" placeholder="Once upon a time ..." required>
+    <button id ="submit" type="submit">Publish</button>
+  </form>`;
+  return textBox;
+}
+
+
 };
 
 const generateStoryPage = (storyObj) => {
@@ -79,4 +111,5 @@ const generateStoryPage = (storyObj) => {
 
   return storyPage;
 };
+
 

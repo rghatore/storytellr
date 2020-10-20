@@ -5,6 +5,6 @@ CREATE TABLE stories (
   title VARCHAR(255) NOT NULL,
   content TEXT NOT NULL,
   summary TEXT NOT NULL,
-  date_started TIMESTAMPTZ NOT NULL,
+  date_started TIMESTAMPTZ DEFAULT NOW() NOT NULL,
   date_completed TIMESTAMPTZ DEFAULT NULL
 );
