@@ -1,37 +1,23 @@
 // accessing login form from the client side
 
 $(document).ready(() => {
-  // testing show a login page
-
-  // $("#login-form").hide();
-  // // on clicking login button
-  // $("#login").click(() => {
-  //   $("#login").hide();
-  //   $("#profile").hide();
-  //   $("nav .nav-options").append(loginForm());
-  //   $("nav .nav-options form").hide();
-  //   $("nav .nav-options form").slideDown();
-  //   // $('#top-header').append(loginForm()).hide();
-  //   // $('#top-header').slideDown();
-  // });
+  // add content to the sidebar
   $(".sidebar_content").append(loginForm());
 
+  // handling clicks on the user icon
   $("#login").on("click", function (event) {
     $("#sidebar").addClass("active");
+    $(".overlay").addClass("active");
     event.stopPropagation();
   });
 
+  // handling hiding the sidebar
   $(".wrapper").on("click", function () {
     $("#sidebar").removeClass("active");
+    $(".overlay").removeClass("active");
   });
 
-  // $(document).on("click", ".passive", (event) => {
-  //   if ($(".wrapper").hasClass("passive")) {
-  //     console.log("Passive!");
-  //   }
-  // });
-
-  $(document).on("submit", "nav .nav-options form", (event) => {
+  $(document).on("submit", ".nav-options form", (event) => {
     // alert("it's working!");
     event.preventDefault();
     // show login button and change to logout
@@ -45,8 +31,6 @@ $(document).ready(() => {
       data: $(event.target).serialize(),
     }).then((user) => {
       console.log(user);
-      // console.log(user.user);
-      // console.log(user.name);
       $("#login").fadeIn();
       $("#login").html("logout");
 
@@ -55,9 +39,16 @@ $(document).ready(() => {
     });
   });
 
-  // $('#submit-login').click((event) => {
-  // event.preventDefault(); // this does not seem to work!
-  // $.ajax({
-  // });
-  // });
+  //handles the disappear / reappear of the nav
+  let lastScrollTop = 0;
+
+  $(window).scroll(function () {
+    let st = $(this).scrollTop();
+    if (st < lastScrollTop) {
+      $(".nav ").css("transform", "translateY(0vh)");
+    } else {
+      $(".nav").css("transform", "translateY(-30vh)");
+    }
+    lastScrollTop = st;
+  });
 });

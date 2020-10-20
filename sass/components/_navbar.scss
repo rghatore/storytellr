@@ -1,4 +1,9 @@
 .nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  transition: all 0.5s ease;
+
   &_home {
     border-bottom: 0.5rem solid $col-pink;
   }
@@ -10,11 +15,15 @@
   }
 }
 
+#nav.passive {
+}
+
 #sidebar {
-  position: absolute;
+  position: fixed;
   width: 75vw;
   min-height: 100vh;
   margin-left: -75vw;
+  z-index: 1000;
 }
 
 #sidebar.active {
