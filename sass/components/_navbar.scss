@@ -1,4 +1,9 @@
 .nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  transition: all 0.5s ease;
+
   &_home {
     border-bottom: 0.5rem solid $col-pink;
   }
@@ -8,4 +13,20 @@
   &_branch {
     border-bottom: 0.5rem solid $col-black;
   }
+}
+
+#nav.passive {
+}
+
+#sidebar {
+  position: fixed;
+  width: 75vw;
+  min-height: 100vh;
+  margin-left: -75vw;
+  z-index: 1000;
+}
+
+#sidebar.active {
+  transition: all 3s ease;
+  transform: translateX(75vw);
 }

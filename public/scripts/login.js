@@ -22,6 +22,22 @@ $(document).ready(() => {
     // $('#top-header').slideDown();
   })
 
+  // add content to the sidebar
+  $(".sidebar_content").append(loginForm());
+
+  // handling clicks on the user icon
+  $("#login").on("click", function (event) {
+    $("#sidebar").addClass("active");
+    $(".overlay").addClass("active");
+    event.stopPropagation();
+  });
+
+  // handling hiding the sidebar
+  $(".wrapper").on("click", function () {
+    $("#sidebar").removeClass("active");
+    $(".overlay").removeClass("active");
+  });
+
   $(document).on('submit', 'nav .nav-options #form-login', (event) => {
     // alert("it's working!");
     event.preventDefault();
@@ -31,7 +47,7 @@ $(document).ready(() => {
 
     console.log($(event.target).serialize());
     $.ajax({
-      url: 'users/login',
+      url: "users/login",
       method: "POST",
       data: $(event.target).serialize()
     })
@@ -62,4 +78,17 @@ $(document).ready(() => {
     // });
   // });
 
+
+  //handles the disappear / reappear of the nav
+  let lastScrollTop = 0;
+
+  $(window).scroll(function () {
+    let st = $(this).scrollTop();
+    if (st < lastScrollTop) {
+      $(".nav ").css("transform", "translateY(0vh)");
+    } else {
+      $(".nav").css("transform", "translateY(-30vh)");
+    }
+    lastScrollTop = st;
+  });
 });
