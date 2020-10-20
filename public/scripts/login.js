@@ -30,6 +30,23 @@ $(document).ready(() => {
 
   });
 
+  //  profile page request
+  $(document).on('click', '#user', () => {
+
+    // username instead of user id
+    const username = $('#user').html();
+
+    $.ajax({
+      url: `users/${username}`,
+      method: "GET"
+    })
+    .then((data) => {
+      console.log(data);
+    })
+
+
+  })
+
   $(document).on('submit', '.sidebar_content #form-login', (event) => {
     // alert("it's working!");
     event.preventDefault();

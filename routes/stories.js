@@ -17,20 +17,20 @@ module.exports = (database) => {
   })
 
   // gets stories by a specific user id
-  router.get('/:userId', (req, res) => {
-    database.getUsernameFromUserId(req.params.userId)
-    .then(data => {
-      database.getAllStories({user_name: data.name, search: null})
-      .then(stories => {
-        if(!stories) {
-          res.send({error: 'empty library'});
-        } else {
-          res.send(stories)
-        }
-      })
-    })
-    .catch(error => res.send(error.message))
-  })
+  // router.get('/:userId', (req, res) => {
+  //   database.getUsernameFromUserId(req.params.userId)
+  //   .then(data => {
+  //     database.getAllStories({user_name: data.name, search: null})
+  //     .then(stories => {
+  //       if(!stories) {
+  //         res.send({error: 'empty library'});
+  //       } else {
+  //         res.send(stories)
+  //       }
+  //     })
+  //   })
+  //   .catch(error => res.send(error.message))
+  // })
 
   return router;
 }

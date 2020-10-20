@@ -85,9 +85,25 @@ module.exports = (database) => {
   })
 
 // profile page
-  router.get('/profile', (req, res) => {
+  router.get('/:username', (req, res) => {
     // console.log('ajax request: ', req.body)
-    res.send('profilePage');
+    const username = req.params.username;
+    console.log(username)
+    // copied from stories route
+    // database.getUsernameFromUserId(username)
+    // .then(data => {
+      database.getAllStories({user_name: username, search: null})
+      .then(stories => {
+        if(!stories) {
+          res.send({error: 'empty library'});
+        } else {
+          res.send(stories)
+        }
+      })
+    // })
+    .catch(error => res.send(error.message))
+
+    // res.send('profilePage');
   })
 
   return router;
