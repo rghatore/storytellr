@@ -33,14 +33,16 @@ module.exports = (database) => {
     console.log('hello');
     const {email, password} = req.body;
 
-    req.session.user_id = login(email, password, database)
+   login(email, password, database)
     .then((user) => {
       if(!user) {
-        console.log({error: "User not found! Please register."});
+        // console.log({error: "User not found! Please register."});
+        // console.log(user)
         res.send({error: "User not found! Please register."});
         return;
       }
       //  assign cookie
+      req.session['user_id'] = user.id;
       // send user object to ajax request
       // console.log({user: {name: user.name, email: user.email, id: user.id}});
       res.send(user);
@@ -73,6 +75,15 @@ module.exports = (database) => {
     })
   });
 
+  router.post('/logout', (req, res) => {
+    console.log('before :', req.session['user_id']);
+    req.session['user_id'] = null;
+    console.log('after: ', req.session['user_id']);
+
+    res.send('Logged out successfully!');
+  })
+
+// profile page
   router.get('/profile', (req, res) => {
     // console.log('ajax request: ', req.body)
     res.send('profilePage');

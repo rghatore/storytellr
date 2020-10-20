@@ -4,39 +4,44 @@ $(document).ready(() => {
   // testing show a login page
   // show registration form
 
-  $('nav #profile').click(() => {
+  // $('nav #profile').click(() => {
 
-    $('#top-header .error').remove();
+    // $('#top-header .error').remove();
 
-    if($('nav #profile').html() !== 'register') {
-      // logout functionality
-      // alert('profile page!');
-      $.ajax({
-        url: 'users/profile',
-        method: "GET"
-      }).then((data) => {
-        console.log(data);
-        $('.container').empty();
-        $('.container').append(`<p>${data}</p>`)
-      })
+    // if($('nav #profile').html() !== 'register') {
+    //   // logout functionality
+    //   // alert('profile page!');
+    //   $.ajax({
+    //     url: 'users/profile',
+    //     method: "GET"
+    //   }).then((data) => {
+    //     console.log(data);
+    //     $('.container').empty();
+    //     $('.container').append(`<p>${data}</p>`)
+    //   })
 
+  //     // $('nav .nav-options').append(loginForm('register'));
 
+  //   } else {
+
+  //   }
+
+  // })
+
+  $(document).on('click', '#register', () => {
+    if($('#form-register').html()) {
+      $("#form-register").remove();
     } else {
-      $('nav #profile').hide();
-      $('nav #login').hide();
-      $('nav .nav-options').append(loginForm('registration'));
-      $('nav .nav-options form').hide();
-      $('nav .nav-options form').slideDown();
+      $(".sidebar_content").append(loginForm('register'));
     }
-
   })
 
-  $(document).on('submit', 'nav .nav-options #form-registration', (event) => {
+  $(document).on('submit', '.sidebar_content #form-register', (event) => {
     // alert("it's working!");
     event.preventDefault();
     // show login button and change to logout
 
-    $('nav .nav-options #form-registration').remove();
+    $('nav .nav-options #form-register').remove();
 
     console.log($(event.target).serialize());
     $.ajax({

@@ -2,7 +2,7 @@
 
 $(document).ready(() => {
   // add content to the sidebar
-  $(".sidebar_content").append(loginForm());
+    // $(".sidebar_content").append(loginForm('login'));
 
   // handling clicks on the user icon
 
@@ -16,6 +16,8 @@ $(document).ready(() => {
     } else {
       $("#sidebar").addClass("active");
       $(".overlay").addClass("active");
+      $(".sidebar_content").append(`<button type="button" id="register">Register</button>`);
+
       event.stopPropagation();
     }
   })
@@ -28,12 +30,12 @@ $(document).ready(() => {
 
   });
 
-  $(document).on('submit', 'nav .nav-options #form-login', (event) => {
+  $(document).on('submit', '.sidebar_content #form-login', (event) => {
     // alert("it's working!");
     event.preventDefault();
     // show login button and change to logout
 
-    $('nav .nav-options #form-login').remove();
+    // $('nav .nav-options #form-login').remove();
 
     console.log($(event.target).serialize());
     $.ajax({
@@ -44,22 +46,41 @@ $(document).ready(() => {
     .then(user => {
       // console.log(user);
       if (user.error) {
-        // console.log(error);
-        $('#top-header').prepend(`<span></span>`);
-        $('#top-header span').addClass('error').hide();
-        $('#top-header .error').prepend(`${user.error}`);
-        $('#top-header .error').slideDown();
+        console.log(user.error);
       } else {
-        $('nav #login').html('logout');
-        $('nav #profile').html(user.name);
+        $(".sidebar_content form").remove();
+        $(".sidebar_content").append(`<span id="user">${user.name}</span>`);
+        $(".sidebar_content").append(`<button type="button" id="logout">Logout</button>`);
       }
-      $('nav #login').fadeIn();
-      $('nav #profile').fadeIn();
-      // console.log(user.user);
-      // console.log(user.name);
 
     })
 
+  })
+
+  $(document).on('click', '#logout', () => {
+    //  ajax request to POST users/logout
+    // console.log(req.session['user_id']);
+    $(".sidebar_content").remove();
+    // $("#sidebar").removeClass("active");
+    // $(".overlay").removeClass("active");
+    // $(".sidebar_content").append(loginForm('login'));
+
+    // $(".sidebar_content").append(loginForm('login'));
+
+
+    $.ajax({
+      url: "users/logout",
+      method: "POST"
+    })
+    .then((message) => {
+      // console.log(req.session['user_id']);
+      console.log(message);
+      $('#top-header').append(message);
+      $.ajax({
+        url: "/",
+        method: "GET"
+      })
+    })
   })
 
   // $('#submit-login').click((event) => {

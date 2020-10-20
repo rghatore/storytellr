@@ -25,7 +25,7 @@ module.exports = (database) => {
         if(!stories) {
           res.send({error: 'empty library'});
         } else {
-         res.send(stories)
+          res.send(stories)
         }
       })
     })

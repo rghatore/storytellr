@@ -4,7 +4,7 @@
 const loginForm = (type) => {
   let form = `<form id="form-${type}" action="/users/${type}" method="POST">
 
-                ${type === 'registration' ?
+                ${type === 'register' ?
                               `<div class="test-form">
                                 <label for="name">Enter your name: </label>
                                 <input type="text" name="name" id="name" placeholder="name" required>
@@ -19,10 +19,9 @@ const loginForm = (type) => {
                   <input type="password" name="password" id="password" placeholder="password" required>
                 </div>
                 <div class="test-form">
-                  <button id ="submit" type="submit">Login</button>
+                  <button id ="submit" type="submit">${type}</button>
                 </div>
               </form>`;
 
   return form;
 }
-

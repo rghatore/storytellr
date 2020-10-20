@@ -7,7 +7,7 @@ const salt = bcrypt.genSaltSync(10);
 const login = (email, password, database) => {
   return database.getUserFromEmail(email)
   .then(existingUser => {
-    // console.log(data);
+    // console.log('user in database:', existingUser);
     if (existingUser && bcrypt.compareSync(password, existingUser.password)) {
     // if (password = 'password') {
       return existingUser;
