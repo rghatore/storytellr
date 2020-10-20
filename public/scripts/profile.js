@@ -31,7 +31,20 @@ $(document).on('submit', '.container .newStory', (event) => {
     method: "POST",
     data: $(event.target).serialize()
   })
-  .then()
+  .then((story) => {
+    $.ajax({
+      url: `stories/${story.id}`,
+      method: "GET"
+    })
+    .then((response) => {
+      const storyObj = response[0];
+      // generateStoryPage is in scripts/helpers
+      const storyPage = generateStoryPage(storyObj);
+      $("#nav").removeClass("nav_home").addClass("nav_story");
+      $("#main").empty();
+      $("#main").append(storyPage);
+    });
+  })
   })
 // INSERT INTO stories (user_id, title, content, summary, date_started, date_completed)
 // VALUES (data.user_id, data.newTitle, data.newContent, )

@@ -61,7 +61,6 @@ const newStory = () => {
 }
 
 
-};
 
 const generateStoryPage = (storyObj) => {
   let storyPage = `
