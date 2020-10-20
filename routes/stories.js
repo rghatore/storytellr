@@ -33,6 +33,7 @@ module.exports = (database) => {
     database.addStory(story)
     .then((data) => {
       console.log(data);
+      res.send(data);
     })
   })
 
