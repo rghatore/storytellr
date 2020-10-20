@@ -6,6 +6,8 @@ $(document).ready(() => {
   // show login form
   $('nav #login').click(() => {
 
+    $('#top-header .error').remove();
+
     if($('nav #login').html() === 'logout') {
       // logout functionality
       alert('logout!');
@@ -25,7 +27,7 @@ $(document).ready(() => {
     event.preventDefault();
     // show login button and change to logout
 
-    $('nav .nav-options form').hide();
+    $('nav .nav-options #form-login').remove();
 
     console.log($(event.target).serialize());
     $.ajax({

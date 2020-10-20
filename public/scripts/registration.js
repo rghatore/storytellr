@@ -6,6 +6,8 @@ $(document).ready(() => {
 
   $('nav #profile').click(() => {
 
+    $('#top-header .error').remove();
+
     if($('nav #profile').html() !== 'register') {
       // logout functionality
       // alert('profile page!');
@@ -34,7 +36,7 @@ $(document).ready(() => {
     event.preventDefault();
     // show login button and change to logout
 
-    $('nav .nav-options form').hide();
+    $('nav .nav-options #form-registration').remove();
 
     console.log($(event.target).serialize());
     $.ajax({
