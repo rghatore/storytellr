@@ -3,6 +3,7 @@
 $(document).ready(() => {
   // add content to the sidebar
   $(".sidebar_content").append(loginForm());
+  console.log("i have ran")
 
   // handling clicks on the user icon
   $("#login").on("click", function (event) {
@@ -15,6 +16,7 @@ $(document).ready(() => {
   $(".wrapper").on("click", function () {
     $("#sidebar").removeClass("active");
     $(".overlay").removeClass("active");
+
   });
 
   $(document).on("submit", ".nav-options form", (event) => {
