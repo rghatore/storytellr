@@ -34,14 +34,21 @@ $(document).ready(() => {
       data: $(event.target).serialize()
     })
     .then(user => {
-      console.log(user);
+      // console.log(user);
+      if (user.error) {
+        // console.log(error);
+        $('#top-header').prepend(`<span></span>`);
+        $('#top-header span').addClass('error').hide();
+        $('#top-header .error').prepend(`${user.error}`);
+        $('#top-header .error').slideDown();
+      } else {
+        $('nav #login').html('logout');
+        $('nav #profile').html(user.name);
+      }
+      $('nav #login').fadeIn();
+      $('nav #profile').fadeIn();
       // console.log(user.user);
       // console.log(user.name);
-      $('nav #login').fadeIn();
-      $('nav #login').html('logout');
-
-      $('nav #profile').html(user.name);
-      $('nav #profile').fadeIn();
 
     })
 

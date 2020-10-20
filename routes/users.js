@@ -6,8 +6,14 @@
  */
 
 const express = require('express'); // move this into server eventually
-// const { database } = require('pg/lib/defaults');
+const app = express();
 const router  = express.Router(); // move this into server enentually and pass as an argument
+// encrypted cookies
+const cookieSession = require('cookie-session');
+app.use(cookieSession({
+  name: 'session',
+  keys: ['011d44bed2280dfa962918ea5f8e49a5', 'b05c089064c673537890b0175f8e49c2']
+}));
 
 const { login, register } = require('../helpers');
 
@@ -32,8 +38,8 @@ module.exports = (database) => {
     login(email, password, database)
     .then((user) => {
       if(!user) {
-        console.log({error: "Please register!"});
-        res.send({error: "Please register!"});
+        console.log({error: "User not found! Please register."});
+        res.send({error: "User not found! Please register."});
         return;
       }
       //  assign cookie
@@ -56,7 +62,7 @@ module.exports = (database) => {
     .then(newUser => {
       console.log('newUser: ', newUser);
       if(!newUser) {
-        console.log({error: 'User already registered! Please login.'});
+        // console.log({error: 'User already registered! Please login.'});
         res.send({error: 'User already registered! Please login.'});
         return;
       }
@@ -69,6 +75,11 @@ module.exports = (database) => {
       res.send(error.message)
     })
   });
+
+  router.get('/profile', (req, res) => {
+    // console.log('ajax request: ', req.body)
+    res.send('profilePage');
+  })
 
   return router;
 };
