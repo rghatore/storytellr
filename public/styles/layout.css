@@ -10,6 +10,9 @@ body {
     justify-content: space-around;
     align-items: center; }
 
+body {
+  font-family: "Roboto", sans-serif; }
+
 a {
   text-decoration: none;
   color: #0c090d; }
@@ -17,11 +20,27 @@ a {
 .col_branch {
   color: #ea9010; }
 
+.storytellr {
+  font-family: "Fredoka One", cursive; }
+
+.nav_top {
+  font-size: 2rem; }
+
 .nav {
   position: fixed;
   top: 0;
   width: 100%;
-  transition: all 0.5s ease; }
+  transition: all 0.5s ease;
+  height: 20vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; }
+  .nav_top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    margin-bottom: -1rem; }
   .nav_home {
     border-bottom: 0.5rem solid #ef476f; }
   .nav_story {
@@ -70,7 +89,8 @@ a {
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center; }
+  align-items: center;
+  margin-top: 20vh; }
 
 .content {
   width: 95%;
