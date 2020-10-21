@@ -76,36 +76,46 @@ const generateStoryPage = (storyObj) => {
   </section>
   </header>
   <!-- Page-specific (main) content here -->
-  <main class="content content_story">
+  <div class="content content_story">
     <section class="story">
       <div class="story_body">
         <p>${storyObj.content}
         </p>
       </div>
     </section>
+  `;
 
-    <div class="branch_marker">
+  return storyPage;
+};
+
+const storyBranches = (storyObj) => {
+  let storyBranches = "";
+  for (let branch of storyObj.branches) {
+    storyBranches += `
+        <div class="branch_marker" id="${branch.branch_point_id}">
       <p>BRANCHED view all suggested branches</p>
     </div>
 
       <section class="story">
         <div class="story_body">
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos nihil a commodi eum adipisci fugiat impedit
-            dolor tempora quam voluptatibus numquam, nesciunt consectetur molestiae perspiciatis provident accusamus sapiente
-            nemo amet.</p>
+          <p>${branch.content}</p>
         </div>
       </section>
+    `;
+  }
+  return storyBranches;
+};
 
+const writing_box = () => {
+  return `
       <div class="writing_box">
         <form id="submit_branch" action="stories/branches" method="POST">
           <textarea name="content" id="writing_box" cols="30" rows="10">Write in me ...</textarea>
           <button>Submit</button>
         </form>
       </div>
-  </main>
-  `;
-
-  return storyPage;
+      </div>
+      `;
 };
 
 // homepage header
@@ -115,4 +125,28 @@ const headerHome = () => {
                     <a href="#">filter</a>
                   </header>`;
   return header;
+};
+
+const generateBranchesPage = (object) => {
+  let branchesPage = `
+  <header class="header header_story">
+    <h3></h3>
+    <section class="card card_story">
+      <div class="card_top">
+        <p></p>
+        <p>view count</p>
+        <p></p>
+      </div>
+      <div class="card_bottom">
+        <p></p>
+        <p>jump to latest branch</p>
+      </div>
+    </section>
+  </header>
+
+  <main class="content content_story">
+    <p>${object.content}</p>
+  </main>
+  `;
+  return branchesPage;
 };
