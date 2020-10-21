@@ -1,21 +1,21 @@
 $(document).ready(() => {
   //  profile page request
-  $(document).on('click', '#branch_point', () => {
-
-    // username instead of user id
-    const branch_point = $('#branch_point').html();
-
+  $(document).on("click", ".branch_point", (e) => {
+    let branch_point_id = $(e.target).closest(".branch_point")[0].id;
+    console.log("this branch point id:", branch_point_id);
     $.ajax({
-      url: `users/${username}`,
+      url: `/branches/${branch_point_id}`,
       method: "GET"
-    })
-    .then((data) => {
-      $("#sidebar").removeClass("active");
-      $(".overlay").removeClass("active");
-      $(".container").empty()
-      for (const story of data){
-        $('.container').append(storyBox(story));
+      //data
+    }).then((response) => {
+      const branchPoint = response[0];
+      // generateStoryPage is in scripts/helpers
+      const branches = generateStoryPage(branch_point);
+      $("#nav").removeClass("nav_story").addClass("nav_branch");
+      $("#main").empty();
+      for (const branch of branches) {
+        $("#main").append(branch);
       }
-      $(".container").append(newStory());
-    })
-  })
+    });
+  });
+});

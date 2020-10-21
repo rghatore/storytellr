@@ -155,7 +155,7 @@ const getKeywordsByStoryId = (id) => {
 
 exports.getKeywordsByStoryId = getKeywordsByStoryId;
 
-const getBracnhesByBranchPointId = (id) => {
+const getBranchesByBranchPointId = (id) => {
   let queryString = `
   SELECT branches.*, users.name, branch_points.*
   FROM branches
@@ -171,4 +171,4 @@ const getBracnhesByBranchPointId = (id) => {
     .catch((err) => console.error(err));
 };
 
-exports.getBracnhesByBranchPointId = getBracnhesByBranchPointId;
+exports.getBranchesByBranchPointId = getBranchesByBranchPointId;

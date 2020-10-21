@@ -118,3 +118,34 @@ const headerHome = () => {
                   </header>`;
   return header;
 };
+
+const generateBranchesPage = (object) => {
+  let branchesPage = `
+  <header class="header header_story">
+    <h3>${storyObj.title}</h3>
+    <section class="card card_story">
+      <div class="card_top">
+        <p>${storyObj.user_name}</p>
+        <p>view count</p>
+        <p>${storyObj.times_favourited}</p>
+      </div>
+      <div class="card_bottom">
+        <p>${JSON.stringify(storyObj.keywords)}</p>
+        <p>jump to latest branch</p>
+      </div>
+    </section>
+  </header>
+
+  <main class="content content_story">
+
+  </main>
+  `;
+
+  for(branch in object) {
+
+  }
+
+
+
+  return storyPage;
+};
