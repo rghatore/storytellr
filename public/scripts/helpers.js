@@ -64,7 +64,10 @@ const newStory = () => {
 const generateStoryPage = (storyObj) => {
   let storyPage = `
   <header class="header header_story">
-    <h3>${storyObj.title}</h3>
+  <div class = "story_title">
+    <h3 >${storyObj.title}</h3>
+    <i id="toggle_story_info" class="fas fa-angle-double-down"></i>
+    </div>
   <section class="card card_story">
   <div class="card_top">
     <p>${storyObj.user_name}</p>
@@ -114,13 +117,18 @@ const storyBranches = (storyObj) => {
 
 const writing_box = () => {
   return `
-      <div class="writing_box">
-        <form action="#">
-          <textarea name="writing_box" id="writing_box" cols="30" rows="10">Write in me ...</textarea>
-          <button>Submit</button>
-        </form>
+    <div id="writing_form_div">
+      <p class="toggle_textarea">What happens next??</p>
+      <form id="writing_form" action="#">
+        <div class="textarea_div">
+          <textarea name="writing_box" id="writing_box" cols="30" rows="10"></textarea>
+          <div class="submit_div">
+            <p class="btn_submit">Submit</p>
+            <i class="fas fa-angle-double-right"></i>
+        </div>
       </div>
-      </div>
+    </form>
+  </div>
       `;
 };
 

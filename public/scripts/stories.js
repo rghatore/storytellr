@@ -30,8 +30,13 @@ $(document).ready(() => {
       $("#nav").removeClass("nav_home").addClass("nav_story");
       $("#main").empty();
       $("#main").append(storyPage);
-      $("h3").on("click", () => {
+      $("#toggle_story_info").on("click", () => {
         $(".card_story").slideToggle("slow");
+      });
+
+      //toggle the writing form
+      $("#writing_form_div p").on("click", () => {
+        $("#writing_form").slideToggle("slow");
       });
     });
   });

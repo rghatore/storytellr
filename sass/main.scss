@@ -1,5 +1,5 @@
 @import "abstracts/variables";
-// @import "base/animations";
+@import "base/animations";
 @import "base/base";
 @import "base/typography";
 // @import "base/utilities";
@@ -7,8 +7,9 @@
 @import "components/headers";
 @import "components/navbar";
 @import "components/cards";
+@import "components/textarea";
 @import "layout/container";
 @import "layout/overlay";
 // @import "pages/branch";
 // @import "pages/profile";
-// @import "pages/story";
+@import "pages/story";
