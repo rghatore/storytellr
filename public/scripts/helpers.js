@@ -129,26 +129,19 @@ const headerHome = () => {
   return header;
 };
 
-const generateBranchesPage = (object) => {
+const generateBranchesPage = (branchObj) => {
   let branchesPage = `
-  <header class="header header_story">
-    <h3></h3>
-    <section class="card card_story">
-      <div class="card_top">
-        <p></p>
-        <p>view count</p>
-        <p></p>
-      </div>
-      <div class="card_bottom">
-        <p></p>
-        <p>jump to latest branch</p>
-      </div>
-    </section>
-  </header>
-
-  <main class="content content_story">
-    <p>${object.content}</p>
+  <section class="card card_branch">
+  <p>Written by ${branchObj.name}</p>
+  <div class="card_top">
+    <p>Likes</p>
+    <p>${branchObj.vote_count}</p>
+  </div>
+  </section>
+  <main class="content content_branch">
+    <p>${branchObj.content}</p>
   </main>
+  ${branchObj.date_approved ? `<p>Chosen branch!</p>` : ""}
   `;
   return branchesPage;
 };
