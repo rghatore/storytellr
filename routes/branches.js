@@ -8,9 +8,10 @@ router.use(cookieSession({
 
 
 module.exports = (database) => {
-  router.get("/", (req, res) => {
+  router.get("/:branch_point_id", (req, res) => {
     database
-      .getBranchesByBranchPointId(branch_id)
+    console.log(req.params)
+      .getBranchesByBranchPointId(req.params.branch_point_id)
       .then((branches) => {
         if (!branches) {
           res.send({ error: "empty library" });
@@ -20,8 +21,5 @@ module.exports = (database) => {
       })
       .catch((error) => res.send(error.message));
   });
-
-
-
 return router;
 };

@@ -4,7 +4,7 @@ $(document).ready(() => {
     method: "GET",
     // data
   }).then((stories) => {
-    console.log(stories);
+    // console.log(stories);
     // target is .container .content
 
     for (const story of stories) {
@@ -24,7 +24,9 @@ $(document).ready(() => {
     }).then((response) => {
       const storyObj = response[0];
       // generateStoryPage is in scripts/helpers
-      const storyPage = generateStoryPage(storyObj);
+      let storyPage = generateStoryPage(storyObj);
+      storyPage += storyBranches(storyObj);
+      storyPage += writing_box();
       $("#nav").removeClass("nav_home").addClass("nav_story");
       $("#main").empty();
       $("#main").append(storyPage);

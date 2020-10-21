@@ -172,3 +172,19 @@ const getBranchesByBranchPointId = (id) => {
 };
 
 exports.getBranchesByBranchPointId = getBranchesByBranchPointId;
+
+const getBranchesByStoryId = (id) => {
+  let queryString = `
+  SELECT branches.*
+  FROM branches
+  JOIN branch_points ON branches.branch_point_id = branch_points.id
+  JOIN stories ON branch_points.story_id = stories.id
+  WHERE stories.id = $1;
+  `;
+  return db
+    .query(queryString, [id])
+    .then((res) => res.rows)
+    .catch((err) => console.error(err));
+};
+
+exports.getBranchesByStoryId = getBranchesByStoryId;
