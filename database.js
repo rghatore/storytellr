@@ -220,11 +220,13 @@ exports.getKeywordsByStoryId = getKeywordsByStoryId;
 
 const getBranchesByBranchPointId = (id) => {
   let queryString = `
-  SELECT branches.*, users.name, branch_points.*
+  SELECT branches.*, users.name, branch_points.*, COUNT(votes.up) AS vote_count
   FROM branches
   JOIN users ON users.id = user_id
   JOIN branch_points ON branch_point_id = branch_points.id
+  JOIN votes ON branches.id = branch_id
   WHERE branch_point_id = $1
+  GROUP BY branches.id, users.name, branch_points.id;
   `;
   return db
     .query(queryString, [id])
