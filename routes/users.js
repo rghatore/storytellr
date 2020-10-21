@@ -30,7 +30,7 @@ module.exports = (database) => {
   //     });
   // });
   router.post('/login', (req, res) => {
-    console.log('hello');
+    // console.log('hello');
     const {email, password} = req.body;
 
    login(email, password, database)
@@ -49,7 +49,7 @@ module.exports = (database) => {
     })
     // .catch((error) => res.send(error.message));
     .catch((error) => {
-      console.log(error)
+      // console.log(error)
       res.send(error.message)
     });
   });
@@ -59,7 +59,7 @@ module.exports = (database) => {
 
     register(name, email, password, database)
     .then(newUser => {
-      console.log('newUser: ', newUser);
+      // console.log('newUser: ', newUser);
       if(!newUser) {
         // console.log({error: 'User already registered! Please login.'});
         res.send({error: 'User already registered! Please login.'});
@@ -71,15 +71,15 @@ module.exports = (database) => {
       res.send(newUser);
     })
     .catch((error) => {
-      console.log(error)
+      // console.log(error)
       res.send(error.message)
     })
   });
 
   router.post('/logout', (req, res) => {
-    console.log('before :', req.session['user_id']);
+    // console.log('before :', req.session['user_id']);
     req.session['user_id'] = null;
-    console.log('after: ', req.session['user_id']);
+    // console.log('after: ', req.session['user_id']);
 
     res.send('Logged out successfully!');
   })
@@ -88,7 +88,7 @@ module.exports = (database) => {
   router.get('/:username', (req, res) => {
     // console.log('ajax request: ', req.body)
     const username = req.params.username;
-    console.log(username)
+    // console.log(username)
     // copied from stories route
     // database.getUsernameFromUserId(username)
     // .then(data => {

@@ -32,7 +32,7 @@ module.exports = (database) => {
     story['user_id'] = req.session['user_id'];
     database.addStory(story)
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       res.send(data);
     })
   })
@@ -81,6 +81,22 @@ module.exports = (database) => {
       })
       .catch((error) => console.error(error.message));
   });
+
+  router.post('/branches', (req, res) => {
+
+    const branch = req.body;
+    if(!req.session['user_id']) {
+      res.send({error: 'Please login to add branches.'});
+    } else {
+      branch['user_id'] = req.session['user_id'];
+      console.log('branch: ', branch);
+      database.addBranch(branch)
+      .then((data) => {
+        // console.log(data);
+        res.send(data);
+      })
+    }
+  })
 
   return router;
 };

@@ -24,8 +24,8 @@ $(document).ready(() => {
 $(document).on('submit', '.container .newStory', (event) => {
   event.preventDefault();
   const username = $('#user').html();
-  console.log(username)
-  console.log($(event.target).serialize());
+  // console.log(username)
+  // console.log($(event.target).serialize());
   $.ajax({
     url: `stories/`,
     method: "POST",

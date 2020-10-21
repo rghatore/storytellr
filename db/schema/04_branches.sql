@@ -4,6 +4,6 @@ CREATE TABLE branches (
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   branch_point_id INTEGER REFERENCES branch_points(id) ON DELETE CASCADE,
   content TEXT NOT NULL,
-  date_started TIMESTAMPTZ NOT NULL,
+  date_started TIMESTAMPTZ DEFAULT NOW() NOT NULL,
   date_approved TIMESTAMPTZ DEFAULT NULL
 );
