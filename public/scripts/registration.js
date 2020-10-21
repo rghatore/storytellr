@@ -26,25 +26,16 @@ $(document).ready(() => {
     .then(user => {
 
       if (user.error) {
-        console.log(user.error);
-
+        // console.log(user.error);
+        $("#message").html(user.error);
       } else {
-
         $(".sidebar_content").empty();
         $(".sidebar_content").append(`<span id="user">${user.name}</span>`);
         $(".sidebar_content").append(`<button type="button" id="logout">Logout</button>`);
       }
-      // console.log(user);
-      // console.log(user.user);
-      // console.log(user.name);
     })
 
   })
 
-  // $('#submit-login').click((event) => {
-    // event.preventDefault(); // this does not seem to work!
-    // $.ajax({
-    // });
-  // });
 
 });

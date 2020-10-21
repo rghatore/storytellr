@@ -7,19 +7,15 @@ $(document).ready(() => {
   // handling clicks on the user icon
 
   $('nav #login').click((event) => {
+  // should be an ajax request to check for cookies
+  // currently new register button gets appended on every click
 
-    $('#top-header .error').remove();
 
-    if($('nav #login').html() === 'logout') {
-      // logout functionality
-      alert('logout!');
-    } else {
       $("#sidebar").addClass("active");
       $(".overlay").addClass("active");
-      $(".sidebar_content").append(`<button type="button" id="register">Register</button>`);
+      // $(".sidebar_content").append(`<button type="button" id="register">Register</button>`);
 
       event.stopPropagation();
-    }
   })
 
   // handling hiding the sidebar
@@ -47,7 +43,8 @@ $(document).ready(() => {
     .then(user => {
       // console.log(user);
       if (user.error) {
-        console.log(user.error);
+        // console.log(user.error);
+        $("#message").html(user.error);
       } else {
         $(".sidebar_content").empty();
         $(".sidebar_content").append(`<span id="user">${user.name}</span>`);
@@ -62,6 +59,7 @@ $(document).ready(() => {
     //  ajax request to POST users/logout
     // console.log(req.session['user_id']);
     $(".sidebar_content").empty();
+    $(".sidebar_content").append('<span id="message"></span>');
     $(".sidebar_content").append(loginForm('login'));
     $(".sidebar_content").append(`<button type="button" id="register">Register</button>`);
 
@@ -77,21 +75,14 @@ $(document).ready(() => {
     })
     .then((message) => {
       // console.log(req.session['user_id']);
-      console.log(message);
-      $('#top-header').append(message);
+      // console.log(message);
+      $('#message').append(message);
       $.ajax({
         url: "/",
         method: "GET"
       })
     })
   })
-
-  // $('#submit-login').click((event) => {
-    // event.preventDefault(); // this does not seem to work!
-    // $.ajax({
-    // });
-  // });
-
 
   //handles the disappear / reappear of the nav
   let lastScrollTop = 0;
