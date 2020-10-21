@@ -8,18 +8,11 @@ $(document).ready(() => {
 
   $('nav #login').click((event) => {
 
-    $('#top-header .error').remove();
-
-    if($('nav #login').html() === 'logout') {
-      // logout functionality
-      alert('logout!');
-    } else {
       $("#sidebar").addClass("active");
       $(".overlay").addClass("active");
       $(".sidebar_content").append(`<button type="button" id="register">Register</button>`);
 
       event.stopPropagation();
-    }
   })
 
   // handling hiding the sidebar
@@ -47,7 +40,8 @@ $(document).ready(() => {
     .then(user => {
       // console.log(user);
       if (user.error) {
-        console.log(user.error);
+        // console.log(user.error);
+        $("#error").html(user.error);
       } else {
         $(".sidebar_content").empty();
         $(".sidebar_content").append(`<span id="user">${user.name}</span>`);
@@ -85,13 +79,6 @@ $(document).ready(() => {
       })
     })
   })
-
-  // $('#submit-login').click((event) => {
-    // event.preventDefault(); // this does not seem to work!
-    // $.ajax({
-    // });
-  // });
-
 
   //handles the disappear / reappear of the nav
   let lastScrollTop = 0;
