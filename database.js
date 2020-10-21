@@ -29,9 +29,10 @@ const addUser = (user) => {
 
   const queryParams = [user.name, user.email, user.password];
 
-  return db.query(queryString, queryParams)
-  .then(response => response.rows[0]);
-}
+  return db
+    .query(queryString, queryParams)
+    .then((response) => response.rows[0]);
+};
 exports.addUser = addUser;
 
 // add new story to the database
@@ -42,11 +43,17 @@ const addStory = (story) => {
   RETURNING *
   `;
 
-  const queryParams = [story.user_id, story.newTitle, story.newSummary, story.newContent];
+  const queryParams = [
+    story.user_id,
+    story.newTitle,
+    story.newSummary,
+    story.newContent,
+  ];
 
-  return db.query(queryString, queryParams)
-  .then(response => response.rows[0]);
-}
+  return db
+    .query(queryString, queryParams)
+    .then((response) => response.rows[0]);
+};
 exports.addStory = addStory;
 
 const getUsernameFromUserId = (user_id) => {
@@ -97,7 +104,7 @@ const getAllStories = (options) => {
   const queryParams = [];
   // basic getting all stories + authors/users
   let queryString = `
-  SELECT *, users.name
+  SELECT stories.*, users.name
   FROM stories
   JOIN users ON users.id = user_id
   `;
