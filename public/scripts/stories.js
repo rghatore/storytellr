@@ -31,12 +31,18 @@ $(document).ready(() => {
       $("#main").empty();
       $("#main").append(storyPage);
       $("#toggle_story_info").on("click", () => {
-        $(".card_story").slideToggle("slow");
+        $(".story_wrapper").slideToggle("slow");
       });
 
       //toggle the writing form
       $("#writing_form_div p").on("click", () => {
         $("#writing_form").slideToggle("slow");
+        $("html, body").animate(
+          {
+            scrollTop: $("#story_submit").offset().top,
+          },
+          1000
+        );
       });
     });
   });

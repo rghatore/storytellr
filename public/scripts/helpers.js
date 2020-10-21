@@ -64,21 +64,23 @@ const newStory = () => {
 const generateStoryPage = (storyObj) => {
   let storyPage = `
   <header class="header header_story">
-  <div class = "story_title">
-    <h3 >${storyObj.title}</h3>
-    <i id="toggle_story_info" class="fas fa-angle-double-down"></i>
+    <div class = "story_title">
+      <h3 >${storyObj.title}</h3>
+      <i id="toggle_story_info" class="fas fa-angle-double-down"></i>
     </div>
-  <section class="card card_story">
-  <div class="card_top">
-    <p>${storyObj.user_name}</p>
-    <p>view count</p>
-    <p>${storyObj.times_favourited}</p>
-  </div>
-  <div class="card_bottom">
-    <p>${JSON.stringify(storyObj.keywords)}</p>
-    <p>jump to latest branch</p>
-  </div>
-  </section>
+    <div class="story_wrapper">
+      <section class="card card_story">
+        <div class="card_top_story">
+          <p>${storyObj.user_name}</p>
+          <p>view count</p>
+          <p>${storyObj.times_favourited}</p>
+        </div>
+        <div class="card_bottom_story">
+          <p>${JSON.stringify(storyObj.keywords)}</p>
+          <p class='col_branch'>jump to latest branch</p>
+        </div>
+      </section>
+    </div>
   </header>
   <!-- Page-specific (main) content here -->
   <div class="content content_story">
@@ -122,7 +124,7 @@ const writing_box = () => {
       <form id="writing_form" action="#">
         <div class="textarea_div">
           <textarea name="writing_box" id="writing_box" cols="30" rows="10"></textarea>
-          <div class="submit_div">
+          <div id="story_submit" class="submit_div">
             <p class="btn_submit">Submit</p>
             <i class="fas fa-angle-double-right"></i>
         </div>
