@@ -78,7 +78,7 @@ const generateStoryPage = (storyObj) => {
   </section>
   </header>
   <!-- Page-specific (main) content here -->
-  <main class="content content_story">
+  <div class="content content_story">
     <section class="story">
       <div class="story_body">
         <p>${storyObj.content}
@@ -86,28 +86,42 @@ const generateStoryPage = (storyObj) => {
       </div>
     </section>
 
-    <div class="branch_marker">
+
+
+
+  `;
+
+  return storyPage;
+};
+
+const storyBranches = (storyObj) => {
+  let storyBranches = "";
+  for (let branch of storyObj.branches) {
+    storyBranches += `
+        <div class="branch_marker">
       <p>BRANCHED view all suggested branches</p>
     </div>
 
       <section class="story">
         <div class="story_body">
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos nihil a commodi eum adipisci fugiat impedit
-            dolor tempora quam voluptatibus numquam, nesciunt consectetur molestiae perspiciatis provident accusamus sapiente
-            nemo amet.</p>
+          <p>${branch.content}</p>
         </div>
       </section>
+    `;
+  }
+  return storyBranches;
+};
 
+const writing_box = () => {
+  return `
       <div class="writing_box">
         <form action="#">
           <textarea name="writing_box" id="writing_box" cols="30" rows="10">Write in me ...</textarea>
           <button>Submit</button>
         </form>
       </div>
-  </main>
-  `;
-
-  return storyPage;
+      </div>
+      `;
 };
 
 // homepage header

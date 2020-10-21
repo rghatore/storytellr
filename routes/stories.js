@@ -1,13 +1,18 @@
 const express = require("express"); // move this into server eventually
 // const { database } = require('pg/lib/defaults');
 
-const router  = express.Router(); // move this into server enentually and pass as an argument
-const cookieSession = require('cookie-session');
-router.use(cookieSession({
-  name: 'session',
-  keys: ["this is a very good key thank you", "nfjklasdfiasjudpfnonfniju2o3r94ruj123mn45rji42bn580423jnro"]
-}));
-
+const router = express.Router(); // move this into server enentually and pass as an argument
+const cookieSession = require("cookie-session");
+const { branchFilterAndSort, populateKeywordArray } = require("../helpers");
+router.use(
+  cookieSession({
+    name: "session",
+    keys: [
+      "this is a very good key thank you",
+      "nfjklasdfiasjudpfnonfniju2o3r94ruj123mn45rji42bn580423jnro",
+    ],
+  })
+);
 
 module.exports = (database) => {
   // get all stories
@@ -25,17 +30,16 @@ module.exports = (database) => {
   });
 
   // post a new story
-  router.post('/', (req, res) => {
+  router.post("/", (req, res) => {
     // console.log(req.body);
     // console.log(req.session);
     const story = req.body;
-    story['user_id'] = req.session['user_id'];
-    database.addStory(story)
-    .then((data) => {
+    story["user_id"] = req.session["user_id"];
+    database.addStory(story).then((data) => {
       console.log(data);
       res.send(data);
-    })
-  })
+    });
+  });
 
   // gets stories by a specific user id
   // router.get('/:userId', (req, res) => {
@@ -53,11 +57,10 @@ module.exports = (database) => {
   //     .catch((error) => res.send(error.message));
   // });
 
-  // gets story by id
-  // everything to do with branches still needs to be queried
+  // gets story + branch and keyword info by id
   router.get("/:storyId", (req, res) => {
+    //the first function call returns the stories object from the stories relation
     database
-      //the first function call returns the stories object from the stories relation
       .getStoryById(req.params.storyId)
       .then((story) => {
         if (story.length < 1) {
@@ -66,7 +69,7 @@ module.exports = (database) => {
           //the second function call queries favourites in the db and appends the count of favourites to the stories object
           database.getFaveCountByStoryId(req.params.storyId).then((faves) => {
             story[0].times_favourited = faves[0].times_favourited;
-            //the last function call queries story_keywords and populates an array of keywords in the stories object
+            //the third function call queries story_keywords and populates an array of keywords in the stories object
             database
               .getKeywordsByStoryId(req.params.storyId)
               .then((keywords) => {
@@ -74,7 +77,14 @@ module.exports = (database) => {
                 for (let entry of keywords) {
                   story[0].keywords.push(entry.keywords);
                 }
-                res.send(story);
+                database
+                  .getBranchesByStoryId(req.params.storyId)
+                  .then((branches) => {
+                    // branchFilterAndSort is defined in helpers.js on the server side
+                    let approvedBranches = branchFilterAndSort(branches);
+                    story[0].branches = approvedBranches;
+                    res.send(story);
+                  });
               });
           });
         }
