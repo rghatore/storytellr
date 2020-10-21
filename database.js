@@ -69,37 +69,6 @@ const getUsernameFromUserId = (user_id) => {
 };
 exports.getUsernameFromUserId = getUsernameFromUserId;
 
-// const getAllStories = () => {
-//   const queryString = `
-//   SELECT *, users.name
-//   FROM stories
-//   JOIN users ON users.id = user_id
-//   LIMIT 5;
-//   `;
-
-//   return db.query(queryString)
-//   .then(response => response.rows);
-// }
-
-// exports.getAllStories = getAllStories;
-
-// const getStoriesByUser = (user) => {
-//   const queryString = `
-//   SELECT *, users.name
-//   FROM stories
-//   JOIN users ON users.id = user_id
-//   WHERE users.name = $1
-//   LIMIT 5;
-//   `;
-
-//   const queryParams = [user];
-
-//   return db.query(queryString, queryParams)
-//   .then(response => response.rows);
-// }
-
-// exports.getStoriesByUser = getStoriesByUser;
-
 const getAllStories = (options) => {
   const queryParams = [];
   // basic getting all stories + authors/users
@@ -185,3 +154,21 @@ const getKeywordsByStoryId = (id) => {
 };
 
 exports.getKeywordsByStoryId = getKeywordsByStoryId;
+
+const getBracnhesByBranchPointId = (id) => {
+  let queryString = `
+  SELECT branches.*, users.name, branch_points.*
+  FROM branches
+  JOIN users ON users.id = user_id
+  JOIN branch_points ON branch_point_id = branch_points.id
+  WHERE branch_point_id = $1
+  `;
+  return db
+    .query(queryString, [id])
+    .then((res) => {
+      return res.rows;
+    })
+    .catch((err) => console.error(err));
+};
+
+exports.getBracnhesByBranchPointId = getBracnhesByBranchPointId;
