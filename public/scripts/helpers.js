@@ -33,7 +33,7 @@ const loginForm = (type) => {
 
 // stories box
 const storyBox = (story) => {
-  console.log(story);
+  // console.log(story);
   let box = `<section id="${story.id}" class="content content_home card card_home">
             <div class="card_top">
               <p>${story.title}</p>
@@ -85,10 +85,6 @@ const generateStoryPage = (storyObj) => {
         </p>
       </div>
     </section>
-
-
-
-
   `;
 
   return storyPage;
@@ -98,7 +94,7 @@ const storyBranches = (storyObj) => {
   let storyBranches = "";
   for (let branch of storyObj.branches) {
     storyBranches += `
-        <div class="branch_marker">
+        <div class="branch_marker" id="${branch.branch_point_id}">
       <p>BRANCHED view all suggested branches</p>
     </div>
 
@@ -131,4 +127,28 @@ const headerHome = () => {
                     <a href="#">filter</a>
                   </header>`;
   return header;
+};
+
+const generateBranchesPage = (object) => {
+  let branchesPage = `
+  <header class="header header_story">
+    <h3></h3>
+    <section class="card card_story">
+      <div class="card_top">
+        <p></p>
+        <p>view count</p>
+        <p></p>
+      </div>
+      <div class="card_bottom">
+        <p></p>
+        <p>jump to latest branch</p>
+      </div>
+    </section>
+  </header>
+
+  <main class="content content_story">
+    <p>${object.content}</p>
+  </main>
+  `;
+  return branchesPage;
 };

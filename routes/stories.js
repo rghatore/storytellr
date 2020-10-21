@@ -92,5 +92,23 @@ module.exports = (database) => {
       .catch((error) => console.error(error.message));
   });
 
+  // module.exports = (database) => {
+    router.get("/branches/:branch_point_id", (req, res) => {
+      console.log(req.params)
+      database
+        .getBranchesByBranchPointId(req.params.branch_point_id)
+        .then((branches) => {
+          if (!branches) {
+            res.send({ error: "empty library" });
+          } else {
+            // console.log(branches);
+            res.send(branches);
+          }
+        })
+        .catch((error) => res.send(error.message));
+    });
+  // return router;
+  // };
+
   return router;
 };

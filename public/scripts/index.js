@@ -1,5 +1,3 @@
-//
-
 $(document).ready(() => {
   // loads home page from storytellr logo
   $("#storytellr_logo").click(() => {

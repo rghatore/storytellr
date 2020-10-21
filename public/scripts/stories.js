@@ -4,7 +4,7 @@ $(document).ready(() => {
     method: "GET",
     // data
   }).then((stories) => {
-    console.log(stories);
+    // console.log(stories);
     // target is .container .content
 
     for (const story of stories) {
