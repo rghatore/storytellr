@@ -110,7 +110,7 @@ const writing_box = () => {
   return `
       <div class="writing_box">
         <form id="submit_branch" action="stories/branches" method="POST">
-          <textarea name="content" id="writing_box" cols="30" rows="10">Write in me ...</textarea>
+          <textarea name="content" id="writing_box" cols="30" rows="10" placeholder="Write in me ..."></textarea>
           <button>Submit</button>
         </form>
       </div>

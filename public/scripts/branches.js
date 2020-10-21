@@ -38,7 +38,7 @@ $(document).ready(() => {
     // const storyOwner = $('#story_username').text();
     // console.log('title: ', title);
 
-    const data = { lastBranchPoint, content: $('#writing_box').text() };
+    const data = { lastBranchPoint, content: $('#writing_box').val() };
 
     // console.log($('#story_username').html());
     console.log('data: ', data);
@@ -56,7 +56,8 @@ $(document).ready(() => {
           url: `stories/branches/${lastBranchPoint}`,
           method: "GET"
           //data
-        }).then((response) => {
+        })
+        .then((response) => {
           const branches = response;
           $("#nav").removeClass("nav_story").addClass("nav_branch");
           $("#main").empty();

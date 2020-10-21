@@ -61,6 +61,7 @@ module.exports = (database) => {
 
   // gets story + branch and keyword info by id
   router.get("/:storyId", (req, res) => {
+    console.log(req.session['user_id']);
     //the first function call returns the stories object from the stories relation
     database
       .getStoryById(req.params.storyId)
@@ -106,7 +107,7 @@ module.exports = (database) => {
       database
       .addBranch(branch)
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         database.getUsernameFromUserId(data.user_id)
         .then((username) => {
           data.name = username.name;
