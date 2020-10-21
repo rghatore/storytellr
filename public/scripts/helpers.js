@@ -6,8 +6,9 @@ const loginForm = (type) => {
 
 
 
-                ${type === 'register' ?
-                              `<div class="test-form">
+                ${
+                  type === "register"
+                    ? `<div class="test-form">
                                 <label for="name">Enter your name: </label>
                                 <input type="text" name="name" id="name" placeholder="name" required>
                               </div>`
@@ -28,12 +29,12 @@ const loginForm = (type) => {
               </form>`;
 
   return form;
-
-}
+};
 
 // stories box
 const storyBox = (story) => {
-let box = `<section class="content content_home card card_home">
+  console.log(story);
+  let box = `<section id="${story.id}" class="content content_home card card_home">
             <div class="card_top">
               <p>${story.title}</p>
               <p>${story.name}</p>
@@ -43,8 +44,8 @@ let box = `<section class="content content_home card card_home">
               <p>${story.summary}</p>
             </div>
           </section>`;
-return box;
-}
+  return box;
+};
 
 // new story box
 const newStory = () => {
@@ -58,9 +59,7 @@ const newStory = () => {
     <button id ="submit" type="submit">Publish</button>
   </form>`;
   return textBox;
-}
-
-
+};
 
 const generateStoryPage = (storyObj) => {
   let storyPage = `
