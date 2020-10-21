@@ -68,18 +68,21 @@ $(document).ready(() => {
 
     // $(".sidebar_content").append(loginForm('login'));
 
-
     $.ajax({
       url: "users/logout",
       method: "POST"
     })
     .then((message) => {
-      // console.log(req.session['user_id']);
-      // console.log(message);
       $('#message').append(message);
       $.ajax({
-        url: "/",
-        method: "GET"
+        url: "/stories",
+        method: "GET",
+      }).then((stories) => {
+        $('#main').empty();
+        $('#main').append(headerHome());
+        for (const story of stories) {
+          $("#main").append(storyBox(story));
+        }
       })
     })
   })
