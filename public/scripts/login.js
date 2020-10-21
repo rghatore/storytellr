@@ -44,7 +44,7 @@ $(document).ready(() => {
       // console.log(user);
       if (user.error) {
         // console.log(user.error);
-        $("#error").html(user.error);
+        $("#message").html(user.error);
       } else {
         $(".sidebar_content").empty();
         $(".sidebar_content").append(`<span id="user">${user.name}</span>`);
@@ -59,6 +59,7 @@ $(document).ready(() => {
     //  ajax request to POST users/logout
     // console.log(req.session['user_id']);
     $(".sidebar_content").empty();
+    $(".sidebar_content").append('<span id="message"></span>');
     $(".sidebar_content").append(loginForm('login'));
     $(".sidebar_content").append(`<button type="button" id="register">Register</button>`);
 
@@ -74,8 +75,8 @@ $(document).ready(() => {
     })
     .then((message) => {
       // console.log(req.session['user_id']);
-      console.log(message);
-      $('#top-header').append(message);
+      // console.log(message);
+      $('#message').append(message);
       $.ajax({
         url: "/",
         method: "GET"

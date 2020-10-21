@@ -27,7 +27,7 @@ $(document).ready(() => {
 
       if (user.error) {
         // console.log(user.error);
-        $("#error").html(user.error);
+        $("#message").html(user.error);
       } else {
         $(".sidebar_content").empty();
         $(".sidebar_content").append(`<span id="user">${user.name}</span>`);
