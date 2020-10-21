@@ -4,8 +4,6 @@
 const loginForm = (type) => {
   let form = `<form id="form-${type}" action="/users/${type}" method="POST">
 
-
-
                 ${
                   type === "register"
                     ? `<div class="test-form">
@@ -33,7 +31,7 @@ const loginForm = (type) => {
 
 // stories box
 const storyBox = (story) => {
-  console.log(story);
+  // console.log(story);
   let box = `<section id="${story.id}" class="content content_home card card_home">
             <div class="card_top">
               <p>${story.title}</p>
@@ -81,6 +79,7 @@ const generateStoryPage = (storyObj) => {
         </div>
       </section>
     </div>
+
   </header>
   <!-- Page-specific (main) content here -->
   <div class="content content_story">
@@ -90,10 +89,6 @@ const generateStoryPage = (storyObj) => {
         </p>
       </div>
     </section>
-
-
-
-
   `;
 
   return storyPage;
@@ -103,8 +98,9 @@ const storyBranches = (storyObj) => {
   let storyBranches = "";
   for (let branch of storyObj.branches) {
     storyBranches += `
-        <div class="branch_marker">
-      <p class="col_branch">BRANCHED view all suggested branches</p>
+        <div class="branch_marker" id="${branch.branch_point_id}">
+      <p>BRANCHED view all suggested branches</p>
+
     </div>
 
       <section class="story">
@@ -119,11 +115,12 @@ const storyBranches = (storyObj) => {
 
 const writing_box = () => {
   return `
-    <div id="writing_form_div">
+
+    <div id="writing_form_div" class="writing_box">
       <p class="toggle_textarea">And then . . . </p>
-      <form id="writing_form" action="#">
+      <form id="writing_form" action="stories/branches" method="POST"> // change from target id
         <div class="textarea_div">
-          <textarea name="writing_box" id="writing_box" cols="30" rows="10"></textarea>
+          <textarea name="content" id="writing_box" cols="30" rows="10" placeholder="Write in me ..."></textarea>
           <div id="story_submit" class="submit_div">
             <p class="btn_submit">Submit</p>
             <i class="fas fa-angle-double-right"></i>
@@ -141,4 +138,21 @@ const headerHome = () => {
                     <a href="#">filter</a>
                   </header>`;
   return header;
+};
+
+const generateBranchesPage = (branchObj) => {
+  let branchesPage = `
+  <section class="card card_branch">
+  <p>Written by ${branchObj.name}</p>
+  <div class="card_top">
+    <p>Likes</p>
+    <p>${branchObj.vote_count}</p>
+  </div>
+  </section>
+  <main class="content content_branch">
+    <p>${branchObj.content}</p>
+  </main>
+  ${branchObj.date_approved ? `<p>Chosen branch!</p>` : ""}
+  `;
+  return branchesPage;
 };

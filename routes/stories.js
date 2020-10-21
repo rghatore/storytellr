@@ -34,9 +34,11 @@ module.exports = (database) => {
     // console.log(req.body);
     // console.log(req.session);
     const story = req.body;
-    story["user_id"] = req.session["user_id"];
-    database.addStory(story).then((data) => {
-      console.log(data);
+
+    story['user_id'] = req.session['user_id'];
+    database.addStory(story)
+    .then((data) => {
+      // console.log(data);
       res.send(data);
     });
   });
@@ -59,6 +61,7 @@ module.exports = (database) => {
 
   // gets story + branch and keyword info by id
   router.get("/:storyId", (req, res) => {
+    console.log(req.session['user_id']);
     //the first function call returns the stories object from the stories relation
     database
       .getStoryById(req.params.storyId)
@@ -91,6 +94,46 @@ module.exports = (database) => {
       })
       .catch((error) => console.error(error.message));
   });
+
+  router.post('/branches', (req, res) => {
+
+    const branch = req.body;
+    if(!req.session['user_id']) {
+      res.send({error: 'Please login to add branches.'});
+    } else {
+      branch['user_id'] = req.session['user_id'];
+      // console.log('branch: ', branch);
+
+      database
+      .addBranch(branch)
+      .then((data) => {
+        // console.log(data);
+        database.getUsernameFromUserId(data.user_id)
+        .then((username) => {
+          data.name = username.name;
+          res.send(data);
+        })
+      })
+      .catch(error => console.log(error.message));
+    }
+  })
+  // module.exports = (database) => {
+    router.get("/branches/:branch_point_id", (req, res) => {
+      console.log(req.params)
+      database
+        .getBranchesByBranchPointId(req.params.branch_point_id)
+        .then((branches) => {
+          if (!branches) {
+            res.send({ error: "empty library" });
+          } else {
+            // console.log(branches);
+            res.send(branches);
+          }
+        })
+        .catch((error) => res.send(error.message));
+    });
+  // return router;
+  // };
 
   return router;
 };
