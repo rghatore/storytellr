@@ -7,10 +7,13 @@ $(document).ready(() => {
   // handling clicks on the user icon
 
   $('nav #login').click((event) => {
+  // should be an ajax request to check for cookies
+  // currently new register button gets appended on every click
+
 
       $("#sidebar").addClass("active");
       $(".overlay").addClass("active");
-      $(".sidebar_content").append(`<button type="button" id="register">Register</button>`);
+      // $(".sidebar_content").append(`<button type="button" id="register">Register</button>`);
 
       event.stopPropagation();
   })
