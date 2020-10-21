@@ -77,9 +77,26 @@ $(document).ready(() => {
       // console.log(req.session['user_id']);
       // console.log(message);
       $('#message').append(message);
+      // $.ajax({
+      //   url: "/",
+      //   method: "GET"
+      // })
       $.ajax({
-        url: "/",
-        method: "GET"
+        url: "/stories",
+        method: "GET",
+        // data
+      }).then((stories) => {
+        // console.log($('#top-header'));
+        // if(!$('#top-header')) {
+          $('#main').empty();
+          $('#main').append(headerHome());
+        // } else {
+          // $('#main .content').empty();
+        // }
+
+        for (const story of stories) {
+          $("#main").append(storyBox(story));
+        }
       })
     })
   })

@@ -111,4 +111,11 @@ const generateStoryPage = (storyObj) => {
   return storyPage;
 };
 
-
+// homepage header
+const headerHome = () => {
+  const header = `<header id="top-header" class="header_home">
+                    <form action="#"><label for="search">search</label><input type="text" name="search"></form>
+                    <a href="#">filter</a>
+                  </header>`;
+  return header;
+};

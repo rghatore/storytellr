@@ -9,18 +9,7 @@ $(document).ready(() => {
 
 
     for (const story of stories) {
-      $("#main").append(`
-    <section id="${story.id}" class="content content_home card card_home">
-    <div class="card_top">
-      <p>${story.title}</p>
-      <p>${story.name}</p>
-      <p>Tags</p>
-    </div>
-    <div class="card_bottom">
-      <p>${story.summary}</p>
-    </div>
-  </section>
-  `);
+      $("#main").append(storyBox(story));
     }
 
     //listens for click on the story card and finds the story id
