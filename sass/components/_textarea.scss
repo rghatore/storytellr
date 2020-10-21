@@ -6,6 +6,10 @@
   .toggle_textarea {
     font-size: 2rem;
     margin: 1rem 0;
+    transition: 0.5s ease;
+    &:hover {
+      transform: translateY(-2px);
+    }
   }
 }
 

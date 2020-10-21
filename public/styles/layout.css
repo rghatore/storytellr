@@ -147,7 +147,10 @@ a {
   align-items: center; }
   #writing_form_div .toggle_textarea {
     font-size: 2rem;
-    margin: 1rem 0; }
+    margin: 1rem 0;
+    transition: 0.5s ease; }
+    #writing_form_div .toggle_textarea:hover {
+      transform: translateY(-2px); }
 
 #writing_form {
   display: none; }

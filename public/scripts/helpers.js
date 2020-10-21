@@ -104,7 +104,7 @@ const storyBranches = (storyObj) => {
   for (let branch of storyObj.branches) {
     storyBranches += `
         <div class="branch_marker">
-      <p>BRANCHED view all suggested branches</p>
+      <p class="col_branch">BRANCHED view all suggested branches</p>
     </div>
 
       <section class="story">
@@ -120,7 +120,7 @@ const storyBranches = (storyObj) => {
 const writing_box = () => {
   return `
     <div id="writing_form_div">
-      <p class="toggle_textarea">What happens next??</p>
+      <p class="toggle_textarea">And then . . . </p>
       <form id="writing_form" action="#">
         <div class="textarea_div">
           <textarea name="writing_box" id="writing_box" cols="30" rows="10"></textarea>
