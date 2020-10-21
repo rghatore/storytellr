@@ -3,7 +3,7 @@ const express = require("express"); // move this into server eventually
 
 const router = express.Router(); // move this into server enentually and pass as an argument
 const cookieSession = require("cookie-session");
-const { branchFilterAndSort } = require("../helpers");
+const { branchFilterAndSort, populateKeywordArray } = require("../helpers");
 router.use(
   cookieSession({
     name: "session",
@@ -57,8 +57,7 @@ module.exports = (database) => {
   //     .catch((error) => res.send(error.message));
   // });
 
-  // gets story by id
-  // everything to do with branches still needs to be queried
+  // gets story + branch and keyword info by id
   router.get("/:storyId", (req, res) => {
     //the first function call returns the stories object from the stories relation
     database
@@ -78,7 +77,6 @@ module.exports = (database) => {
                 for (let entry of keywords) {
                   story[0].keywords.push(entry.keywords);
                 }
-                //the fourth function call queries branches and populates and array of branches with all the branch data
                 database
                   .getBranchesByStoryId(req.params.storyId)
                   .then((branches) => {

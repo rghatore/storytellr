@@ -48,8 +48,21 @@ const branchFilterAndSort = (branchArr) => {
   return approvedBranches;
 };
 
+// const populateKeywordArray = (keywordsQueryArr) => {
+//   if (keywordsQueryArr.length > 0) {
+//     let keys = [];
+//     for (let entry of keywords) {
+//       keys.push(entry.keywords);
+//     }
+//   } else {
+//     let keys = ``;
+//   }
+//   return keys;
+// };
+
 module.exports = {
   login,
   register,
   branchFilterAndSort,
+  // populateKeywordArray,
 };
