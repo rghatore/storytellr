@@ -79,16 +79,19 @@ const addStory = (story) => {
 exports.addStory = addStory;
 
 const addBranch = (branch) => {
+
+  // branch
+
   const queryString = `
-  INSERT INTO branches (user_id, branch_point_id, content)
+  INSERT INTO branches (user_id, content, branch_point_id)
   VALUES ($1, $2, $3)
   RETURNING *
   `;
 
   const queryParams = [
     branch.user_id,
-    // branch.need_to_send,
-    branch.content
+    branch.content,
+    branch.branchPoint
   ];
 
   return db
@@ -96,6 +99,27 @@ const addBranch = (branch) => {
     .then((response) => response.rows[0]);
 };
 exports.addBranch = addBranch;
+
+const getBranchPoint = (branch) => {
+  const queryString = `
+  SELECT branch_points.id
+  FROM branch_points
+  WHERE story_id = (SELECT stories.id
+    FROM stories
+    JOIN users ON users.id = user_id
+    WHERE stories.title = $1
+    AND users.name = $2)
+  ORDER BY branch_points.id DESC
+  LIMIT 1;
+  `
+  const queryParams =[branch.storyTitle, branch.storyOwner];
+
+  return db
+  .query(queryString, queryParams)
+  .then((response) => response.rows[0]);
+}
+exports.getBranchPoint = getBranchPoint;
+
 
 const getUsernameFromUserId = (user_id) => {
   const queryString = `

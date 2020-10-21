@@ -1,19 +1,22 @@
 $(document).ready(() => {
 
-  $(document).on('submit', '.story .writing_box form', (event) => {
+  console.log('loading branch');
+  $(document).on('submit', '#submit_branch', (event) => {
 
     event.preventDefault();
-    const title = $('#story_title').html();
+    const storyTitle = $('#story_title').text();
+    const storyOwner = $('#story_username').text();
+    // console.log('title: ', title);
 
+    const data = { storyTitle, storyOwner, content: $('#writing_box').text() };
 
-    console.log(title);
     // console.log($('#story_username').html());
-    console.log($(event.target).serialize());
+    console.log('data: ', data);
 
     $.ajax({
       url: 'stories/branches',
       method: "POST",
-      data: $(event.target).serialize()
+      data: data
     })
     .then(data => {
       console.log(data.error);

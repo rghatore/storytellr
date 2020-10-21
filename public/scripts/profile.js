@@ -23,6 +23,7 @@ $(document).ready(() => {
 // submit request for publishing new story
 $(document).on('submit', '.container .newStory', (event) => {
   event.preventDefault();
+  // console.log('New Story added');
   const username = $('#user').html();
   // console.log(username)
   // console.log($(event.target).serialize());

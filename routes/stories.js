@@ -89,12 +89,20 @@ module.exports = (database) => {
       res.send({error: 'Please login to add branches.'});
     } else {
       branch['user_id'] = req.session['user_id'];
-      console.log('branch: ', branch);
-      database.addBranch(branch)
-      .then((data) => {
-        // console.log(data);
-        res.send(data);
+      // console.log('branch: ', branch);
+
+      database.getBranchPoint(branch)
+      .then(branchPoint => {
+        branch['branchPoint'] = branchPoint;
+        console.log('branch: ', branch);
+
+        database.addBranch(branch)
+        .then((data) => {
+          console.log(data);
+          res.send(data);
+        })
       })
+      .catch(error => console.log(error.message));
     }
   })
 
