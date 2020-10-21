@@ -68,32 +68,18 @@ $(document).ready(() => {
 
     // $(".sidebar_content").append(loginForm('login'));
 
-
     $.ajax({
       url: "users/logout",
       method: "POST"
     })
     .then((message) => {
-      // console.log(req.session['user_id']);
-      // console.log(message);
       $('#message').append(message);
-      // $.ajax({
-      //   url: "/",
-      //   method: "GET"
-      // })
       $.ajax({
         url: "/stories",
         method: "GET",
-        // data
       }).then((stories) => {
-        // console.log($('#top-header'));
-        // if(!$('#top-header')) {
-          $('#main').empty();
-          $('#main').append(headerHome());
-        // } else {
-          // $('#main .content').empty();
-        // }
-
+        $('#main').empty();
+        $('#main').append(headerHome());
         for (const story of stories) {
           $("#main").append(storyBox(story));
         }
