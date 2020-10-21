@@ -2,32 +2,29 @@
 
 $(document).ready(() => {
   // add content to the sidebar
-    // $(".sidebar_content").append(loginForm('login'));
+  // $(".sidebar_content").append(loginForm('login'));
 
   // handling clicks on the user icon
 
-  $('nav #login').click((event) => {
-  // should be an ajax request to check for cookies
-  // currently new register button gets appended on every click
+  $("nav #login").click((event) => {
+    // should be an ajax request to check for cookies
+    // currently new register button gets appended on every click
 
+    $("#sidebar").addClass("active");
+    $(".overlay").addClass("active");
+    // $(".sidebar_content").append(`<button type="button" id="register">Register</button>`);
 
-      $("#sidebar").addClass("active");
-      $(".overlay").addClass("active");
-      // $(".sidebar_content").append(`<button type="button" id="register">Register</button>`);
-
-      event.stopPropagation();
-  })
+    event.stopPropagation();
+  });
 
   // handling hiding the sidebar
   $(".wrapper").on("click", function () {
     // $('nav .nav-options #form-login').remove();
     $("#sidebar").removeClass("active");
     $(".overlay").removeClass("active");
-
   });
 
-
-  $(document).on('submit', '.sidebar_content #form-login', (event) => {
+  $(document).on("submit", ".sidebar_content #form-login", (event) => {
     // alert("it's working!");
     event.preventDefault();
     // show login button and change to logout
@@ -38,9 +35,8 @@ $(document).ready(() => {
     $.ajax({
       url: "users/login",
       method: "POST",
-      data: $(event.target).serialize()
-    })
-    .then(user => {
+      data: $(event.target).serialize(),
+    }).then((user) => {
       // console.log(user);
       if (user.error) {
         // console.log(user.error);
@@ -48,20 +44,22 @@ $(document).ready(() => {
       } else {
         $(".sidebar_content").empty();
         $(".sidebar_content").append(`<span id="user">${user.name}</span>`);
-        $(".sidebar_content").append(`<button type="button" id="logout">Logout</button>`);
+        $(".sidebar_content").append(
+          `<button type="button" id="logout">Logout</button>`
+        );
       }
+    });
+  });
 
-    })
-
-  })
-
-  $(document).on('click', '#logout', () => {
+  $(document).on("click", "#logout", () => {
     //  ajax request to POST users/logout
     // console.log(req.session['user_id']);
     $(".sidebar_content").empty();
     $(".sidebar_content").append('<span id="message"></span>');
-    $(".sidebar_content").append(loginForm('login'));
-    $(".sidebar_content").append(`<button type="button" id="register">Register</button>`);
+    $(".sidebar_content").append(loginForm("login"));
+    $(".sidebar_content").append(
+      `<button type="button" id="register">Register</button>`
+    );
 
     // $("#sidebar").removeClass("active");
     // $(".overlay").removeClass("active");
@@ -70,33 +68,19 @@ $(document).ready(() => {
 
     $.ajax({
       url: "users/logout",
-      method: "POST"
-    })
-    .then((message) => {
-      $('#message').append(message);
+      method: "POST",
+    }).then((message) => {
+      $("#message").append(message);
       $.ajax({
         url: "/stories",
         method: "GET",
       }).then((stories) => {
-        $('#main').empty();
-        $('#main').append(headerHome());
+        $("#main").empty();
+        $("#main").append(headerHome());
         for (const story of stories) {
           $("#main").append(storyBox(story));
         }
-      })
-    })
-  })
-
-  //handles the disappear / reappear of the nav
-  let lastScrollTop = 0;
-
-  $(window).scroll(function () {
-    let st = $(this).scrollTop();
-    if (st < lastScrollTop) {
-      $(".nav ").css("transform", "translateY(0vh)");
-    } else {
-      $(".nav").css("transform", "translateY(-30vh)");
-    }
-    lastScrollTop = st;
+      });
+    });
   });
 });
