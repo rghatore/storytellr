@@ -62,18 +62,24 @@ const newStory = () => {
 const generateStoryPage = (storyObj) => {
   let storyPage = `
   <header class="header header_story">
-    <h3 id="story_title">${storyObj.title}</h3>
-  <section class="card card_story">
-  <div class="card_top">
-    <p id="story_username">${storyObj.user_name}</p>
-    <p>view count</p>
-    <p>${storyObj.times_favourited}</p>
-  </div>
-  <div class="card_bottom">
-    <p>${JSON.stringify(storyObj.keywords)}</p>
-    <p>jump to latest branch</p>
-  </div>
-  </section>
+    <div class = "story_title">
+      <h3 >${storyObj.title}</h3>
+      <i id="toggle_story_info" class="fas fa-angle-double-down"></i>
+    </div>
+    <div class="story_wrapper">
+      <section class="card card_story">
+        <div class="card_top_story">
+          <p>${storyObj.user_name}</p>
+          <p>view count</p>
+          <p>${storyObj.times_favourited}</p>
+        </div>
+        <div class="card_bottom_story">
+          <p>${JSON.stringify(storyObj.keywords)}</p>
+          <p class='col_branch'>jump to latest branch</p>
+        </div>
+      </section>
+    </div>
+
   </header>
   <!-- Page-specific (main) content here -->
   <div class="content content_story">
@@ -94,6 +100,7 @@ const storyBranches = (storyObj) => {
     storyBranches += `
         <div class="branch_marker" id="${branch.branch_point_id}">
       <p>BRANCHED view all suggested branches</p>
+
     </div>
 
       <section class="story">
@@ -108,13 +115,19 @@ const storyBranches = (storyObj) => {
 
 const writing_box = () => {
   return `
-      <div class="writing_box">
-        <form id="submit_branch" action="stories/branches" method="POST">
+
+    <div id="writing_form_div" class="writing_box">
+      <p class="toggle_textarea">And then . . . </p>
+      <form id="writing_form" action="stories/branches" method="POST"> // change from target id
+        <div class="textarea_div">
           <textarea name="content" id="writing_box" cols="30" rows="10" placeholder="Write in me ..."></textarea>
-          <button>Submit</button>
-        </form>
+          <div id="story_submit" class="submit_div">
+            <p class="btn_submit">Submit</p>
+            <i class="fas fa-angle-double-right"></i>
+        </div>
       </div>
-      </div>
+    </form>
+  </div>
       `;
 };
 

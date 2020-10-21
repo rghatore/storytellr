@@ -1,0 +1,45 @@
+#writing_form_div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .toggle_textarea {
+    font-size: 2rem;
+    margin: 1rem 0;
+    transition: 0.5s ease;
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+}
+
+#writing_form {
+  display: none;
+  .textarea_div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .submit_div {
+      width: 100vw;
+      background-color: $col-blue;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      height: 3rem;
+      color: $col-white;
+      font-size: 2rem;
+      .btn_submit {
+        font-family: $font-headings;
+      }
+    }
+  }
+}
+
+#writing_box {
+  width: 95%;
+  border: 0.5rem dashed $col-blue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
