@@ -30,6 +30,9 @@ $(document).ready(() => {
       $("#nav").removeClass("nav_home").addClass("nav_story");
       $("#main").empty();
       $("#main").append(storyPage);
+      $("h3").on("click", () => {
+        $(".card_story").slideToggle("slow");
+      });
     });
   });
   // });
