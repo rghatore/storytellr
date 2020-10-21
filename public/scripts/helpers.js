@@ -4,8 +4,6 @@
 const loginForm = (type) => {
   let form = `<form id="form-${type}" action="/users/${type}" method="POST">
 
-
-
                 ${
                   type === "register"
                     ? `<div class="test-form">
@@ -64,10 +62,10 @@ const newStory = () => {
 const generateStoryPage = (storyObj) => {
   let storyPage = `
   <header class="header header_story">
-    <h3>${storyObj.title}</h3>
+    <h3 id="story_title">${storyObj.title}</h3>
   <section class="card card_story">
   <div class="card_top">
-    <p>${storyObj.user_name}</p>
+    <p id="story_username">${storyObj.user_name}</p>
     <p>view count</p>
     <p>${storyObj.times_favourited}</p>
   </div>
@@ -111,8 +109,8 @@ const storyBranches = (storyObj) => {
 const writing_box = () => {
   return `
       <div class="writing_box">
-        <form action="#">
-          <textarea name="writing_box" id="writing_box" cols="30" rows="10">Write in me ...</textarea>
+        <form id="submit_branch" action="stories/branches" method="POST">
+          <textarea name="content" id="writing_box" cols="30" rows="10" placeholder="Write in me ..."></textarea>
           <button>Submit</button>
         </form>
       </div>

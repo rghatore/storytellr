@@ -16,7 +16,7 @@ $(document).ready(() => {
   // $(".card_home").on("click", (e) => {
   $(document).on("click", ".card_home", (e) => {
     let thisCardId = $(e.target).closest(".card_home")[0].id;
-    console.log("This card id", thisCardId);
+    // console.log("This card id", thisCardId);
     $.ajax({
       url: `/stories/${thisCardId}`,
       method: "GET",

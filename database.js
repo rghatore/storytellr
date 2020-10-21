@@ -52,9 +52,72 @@ const addStory = (story) => {
 
   return db
     .query(queryString, queryParams)
-    .then((response) => response.rows[0]);
+    // .then((response) => response.rows[0]);
+    // adding branch point
+    .then((response) => {
+      const storyData = response.rows[0];
+      // storyData['testKey'] = 'testValue';
+      // console.log(storyData);
+      const queryString = `
+      INSERT INTO branch_points (story_id, title)
+      VALUES ($1, $2)
+      RETURNING *
+      `;
+
+      const queryParams = [storyData.id, storyData.title];
+
+      return db.query(queryString, queryParams)
+      .then((response) => {
+        const branchPointData = response.rows[0];
+        // console.log('storyData: ', storyData);
+        // console.log('branch_point_data: ', branchPointData);
+        return storyData;
+      })
+
+    })
 };
 exports.addStory = addStory;
+
+const addBranch = (branch) => {
+
+  const queryString = `
+  INSERT INTO branches (user_id, branch_point_id, content)
+  VALUES ($1, $2, $3)
+  RETURNING *
+  `;
+
+  const queryParams = [
+    branch.user_id,
+    branch.lastBranchPoint,
+    branch.content
+  ];
+
+  return db
+    .query(queryString, queryParams)
+    .then(response => response.rows[0]);
+};
+exports.addBranch = addBranch;
+
+// const getBranchPoint = (branch) => {
+//   const queryString = `
+//   SELECT branch_points.id
+//   FROM branch_points
+//   WHERE story_id = (SELECT stories.id
+//     FROM stories
+//     JOIN users ON users.id = user_id
+//     WHERE stories.title = $1
+//     AND users.name = $2)
+//   ORDER BY branch_points.id DESC
+//   LIMIT 1;
+//   `
+//   const queryParams =[branch.storyTitle, branch.storyOwner];
+
+//   return db
+//   .query(queryString, queryParams)
+//   .then((response) => response.rows[0]);
+// }
+// exports.getBranchPoint = getBranchPoint;
+
 
 const getUsernameFromUserId = (user_id) => {
   const queryString = `
