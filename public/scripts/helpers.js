@@ -139,6 +139,8 @@ const generateStoryPage = (storyObj) => {
     </div>
 
   </header>
+
+
   <!-- Page-specific (main) content here -->
   <div class="content content_story">
     <section class="story">
@@ -156,15 +158,20 @@ const storyBranches = (storyObj) => {
   let storyBranches = "";
   for (let branch of storyObj.branches) {
     storyBranches += `
-        <div class="branch_marker" id="${branch.branch_point_id}">
-      <p>BRANCHED view all suggested branches</p>
+        <div class="branch_marker col_branch" id="${branch.branch_point_id}">
+          <p class="branch_marker_super">BRANCHED</p>
+          <p class="branch_marker_sub"> view all suggested branches</p>
+         </div>
 
-    </div>
 
-      <section class="story">
+
+      <section class="story story_branch">
         <div class="story_body">
           <p>${branch.content}</p>
         </div>
+                 <div class="branch_info">
+         <p class="branch_info_txt">Here's some text!</p>
+         </div>
       </section>
     `;
   }
