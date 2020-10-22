@@ -8,6 +8,7 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
 
     <!-- External CSS -->
+   <link rel="stylesheet" href="/styles/bootstrap.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" type="text/css" />
 
     <!-- Copied from template CSS -->
@@ -42,27 +43,16 @@
     <script type="text/javascript" src="/scripts/branches.js"></script>
     <script type="text/javascript" src="/scripts/search.js"></script>
 
+    <!-- Bootstrap JS -->
+
+
+
 
   </head>
 
 <body>
   <nav id="sidebar">
     <div class="sidebar_content">
-      <span id="message">Welcome!</span>
-      <form id="form-login" action="/users/login" method="POST">
-        <div class="test-form">
-          <label for="email">Enter your email: </label>
-          <input type="email" name="email" id="email" placeholder="email" required>
-        </div>
-        <div class="test-form">
-          <label for="password">Enter your password: </label>
-          <input type="password" name="password" id="password" placeholder="password" required>
-        </div>
-        <div class="test-form">
-          <button id ="submit" type="submit">Login</button>
-        </div>
-      </form>
-      <button type="button" id="register">Register</button>
     </div>
   </nav>
   <!-- Top nav bar (fixed) -->
@@ -95,6 +85,10 @@
   <div class="overlay">
   </div>
   </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
 </body>
 
 </html>

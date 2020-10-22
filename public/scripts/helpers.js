@@ -29,6 +29,61 @@ const loginForm = (type) => {
   return form;
 };
 
+const bootstrapLoginForm = (type) => {
+  let form = `
+  <div class="form_wrapper">
+  <form id="form-${type}" action="/users/${type}" method="POST">
+    <div class="form-group test-form">
+      <input type="name" class="form-control name input_field" id="name" name="name" placeholder="name">
+    </div>
+    <div class="form-group test-form">
+      <input type="email" class="form-control email input_field" id="email" name="email" aria-describedby="emailHelp" placeholder="email">
+    </div>
+    <div class="form-group test-form">
+      <input type="password" class="form-control password input_field" id="password" name="password" placeholder="password">
+    </div>
+    <button id='submit' type="submit" class="btn btn-primary btn-${type}">${type}</button>
+    <p class="display_sign_up_form">No account yet?</p>
+</form>
+</div>
+  `;
+
+  return form;
+};
+
+const bootstrapUserMenu = (user) => {
+  let userMenu = `
+  <div class="sidebar_user_menu">
+  <div class="list-group">
+    <a href="#" class="list-group-item list-group-item-action user_menu_name">
+      ${user.name}
+    </a>
+    </div>
+    <div class="list-group">
+    <a href="#" class="list-group-item list-group-item-action list_item_first list_item_branch ">
+      Dapibus ac facilisis in
+    </a>
+    <a href="#" class="list-group-item list-group-item-action">
+      Morbi leo risus
+    </a>
+    <a href="#" class="list-group-item list-group-item-action list_item_branch">
+      Porta ac consectetur ac
+    </a>
+    <a href="#" class="list-group-item list-group-item-action">
+      Vestibulum at eros
+    </a>
+    <a href="#" class="list-group-item list-group-item-action list_item_branch">
+      Vestibulum at eros
+    </a>
+    </div>
+    <button type="button" class="btn-logout" id="logout">Logout</button>
+  </div>
+  </div>
+  `;
+
+  return userMenu;
+};
+
 // stories box
 const storyBox = (story) => {
   // console.log(story);
@@ -135,9 +190,10 @@ const writing_box = () => {
 const headerHome = () => {
   const header = `<header id="top-header" class="header_home">
                     <form id="search">
-                      <!-- <label for="search">search</label> -->
-                      <input type="search" name="search">
-                      <button>Search</button>
+                    <div class="form-group test-form">
+                      <input type="search" name="search" class="form-control">
+                      <button class="btn btn-primary btn_search">Search</button>
+                      </div>
                     </form>
                     </header>`;
   return header;

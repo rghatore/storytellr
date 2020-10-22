@@ -7,12 +7,16 @@ $(document).ready(() => {
     }).then((stories) => {
       $("#main").empty();
       $("#main").append(headerHome());
+      console.log(headerHome());
       $("#nav").removeClass("nav_story").addClass("nav_home");
       for (const story of stories) {
         $("#main").append(storyBox(story));
       }
     });
   });
+
+  // appends the login form to the sidebar
+  $(".sidebar_content").append(bootstrapLoginForm("login"));
 
   //handles the disappear / reappear of the nav
   let lastScrollTop = 0;
