@@ -103,35 +103,40 @@ module.exports = (database) => {
     } else {
       branch['user_id'] = req.session['user_id'];
       // console.log('branch: ', branch);
-
-      database
-      .addBranch(branch)
-      .then((data) => {
-        // console.log(data);
-        database.getUsernameFromUserId(data.user_id)
-        .then((username) => {
-          data.name = username.name;
-          res.send(data);
+      // console.log(branch)
+      database.getBranchPointFromStoryPage(branch)
+      .then(data => {
+        branch.lastBranchPoint = data.id;
+        console.log('branch: ', branch)
+        database
+        .addBranch(branch)
+        .then((data) => {
+          database.getUsernameFromUserId(data.user_id)
+          .then((username) => {
+            data.name = username.name;
+            console.log('data being sent: ', data);
+            res.send(data);
+          })
         })
       })
       .catch(error => console.log(error.message));
     }
   })
   // module.exports = (database) => {
-    router.get("/branches/:branch_point_id", (req, res) => {
-      console.log(req.params)
-      database
-        .getBranchesByBranchPointId(req.params.branch_point_id)
-        .then((branches) => {
-          if (!branches) {
-            res.send({ error: "empty library" });
-          } else {
-            // console.log(branches);
-            res.send(branches);
-          }
-        })
-        .catch((error) => res.send(error.message));
-    });
+  router.get("/branches/:branch_point_id", (req, res) => {
+    console.log(req.params)
+    database
+      .getBranchesByBranchPointId(req.params.branch_point_id)
+      .then((branches) => {
+        if (!branches) {
+          res.send({ error: "empty library" });
+        } else {
+          // console.log(branches);
+          res.send(branches);
+        }
+      })
+      .catch((error) => res.send(error.message));
+  });
   // return router;
   // };
 

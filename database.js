@@ -98,25 +98,27 @@ const addBranch = (branch) => {
 };
 exports.addBranch = addBranch;
 
-// const getBranchPoint = (branch) => {
-//   const queryString = `
-//   SELECT branch_points.id
-//   FROM branch_points
-//   WHERE story_id = (SELECT stories.id
-//     FROM stories
-//     JOIN users ON users.id = user_id
-//     WHERE stories.title = $1
-//     AND users.name = $2)
-//   ORDER BY branch_points.id DESC
-//   LIMIT 1;
-//   `
-//   const queryParams =[branch.storyTitle, branch.storyOwner];
+// get open branch point from story page title and username
+const getBranchPointFromStoryPage = (branch) => {
 
-//   return db
-//   .query(queryString, queryParams)
-//   .then((response) => response.rows[0]);
-// }
-// exports.getBranchPoint = getBranchPoint;
+  const queryString = `
+  SELECT branch_points.id
+  FROM branch_points
+  JOIN stories ON story_id = stories.id
+  JOIN users ON user_id = users.id
+  WHERE stories.title = $1
+  AND users.name = $2
+  ORDER BY branch_points.id DESC
+  LIMIT 1;
+  `;
+
+  const queryParams =[branch.storyTitle, branch.storyOwner];
+
+  return db
+  .query(queryString, queryParams)
+  .then((response) => response.rows[0]);
+}
+exports.getBranchPointFromStoryPage = getBranchPointFromStoryPage;
 
 
 const getUsernameFromUserId = (user_id) => {
