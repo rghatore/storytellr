@@ -25,8 +25,9 @@ $(document).ready(() => {
   });
 
   // this submits a new branch at the current open branch point id
+  // $(document).on('click', '#writing_form', (event) => {
   $(document).on('click', '#story_submit', (event) => {
-
+    // $('#writing_form').submit();
     // open branch point id for submissions - OPEN BRANCH POINT not saved in HTML
     // let branch_point_id = $(event.target).parent().parent().find(".branch_marker");
     // const lastBranchPoint = branch_point_id[branch_point_id.length - 1].id;
@@ -66,7 +67,7 @@ $(document).ready(() => {
           $("#main").empty();
           // branches array
           for (const branch of branches) {
-            console.log(branch)
+            // console.log(branch)
             const branchPage = generateBranchesPage(branch);
             $("#main").append(branchPage);
           }
@@ -74,6 +75,23 @@ $(document).ready(() => {
       }
     })
     .catch(error => console.log(error.message));
+
+  })
+
+  $(document).on('click', '.approve', (event) => {
+  // we need to update database for that branch to have approved date
+    const branchId = $(event.target).parent().attr("id");
+    // console.log('approved branch id: ', branchId);
+    const data = {id: branchId}
+    $.ajax({
+      url: 'stories/branches',
+      method: "PUT",
+      data: data
+    })
+    .then(() => console.log("works"))
+  // we need add a new branch point
+  //
+
 
   })
 

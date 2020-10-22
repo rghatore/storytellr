@@ -134,6 +134,24 @@ const getUsernameFromUserId = (user_id) => {
 };
 exports.getUsernameFromUserId = getUsernameFromUserId;
 
+const getUserIdByStoryId = (storyId) => {
+  let queryString = `
+  SELECT users.id
+  FROM stories
+  JOIN users on users.id = stories.user_id
+  WHERE stories.id = $1;
+  `;
+
+  return db
+    .query(queryString, [storyId])
+    .then((response) => {
+      return response.rows[0];
+    })
+    .catch((err) => console.error(err));
+};
+
+exports.getUserIdByStoryId = getUserIdByStoryId;
+
 const getAllStories = (options) => {
   const queryParams = [];
   // basic getting all stories + authors/users
@@ -239,20 +257,19 @@ exports.getKeywordsByStoryId = getKeywordsByStoryId;
 
 const getBranchesByBranchPointId = (id) => {
   let queryString = `
-  SELECT branches.*, users.name, branch_points.*, COUNT(votes.up) AS vote_count
+  SELECT branches.*, users.name, branch_points.story_id
   FROM branches
   JOIN users ON users.id = user_id
   JOIN branch_points ON branch_point_id = branch_points.id
-  JOIN votes ON branches.id = branch_id
   WHERE branch_point_id = $1
-  GROUP BY branches.id, users.name, branch_points.id;
   `;
+  // GROUP BY branches.id, users.name, branch_points.id;
+  // SELECT branches.*, users.name, branch_points.*, COUNT(votes.up) AS vote_count
+
   return db
     .query(queryString, [id])
-    .then((res) => {
-      return res.rows;
-    })
-    .catch((err) => console.error(err));
+    .then(res => res.rows)
+    .catch(err => console.error(err));
 };
 
 exports.getBranchesByBranchPointId = getBranchesByBranchPointId;
@@ -272,3 +289,18 @@ const getBranchesByStoryId = (id) => {
 };
 
 exports.getBranchesByStoryId = getBranchesByStoryId;
+
+const updateBranch = (id) => {
+  let queryString = `
+  UPDATE branches
+  SET date_approved = NOW()
+  WHERE id = $1
+  RETURNING *;
+  `;
+
+  return db
+    .query(queryString, [id])
+    .then(res => res.rows[0])
+}
+
+exports.updateBranch = updateBranch;
