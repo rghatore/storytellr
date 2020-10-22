@@ -170,7 +170,7 @@ const storyBranches = (storyObj) => {
           <p>${branch.content}</p>
         </div>
                  <div class="branch_info">
-         <p class="branch_info_txt">Here's some text!</p>
+         <p class="branch_info_txt">${branch.name}</p>
          </div>
       </section>
     `;
@@ -212,18 +212,27 @@ const headerHome = () => {
 
 const generateBranchesPage = (branchObj) => {
   let branchesPage = `
-  <section class="card card_branch" id="${branchObj.id}">
-    <p>Written by ${branchObj.name}</p>
-    ${branchObj.owner ? `<button class="approve">Approve</button>` : ""}
-    <div class="card_top">
-      <button class="vote">LIKE!</button>
+  <div id="${branchObj.id}" class="card card_branch text-center">
+  <div class="card-header">
+    ${branchObj.date_approved ? `<p class="chosen">Chosen branch!</p>` : ""}
+  </div>
+  <div ${
+    branchObj.date_approved ? 'id="branch_approved"' : ""
+  } class="card-body">
+    <h5 class="card-title">By ${branchObj.name}</h5>
+    <p class="card-text content content_branch">${branchObj.content}</p>
+     ${
+       branchObj.owner && !branchObj.date_approved
+         ? `<a href="#" class="btn btn-primary btn-approve">Approve</a>`
+         : ""
+     }
+  </div>
+  <div class="card-footer text-muted">
       <p>Likes: ${branchObj.vote_count || 0}</p>
-    </div>
-  </section>
-  <main class="content content_branch">
-    <p>${branchObj.content}</p>
-  </main>
-  ${branchObj.date_approved ? `<p>Chosen branch!</p>` : ""}
+      <button class="vote btn-vote">LIKE!</button>
+  </div>
+</div>
   `;
+
   return branchesPage;
 };

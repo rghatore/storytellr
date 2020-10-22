@@ -28,3 +28,12 @@ a {
 #message {
   font-family: $font-headings;
 }
+
+.card-header {
+  font-size: 2rem;
+}
+
+.card-title {
+  font-style: italic;
+  color: grey;
+}

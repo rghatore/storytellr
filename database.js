@@ -50,57 +50,51 @@ const addStory = (story) => {
     story.newContent,
   ];
 
-  return db
-    .query(queryString, queryParams)
-    // .then((response) => response.rows[0]);
-    // adding branch point
-    .then((response) => {
-      const storyData = response.rows[0];
-      // storyData['testKey'] = 'testValue';
-      // console.log(storyData);
-      const queryString = `
+  return (
+    db
+      .query(queryString, queryParams)
+      // .then((response) => response.rows[0]);
+      // adding branch point
+      .then((response) => {
+        const storyData = response.rows[0];
+        // storyData['testKey'] = 'testValue';
+        // console.log(storyData);
+        const queryString = `
       INSERT INTO branch_points (story_id, title)
       VALUES ($1, $2)
       RETURNING *
       `;
 
-      const queryParams = [storyData.id, storyData.title];
+        const queryParams = [storyData.id, storyData.title];
 
-      return db.query(queryString, queryParams)
-      .then((response) => {
-        const branchPointData = response.rows[0];
-        // console.log('storyData: ', storyData);
-        // console.log('branch_point_data: ', branchPointData);
-        return storyData;
+        return db.query(queryString, queryParams).then((response) => {
+          const branchPointData = response.rows[0];
+          // console.log('storyData: ', storyData);
+          // console.log('branch_point_data: ', branchPointData);
+          return storyData;
+        });
       })
-
-    })
+  );
 };
 exports.addStory = addStory;
 
 const addBranch = (branch) => {
-
   const queryString = `
   INSERT INTO branches (user_id, branch_point_id, content)
   VALUES ($1, $2, $3)
   RETURNING *
   `;
 
-  const queryParams = [
-    branch.user_id,
-    branch.lastBranchPoint,
-    branch.content
-  ];
+  const queryParams = [branch.user_id, branch.lastBranchPoint, branch.content];
 
   return db
     .query(queryString, queryParams)
-    .then(response => response.rows[0]);
+    .then((response) => response.rows[0]);
 };
 exports.addBranch = addBranch;
 
 // get open branch point from story page title and username
 const getBranchPointFromStoryPage = (branch) => {
-
   const queryString = `
   SELECT branch_points.id
   FROM branch_points
@@ -112,14 +106,13 @@ const getBranchPointFromStoryPage = (branch) => {
   LIMIT 1;
   `;
 
-  const queryParams =[branch.storyTitle, branch.storyOwner];
+  const queryParams = [branch.storyTitle, branch.storyOwner];
 
   return db
-  .query(queryString, queryParams)
-  .then((response) => response.rows[0]);
-}
+    .query(queryString, queryParams)
+    .then((response) => response.rows[0]);
+};
 exports.getBranchPointFromStoryPage = getBranchPointFromStoryPage;
-
 
 const getUsernameFromUserId = (user_id) => {
   const queryString = `
@@ -268,18 +261,19 @@ const getBranchesByBranchPointId = (id) => {
 
   return db
     .query(queryString, [id])
-    .then(res => res.rows)
-    .catch(err => console.error(err));
+    .then((res) => res.rows)
+    .catch((err) => console.error(err));
 };
 
 exports.getBranchesByBranchPointId = getBranchesByBranchPointId;
 
 const getBranchesByStoryId = (id) => {
   let queryString = `
-  SELECT branches.*
+  SELECT branches.*, users.name
   FROM branches
   JOIN branch_points ON branches.branch_point_id = branch_points.id
   JOIN stories ON branch_points.story_id = stories.id
+  JOIN users ON branches.user_id = users.id
   WHERE stories.id = $1;
   `;
   return db
@@ -298,10 +292,8 @@ const updateBranch = (id) => {
   RETURNING *;
   `;
 
-  return db
-    .query(queryString, [id])
-    .then(res => res.rows[0])
-}
+  return db.query(queryString, [id]).then((res) => res.rows[0]);
+};
 exports.updateBranch = updateBranch;
 
 const addVote = (vote) => {
@@ -311,14 +303,11 @@ const addVote = (vote) => {
   RETURNING *;
   `;
 
-  let queryParams =[vote.user_id, vote.branchId]
+  let queryParams = [vote.user_id, vote.branchId];
 
-  return db
-    .query(queryString, queryParams)
-    .then(res => res.rows[0])
-}
+  return db.query(queryString, queryParams).then((res) => res.rows[0]);
+};
 exports.addVote = addVote;
-
 
 const checkVote = (vote) => {
   let queryString = `
@@ -328,13 +317,13 @@ const checkVote = (vote) => {
   AND branch_id = $2;
   `;
 
-  let queryParams =[vote.user_id, vote.branchId];
+  let queryParams = [vote.user_id, vote.branchId];
 
   return db
     .query(queryString, queryParams)
-    .then(res => res.rows[0])
-    .catch(error => console.log(error));
-}
+    .then((res) => res.rows[0])
+    .catch((error) => console.log(error));
+};
 exports.checkVote = checkVote;
 
 const unvote = (vote) => {
@@ -346,14 +335,13 @@ const unvote = (vote) => {
   RETURNING *;
   `;
 
-  let queryParams =[vote.user_id, vote.branchId];
+  let queryParams = [vote.user_id, vote.branchId];
 
   return db
     .query(queryString, queryParams)
-    .then(res => res.rows[0])
-    .catch(error => console.log(error));
-
-}
+    .then((res) => res.rows[0])
+    .catch((error) => console.log(error));
+};
 exports.unvote = unvote;
 
 const revote = (vote) => {
@@ -365,14 +353,13 @@ const revote = (vote) => {
   RETURNING *;
   `;
 
-  let queryParams =[vote.user_id, vote.branchId];
+  let queryParams = [vote.user_id, vote.branchId];
 
   return db
     .query(queryString, queryParams)
-    .then(res => res.rows[0])
-    .catch(error => console.log(error));
-
-}
+    .then((res) => res.rows[0])
+    .catch((error) => console.log(error));
+};
 exports.revote = revote;
 
 const checkVoteSync = (vote) => {
@@ -383,11 +370,10 @@ const checkVoteSync = (vote) => {
   AND branch_id = $2;
   `;
 
-  let queryParams =[vote.user_id, vote.branchId];
+  let queryParams = [vote.user_id, vote.branchId];
 
-  db
-    .query(queryString, queryParams)
-    .then(res => res.rows[0])
-    .catch(error => console.log(error));
-}
+  db.query(queryString, queryParams)
+    .then((res) => res.rows[0])
+    .catch((error) => console.log(error));
+};
 exports.checkVoteSync = checkVoteSync;
