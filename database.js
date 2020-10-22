@@ -375,19 +375,18 @@ const revote = (vote) => {
 }
 exports.revote = revote;
 
-const checkVoteSync = (vote) => {
+const getVoteCountByBranchId = (branchId) => {
   let queryString = `
-  SELECT up
+  SELECT COUNT(*) AS vote_count
   FROM votes
-  WHERE user_id = $1
-  AND branch_id = $2;
+  WHERE branch_id = $1;
   `;
+  let queryParams = [branchId];
 
-  let queryParams =[vote.user_id, vote.branchId];
+  return db
+  .query(queryString, queryParams)
+  .then(res => res.rows[0])
+  .catch(error => console.log(error));
 
-  db
-    .query(queryString, queryParams)
-    .then(res => res.rows[0])
-    .catch(error => console.log(error));
 }
-exports.checkVoteSync = checkVoteSync;
+exports.getVoteCountByBranchId = getVoteCountByBranchId;
