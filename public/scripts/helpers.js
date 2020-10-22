@@ -196,11 +196,12 @@ const headerHome = () => {
 const generateBranchesPage = (branchObj) => {
   let branchesPage = `
   <section class="card card_branch" id="${branchObj.id}">
-  <p>Written by ${branchObj.name}</p>
-  ${branchObj.owner ? `<button class="approve">Approve</button>` : ""}
-  <div class="card_top">
-    <p>Likes: ${branchObj.vote_count}</p>
-  </div>
+    <p>Written by ${branchObj.name}</p>
+    ${branchObj.owner ? `<button class="approve">Approve</button>` : ""}
+    <div class="card_top">
+      <button class="vote">LIKE!</button>
+      <p>Likes: ${branchObj.vote_count}</p>
+    </div>
   </section>
   <main class="content content_branch">
     <p>${branchObj.content}</p>

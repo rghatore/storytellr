@@ -165,18 +165,63 @@ module.exports = (database) => {
 
       .catch((error) => res.send(error.message));
   });
-  // return router;
-  // };
 
   router.put("/branches", (req, res) => {
     console.log(req.body)
 
     database
-      .updateBranch(req.body.id)
+      .updateBranch(req.body.branchId)
       .then((data) => {
         console.log("approved" ,data)
       })
       .catch(error => console.log(error));
+  })
+
+  router.post('/branches/votes', (req, res) => {
+    const vote = req.body;
+    if(!req.session['user_id']) {
+      res.send({error: 'Please login to vote.'});
+    } else {
+      vote['user_id'] = req.session['user_id'];
+      console.log(vote);
+      database
+      .checkVote(vote)
+      .then((data) => {
+        console.log('vote status: ', data);
+        // if (data) {
+        //   if (data.up) {
+        //     unvote
+        //   } else {
+        //     revote
+        //   }
+        // } else {
+        //   addvote
+        // }
+        if(data) {
+          if(data.up) {
+            database
+            .unvote(vote)
+            .then((data) => {
+            console.log('unvote vote:', data)
+            })
+          } else if(data.up === null) {
+            database
+            .reVote(vote)
+            .then((data) => {
+            console.log('up vote:', data)
+            })
+          }
+        } else {
+          database
+          .addVote(vote)
+          .then((data) => {
+            console.log('add vote:', data)
+          })
+        }
+      })
+      .catch(error => console.log(error));
+
+    }
   })
 
   return router;
