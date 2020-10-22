@@ -134,10 +134,14 @@ const writing_box = () => {
 // homepage header
 const headerHome = () => {
   const header = `<header id="top-header" class="header_home">
-                    <form action="#"><label for="search">search</label><input type="text" name="search"></form>
-                    <a href="#">filter</a>
-                  </header>`;
+                    <form id="search">
+                      <!-- <label for="search">search</label> -->
+                      <input type="search" name="search">
+                      <button>Search</button>
+                    </form>
+                    </header>`;
   return header;
+  // <a href="#">filter</a> // add above form tag if adding filter feature
 };
 
 const generateBranchesPage = (branchObj) => {
