@@ -39,3 +39,26 @@
   transition: all 3s ease;
   transform: translateX(75vw);
 }
+
+.sidebar_user_menu {
+  display: flex;
+  flex-direction: column;
+  height: 75vh;
+  justify-content: space-between;
+  align-items: center;
+  .list-group {
+    width: 100%;
+    .user_menu_name {
+      text-align: center;
+      font-family: $font-headings;
+      background-color: $col-blue;
+      color: $col-white;
+      font-size: 3rem;
+    }
+    .list_item {
+      &_branch {
+        background-color: $col-orange;
+      }
+    }
+  }
+}

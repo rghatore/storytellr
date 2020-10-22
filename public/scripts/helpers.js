@@ -53,25 +53,34 @@ const bootstrapLoginForm = (type) => {
 
 const bootstrapUserMenu = (user) => {
   let userMenu = `
-  <div class="sidebar_user_menu"
+  <div class="sidebar_user_menu">
   <div class="list-group">
-    <a href="#" class="list-group-item list-group-item-action active">
-      Cras justo odio
+    <a href="#" class="list-group-item list-group-item-action user_menu_name">
+      ${user.name}
     </a>
-    <a href="#" class="list-group-item list-group-item-action">
+    </div>
+    <div class="list-group">
+    <a href="#" class="list-group-item list-group-item-action list_item_first list_item_branch ">
+
       Dapibus ac facilisis in
     </a>
     <a href="#" class="list-group-item list-group-item-action">
       Morbi leo risus
     </a>
-    <a href="#" class="list-group-item list-group-item-action">
+
+    <a href="#" class="list-group-item list-group-item-action list_item_branch">
       Porta ac consectetur ac
     </a>
-    <a href="#" class="list-group-item list-group-item-action disabled">
+    <a href="#" class="list-group-item list-group-item-action">
       Vestibulum at eros
     </a>
+    <a href="#" class="list-group-item list-group-item-action list_item_branch">
+      Vestibulum at eros
+    </a>
+    </div>
+    <button type="button" class="btn-logout" id="logout">Logout</button>
   </div>
-  <button type="button" class="btn-logout" id="logout">Logout</button>
+
   </div>
   `;
 
@@ -184,9 +193,10 @@ const writing_box = () => {
 const headerHome = () => {
   const header = `<header id="top-header" class="header_home">
                     <form id="search">
-                      <!-- <label for="search">search</label> -->
-                      <input type="search" name="search">
-                      <button>Search</button>
+                    <div class="form-group test-form">
+                      <input type="search" name="search" class="form-control">
+                      <button class="btn btn-primary btn_search">Search</button>
+                      </div>
                     </form>
                     </header>`;
   return header;

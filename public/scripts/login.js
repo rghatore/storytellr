@@ -58,7 +58,7 @@ $(document).ready(() => {
       method: "POST",
       data: $(event.target).serialize(),
     }).then((user) => {
-      // console.log(user);
+      console.log(user);
       if (user.error) {
         // console.log(user.error);
         $("#message").html(user.error);
@@ -74,7 +74,7 @@ $(document).ready(() => {
     // console.log(req.session['user_id']);
     $(".sidebar_content").empty();
     $(".sidebar_content").append(bootstrapLoginForm("login"));
-    $(".form_wrapper").prepend('<span id="message"></span>');
+
 
     // $("#sidebar").removeClass("active");
     // $(".overlay").removeClass("active");
