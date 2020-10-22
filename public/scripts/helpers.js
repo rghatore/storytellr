@@ -212,6 +212,7 @@ const headerHome = () => {
 
 const generateBranchesPage = (branchObj) => {
   let branchesPage = `
+
   <div id="${branchObj.id}" class="card card_branch text-center">
   <div class="card-header">
     ${branchObj.date_approved ? `<p class="chosen">Chosen branch!</p>` : ""}
@@ -228,10 +229,14 @@ const generateBranchesPage = (branchObj) => {
      }
   </div>
   <div class="card-footer text-muted">
-      <p>Likes: ${branchObj.vote_count || 0}</p>
+      <span>
+        <p>Likes: </p>
+        <p class="likes">${branchObj.vote_count}</p>
+      </span>
       <button class="vote btn-vote">LIKE!</button>
   </div>
 </div>
+
   `;
 
   return branchesPage;

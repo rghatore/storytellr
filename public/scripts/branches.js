@@ -88,15 +88,40 @@ $(document).ready(() => {
   });
 
   // voting for a suggested branch
-  $(document).on("click", ".vote", (event) => {
+
+  $(document).on('click', '.btn-vote', (event) => {
     // we need to update database for that branch to have approved date
-    const branchId = $(event.target).parent().parent().attr("id");
-    // console.log('approved branch id: ', branchId);
-    const data = { branchId };
-    $.ajax({
-      url: "stories/branches/votes/",
-      method: "POST",
-      data: data,
-    }).then(() => console.log("works"));
-  });
+      const branchId = $(event.target).parent().parent().attr("id");
+      const data = {branchId}
+
+      let target = $(event.target)
+      let likes = Number(target.parent().find('.likes').text());
+
+      if (target.text() === 'Like!') {
+        target.text('Unlike!')
+        target.removeClass('btn-false').addClass('btn-true');
+        likes += 1;
+        console.log('likes: ', likes);
+        target.parent().find('.likes').text(likes);
+      } else {
+        target.text('Like!')
+        target.removeClass('btn-true').addClass('btn-false');
+        likes -= 1;
+        console.log('likes: ', likes);
+        target.parent().find('.likes').text(likes);
+      }
+
+      $.ajax({
+        url: 'stories/branches/votes/',
+        method: "POST",
+        data: data
+      })
+      .then(data => {
+        // if true = red, else = white
+        if (data[0].userVote) {
+          // $(event.target).addClass("voted");
+        }
+      })
+    })
+
 });

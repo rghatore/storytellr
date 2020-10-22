@@ -46,22 +46,6 @@ module.exports = (database) => {
     });
   });
 
-  // gets stories by a specific user id
-  // router.get('/:userId', (req, res) => {
-  //   database.getUsernameFromUserId(req.params.userId)
-  //   .then(data => {
-  //     database.getAllStories({user_name: data.name, search: null})
-  //     .then(stories => {
-  //       if(!stories) {
-  //         res.send({error: 'empty library'});
-  //       } else {
-  //         res.send(stories)
-  //       }
-
-  //     })
-  //     .catch((error) => res.send(error.message));
-  // });
-
   // gets story + branch and keyword info by id
   router.get("/:storyId", (req, res) => {
     console.log(req.session['user_id']);
@@ -125,61 +109,6 @@ module.exports = (database) => {
       .catch(error => console.log(error.message));
     }
   })
-  // module.exports = (database) => {
-
-  // router.get("/branches/:branch_point_id", (req, res) => {
-  //   console.log(req.params)
-  //   const returnBranchArray = [];
-  //   database
-  //   .getBranchesByBranchPointId(req.params.branch_point_id)
-  //   .then((branches) => {
-  //       // check if user has voted for that branch
-  //       console.log('branches :', branches);
-  //       const loggedInUser = req.session['user_id'];
-  //       // if branch length !==
-  //       for (const branch of branches) {
-  //       // checks if there is a vote by this user on this branch
-  //       const vote = {user_id: loggedInUser, branchId: branch.id}
-  //       database
-  //       .checkVote(vote) // true, null or false
-  //       .then((data) => {
-  //         if(data) {
-  //           if(data.up) {
-  //             branch.userVote = true;
-  //           } else if(data.up === null) {
-  //             branch.userVote = false;
-  //           }
-  //         } else {
-  //           branch.userVote = false;
-  //         }
-  //       })
-  //       .then(() => {
-  //         database.getUserIdByStoryId(branches[0].story_id)
-  //         .then((data) => {
-  //         // console.log(data.id)
-  //         // we can compare that user id to cookie id
-  //         // if (branches.length < 1) {
-  //         //   res.send({ error: "empty library" });
-  //         // } else {
-  //           // for (const branch of branches) {
-  //             if (data.id === loggedInUser) {
-  //               branch['owner'] = true;
-  //             } else {
-  //               branch['owner'] = false;
-  //             }
-  //           // }
-  //           // res.send(branches);
-  //         })
-
-  //       })
-  //     }
-
-  //     console.log('branches server side: ', branches)
-  //   })
-  //   .then(() => res.send(branches))
-  //   .catch((error) => res.send(error.message));
-  // })
-// });
 
 router.get("/branches/:branch_point_id", (req, res) => {
   // console.log(req.params)
@@ -217,13 +146,6 @@ router.get("/branches/:branch_point_id", (req, res) => {
       Promise.all(branches.map((branch) => {
         vote['branchId'] = branch.id;
         return database.checkVote(vote);
-        // let value = database.checkVote(vote)
-        // if (!value) {
-        //   value = {up: false};
-        //   return value;
-        // } else {
-        //   return value;
-        // }
       }))
         .then(data => {
             console.log('response data: ', data)
@@ -241,34 +163,26 @@ router.get("/branches/:branch_point_id", (req, res) => {
                 branches[item]['userVote'] = true;
               }
             }
-            console.log('final branches: ', branches);
+            // res.send(branches);
+            return branches;
+          })
+          // another promise all to add vote count
+          .then(branches => {
+            Promise.all(branches.map(branch => {
+              // console.
+              // vote['branchId'] = branch.id;
+              return database.getVoteCountByBranchId(branch.id);
+            }))
+            .then(data => {
+              console.log('vote count data: ', data);
+              for (const item in data) {
+                branches[item]['vote_count'] = data[item].vote_count;
+              }
+              console.log('final branches: ', branches);
             res.send(branches);
+            })
         })
         .catch(error => console.log(error))
-      // --
-      // for (const branch of branches) {
-      //   console.log('vote: ', vote)
-      //   // check each branch object
-      //   .then(data => {
-      //   // const data = database.checkVoteSync(vote);
-      //   console.log('user vote data :', data);
-      //     if (data) {
-      //       if(data.up) {
-      //         // user has currently upvoted this post
-      //         branch['userVote'] = true;
-      //       } else if (data.up === null) {
-      //         // user has currently unvoted this post
-      //         branch['userVote'] = false;
-      //       }
-      //     } else {
-      //       // user hasnt currently voted on this post
-      //       branch['userVote'] = false;
-      //     }
-      //     console.log('branch: ', branch)
-      //   })
-      // }
-      // console.log('branches sent to client side: ', branches);
-      // res.send(branches);
     })
   })
   .catch((error) => res.send(error.message));

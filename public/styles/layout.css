@@ -77,6 +77,10 @@ a {
 .btn-vote {
   font-family: "Fredoka One", cursive; }
 
+.btn-true {
+  background-color: #ef476f; }
+
+
 .form_wrapper {
   display: flex;
   flex-direction: column;
