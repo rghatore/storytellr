@@ -4,4 +4,5 @@ VALUES (1, 'the part with the trolls'),
 (2, 'Mr Toad'),
 (2, 'Piper at the Gates of Dawn'),
 (3, 'Vegetables'),
-(3, 'Robe and Wizard Hat');
+(3, 'Robe and Wizard Hat'),
+(1, 'The Hobbit');

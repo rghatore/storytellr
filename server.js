@@ -42,7 +42,7 @@ const branchesRoutes = require("./routes/branches");
 // Note: Feel free to replace the example routes below with your own
 app.use("/users", usersRoutes(database));
 app.use("/stories", storiesRoutes(database));
-app.use("/stories", branchesRoutes(database));
+// app.use("/stories", branchesRoutes(database));
 // Note: mount other resources here, using the same pattern above
 
 // Home page
