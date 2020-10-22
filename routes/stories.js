@@ -126,57 +126,142 @@ module.exports = (database) => {
   })
   // module.exports = (database) => {
 
-  router.get("/branches/:branch_point_id", (req, res) => {
-    console.log(req.params)
-    database
-      .getBranchesByBranchPointId(req.params.branch_point_id)
-      .then((branches) => {
-      //   if (branches.length < 1) {
-      //     res.send({ error: "empty library" });
-      //   } else {
-      //     console.log('branches from branch point: ', branches);
-      //     res.send(branches);
-      //   }
-      // })
-      // console.log(branches[0].story_id)
-      database.getUserIdByStoryId(branches[0].story_id)
-      .then((data) => {
-        // console.log(data.id)
-        // we can compare that user id to cookie id
-        if (branches.length < 1) {
-          res.send({ error: "empty library" });
-        } else {
-          for (const branch of branches) {
-            if (data.id === req.session.user_id) {
-              branch['owner'] = true;
-            } else {
-              branch['owner'] = false;
-            }
+  // router.get("/branches/:branch_point_id", (req, res) => {
+  //   console.log(req.params)
+  //   const returnBranchArray = [];
+  //   database
+  //   .getBranchesByBranchPointId(req.params.branch_point_id)
+  //   .then((branches) => {
+  //       // check if user has voted for that branch
+  //       console.log('branches :', branches);
+  //       const loggedInUser = req.session['user_id'];
+  //       // if branch length !==
+  //       for (const branch of branches) {
+  //       // checks if there is a vote by this user on this branch
+  //       const vote = {user_id: loggedInUser, branchId: branch.id}
+  //       database
+  //       .checkVote(vote) // true, null or false
+  //       .then((data) => {
+  //         if(data) {
+  //           if(data.up) {
+  //             branch.userVote = true;
+  //           } else if(data.up === null) {
+  //             branch.userVote = false;
+  //           }
+  //         } else {
+  //           branch.userVote = false;
+  //         }
+  //       })
+  //       .then(() => {
+  //         database.getUserIdByStoryId(branches[0].story_id)
+  //         .then((data) => {
+  //         // console.log(data.id)
+  //         // we can compare that user id to cookie id
+  //         // if (branches.length < 1) {
+  //         //   res.send({ error: "empty library" });
+  //         // } else {
+  //           // for (const branch of branches) {
+  //             if (data.id === loggedInUser) {
+  //               branch['owner'] = true;
+  //             } else {
+  //               branch['owner'] = false;
+  //             }
+  //           // }
+  //           // res.send(branches);
+  //         })
+
+  //       })
+  //     }
+
+  //     console.log('branches server side: ', branches)
+  //   })
+  //   .then(() => res.send(branches))
+  //   .catch((error) => res.send(error.message));
+  // })
+// });
+
+router.get("/branches/:branch_point_id", (req, res) => {
+  console.log(req.params)
+  database
+    .getBranchesByBranchPointId(req.params.branch_point_id)
+    .then((branches) => {
+    database.getUserIdByStoryId(branches[0].story_id)
+    .then((data) => {
+      // console.log(data.id)
+      // we can compare that user id to cookie id
+      if (branches.length < 1) {
+        res.send({ error: "empty library" });
+      } else {
+        for (const branch of branches) {
+          if (data.id === req.session.user_id) {
+            branch['owner'] = true;
+          } else {
+            branch['owner'] = false;
           }
-          // console.log(branches);
-          res.send(branches);
         }
-      })
-      // if user.id = cookie id then add key owner is true, else false
 
-
-      })
-
-
-      .catch((error) => res.send(error.message));
-  });
-  // return router;
-  // };
+        res.send(branches);
+      }
+    })
+    })
+    .catch((error) => res.send(error.message));
+});
 
   router.put("/branches", (req, res) => {
     console.log(req.body)
 
     database
-      .updateBranch(req.body.id)
+      .updateBranch(req.body.branchId)
       .then((data) => {
         console.log("approved" ,data)
       })
       .catch(error => console.log(error));
+  })
+
+  router.post('/branches/votes', (req, res) => {
+    const vote = req.body;
+    if(!req.session['user_id']) {
+      res.send({error: 'Please login to vote.'});
+    } else {
+      vote['user_id'] = req.session['user_id'];
+      console.log(vote);
+      database
+      // checks if there is a vote by this user on this branch
+      .checkVote(vote)
+      .then((data) => {
+        console.log('vote status: ', data);
+        if(data) {
+          // if there is a vote by this user on this branch it will...
+          // ... change the vote status to null to "unvote" the branch
+          if(data.up) {
+            database
+            .unvote(vote)
+            .then((data) => {
+            console.log('unvote vote:', data)
+            // res.send("remove")
+            })
+            // ... or change the null vote to true to "revote" the branch
+          } else if(data.up === null) {
+            database
+            .revote(vote)
+            .then((data) => {
+            console.log('up vote:', data)
+            // res.send("add")
+            })
+          }
+          // if the user has not voted on this branch it will add the vote to the database and change the vote status to true
+        } else {
+          database
+          .addVote(vote)
+          .then((data) => {
+            console.log('add vote:', data)
+            // res.send("add")
+          })
+        }
+      })
+      .catch(error => console.log(error));
+
+    }
   })
 
   return router;

@@ -78,22 +78,33 @@ $(document).ready(() => {
 
   })
 
+  //  approving a branch to be appended to a story
   $(document).on('click', '.approve', (event) => {
   // we need to update database for that branch to have approved date
     const branchId = $(event.target).parent().attr("id");
     // console.log('approved branch id: ', branchId);
-    const data = {id: branchId}
+    const data = {branchId}
     $.ajax({
       url: 'stories/branches',
       method: "PUT",
       data: data
     })
     .then(() => console.log("works"))
-  // we need add a new branch point
-  //
-
-
   })
+
+  // voting for a suggested branch
+  $(document).on('click', '.vote', (event) => {
+    // we need to update database for that branch to have approved date
+      const branchId = $(event.target).parent().parent().attr("id");
+      // console.log('approved branch id: ', branchId);
+      const data = {branchId}
+      $.ajax({
+        url: 'stories/branches/votes/',
+        method: "POST",
+        data: data
+      })
+      .then(() => console.log("works"))
+    })
 
 
 });

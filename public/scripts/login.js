@@ -75,6 +75,7 @@ $(document).ready(() => {
     $(".sidebar_content").empty();
     $(".sidebar_content").append(bootstrapLoginForm("login"));
 
+
     // $("#sidebar").removeClass("active");
     // $(".overlay").removeClass("active");
 

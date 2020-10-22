@@ -61,11 +61,13 @@ const bootstrapUserMenu = (user) => {
     </div>
     <div class="list-group">
     <a href="#" class="list-group-item list-group-item-action list_item_first list_item_branch ">
+
       Dapibus ac facilisis in
     </a>
     <a href="#" class="list-group-item list-group-item-action">
       Morbi leo risus
     </a>
+
     <a href="#" class="list-group-item list-group-item-action list_item_branch">
       Porta ac consectetur ac
     </a>
@@ -78,6 +80,7 @@ const bootstrapUserMenu = (user) => {
     </div>
     <button type="button" class="btn-logout" id="logout">Logout</button>
   </div>
+
   </div>
   `;
 
@@ -203,11 +206,12 @@ const headerHome = () => {
 const generateBranchesPage = (branchObj) => {
   let branchesPage = `
   <section class="card card_branch" id="${branchObj.id}">
-  <p>Written by ${branchObj.name}</p>
-  ${branchObj.owner ? `<button class="approve">Approve</button>` : ""}
-  <div class="card_top">
-    <p>Likes: ${branchObj.vote_count}</p>
-  </div>
+    <p>Written by ${branchObj.name}</p>
+    ${branchObj.owner ? `<button class="approve">Approve</button>` : ""}
+    <div class="card_top">
+      <button class="vote">LIKE!</button>
+      <p>Likes: ${branchObj.vote_count || 0}</p>
+    </div>
   </section>
   <main class="content content_branch">
     <p>${branchObj.content}</p>
