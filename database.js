@@ -302,5 +302,75 @@ const updateBranch = (id) => {
     .query(queryString, [id])
     .then(res => res.rows[0])
 }
-
 exports.updateBranch = updateBranch;
+
+const addVote = (vote) => {
+  let queryString = `
+  INSERT INTO votes (user_id, branch_id, up)
+  VALUES ($1, $2, true)
+  RETURNING *;
+  `;
+
+  let queryParams =[vote.user_id, vote.branchId]
+
+  return db
+    .query(queryString, queryParams)
+    .then(res => res.rows[0])
+}
+exports.addVote = addVote;
+
+
+const checkVote = (vote) => {
+  let queryString = `
+  SELECT up
+  FROM votes
+  WHERE user_id = $1
+  AND branch_id = $2;
+  `;
+
+  let queryParams =[vote.user_id, vote.branchId];
+
+  return db
+    .query(queryString, queryParams)
+    .then(res => res.rows[0])
+    .catch(error => console.log(error));
+}
+exports.checkVote = checkVote;
+
+const unvote = (vote) => {
+  let queryString = `
+  UPDATE votes
+  SET up = null
+  WHERE user_id = $1
+  AND branch_id = $2
+  RETURNING *;
+  `;
+
+  let queryParams =[vote.user_id, vote.branchId];
+
+  return db
+    .query(queryString, queryParams)
+    .then(res => res.rows[0])
+    .catch(error => console.log(error));
+
+}
+exports.unvote = unvote;
+
+const revote = (vote) => {
+  let queryString = `
+  UPDATE votes
+  SET up = true
+  WHERE user_id = $1
+  AND branch_id = $2
+  RETURNING *;
+  `;
+
+  let queryParams =[vote.user_id, vote.branchId];
+
+  return db
+    .query(queryString, queryParams)
+    .then(res => res.rows[0])
+    .catch(error => console.log(error));
+
+}
+exports.revote = revote;
