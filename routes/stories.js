@@ -17,8 +17,10 @@ router.use(
 module.exports = (database) => {
   // get all stories
   router.get("/", (req, res) => {
+    console.log("Search: ", req.query);
     database
-      .getAllStories({ user_name: null, search: null })
+      // .getAllStories({ user_name: null, search: null }) // original working code
+      .getAllStories(req.query) // changed - should be fine
       .then((stories) => {
         if (!stories) {
           res.send({ error: "empty library" });

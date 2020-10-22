@@ -40,6 +40,8 @@
     <script type="text/javascript" src="/scripts/stories.js"></script>
     <script type="text/javascript" src="/scripts/index.js"></script>
     <script type="text/javascript" src="/scripts/branches.js"></script>
+    <script type="text/javascript" src="/scripts/search.js"></script>
+
 
   </head>
 
@@ -81,8 +83,12 @@
   <!-- Page-specific (main) content here -->
   <main id="main" class="container container_home">
       <header id="top-header" class="header_home">
-        <form action="#"><label for="search">search</label><input type="text" name="search"></form>
-        <a href="#">filter</a>
+        <form id="search">
+          <!-- <label for="search">search</label> -->
+          <input type="search" name="search">
+          <button>Search</button>
+        </form>
+        <!-- <a href="#">filter</a> -->
       </header>
   </main>
 

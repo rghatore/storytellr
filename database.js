@@ -144,19 +144,36 @@ const getAllStories = (options) => {
   `;
 
   // for a specific author/user
+  // if (options.user_name) {
+  //   queryParams.push(`%${options.user_name}%`);
+  //   queryString += `WHERE users.name LIKE $${queryParams.length}`;
+  // }
+  // // searching for a word in the title or author name
+  // if (options.search) {
+  //   queryParams.push(`%${options.search}%`);
+  //   if (queryString.search("WHERE") === -1) {
+  //     queryString += `WHERE stories.title LIKE $${queryParams.length}
+  //     OR users.name LIKE $${queryParams.length}`;
+  //   } else {
+  //     queryString += `AND stories.title LIKE $${queryParams.length}
+  //     OR users.name LIKE $${queryParams.length}`;
+  //   }
+  // }
+
+  // using lower case for comparisons
   if (options.user_name) {
-    queryParams.push(`%${options.user_name}%`);
-    queryString += `WHERE users.name LIKE $${queryParams.length}`;
+    queryParams.push(`%${options.user_name.toLowerCase()}%`);
+    queryString += `WHERE LOWER(users.name) LIKE $${queryParams.length}`;
   }
   // searching for a word in the title or author name
   if (options.search) {
-    queryParams.push(`%${options.search}%`);
+    queryParams.push(`%${options.search.toLowerCase()}%`);
     if (queryString.search("WHERE") === -1) {
-      queryString += `WHERE stories.title LIKE $${queryParams.length}
-      OR users.name LIKE $${queryParams.length}`;
+      queryString += `WHERE LOWER(stories.title) LIKE $${queryParams.length}
+      OR LOWER(users.name) LIKE $${queryParams.length}`;
     } else {
-      queryString += `AND stories.title LIKE $${queryParams.length}
-      OR users.name LIKE $${queryParams.length}`;
+      queryString += `AND LOWER(stories.title) LIKE $${queryParams.length}
+      OR LOWER(users.name) LIKE $${queryParams.length}`;
     }
   }
 
