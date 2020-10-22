@@ -52,9 +52,12 @@ a {
   height: 2.5rem;
   font-size: 1.5rem; }
 
-
 .btn-logout {
   width: 90%; }
+
+.btn-search {
+  background-color: #365585;
+  margin-left: 1rem; }
 
 .form_wrapper {
   display: flex;
@@ -78,6 +81,9 @@ a {
 
 #name {
   display: none; }
+
+.div_search {
+  display: flex; }
 
 .header_story {
   display: flex;
@@ -118,7 +124,7 @@ a {
   .nav_story {
     border-bottom: 2rem solid #365585; }
   .nav_branch {
-    border-bottom: 2rem solid #0c090d; }
+    border-bottom: 2rem solid #ea9010; }
 
 #sidebar {
   position: fixed;

@@ -1,33 +1,33 @@
 //  client side helper functions
 
 // appending form on clicking login
-const loginForm = (type) => {
-  let form = `<form id="form-${type}" action="/users/${type}" method="POST">
+// const loginForm = (type) => {
+//   let form = `<form id="form-${type}" action="/users/${type}" method="POST">
 
-                ${
-                  type === "register"
-                    ? `<div class="test-form">
-                                <label for="name">Enter your name: </label>
-                                <input type="text" name="name" id="name" placeholder="name" required>
-                              </div>`
-                    : ""
-                }
+//                 ${
+//                   type === "register"
+//                     ? `<div class="test-form">
+//                                 <label for="name">Enter your name: </label>
+//                                 <input type="text" name="name" id="name" placeholder="name" required>
+//                               </div>`
+//                     : ""
+//                 }
 
-                <div class="test-form">
-                  <label for="email">Enter your email: </label>
-                  <input type="email" name="email" id="email" placeholder="email" required>
-                </div>
-                <div class="test-form">
-                  <label for="password">Enter your password: </label>
-                  <input type="password" name="password" id="password" placeholder="password" required>
-                </div>
-                <div class="test-form">
-                  <button id ="submit" type="submit">${type}</button>
-                </div>
-              </form>`;
+//                 <div class="test-form">
+//                   <label for="email">Enter your email: </label>
+//                   <input type="email" name="email" id="email" placeholder="email" required>
+//                 </div>
+//                 <div class="test-form">
+//                   <label for="password">Enter your password: </label>
+//                   <input type="password" name="password" id="password" placeholder="password" required>
+//                 </div>
+//                 <div class="test-form">
+//                   <button id ="submit" type="submit">${type}</button>
+//                 </div>
+//               </form>`;
 
-  return form;
-};
+//   return form;
+// };
 
 const bootstrapLoginForm = (type) => {
   let form = `
@@ -193,9 +193,9 @@ const writing_box = () => {
 const headerHome = () => {
   const header = `<header id="top-header" class="header_home">
                     <form id="search">
-                    <div class="form-group test-form">
+                    <div class="form-group test-form div_search">
                       <input type="search" name="search" class="form-control">
-                      <button class="btn btn-primary btn_search">Search</button>
+                      <button class="btn btn-primary btn-search">Search</button>
                       </div>
                     </form>
                     </header>`;
