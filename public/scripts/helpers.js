@@ -1,33 +1,33 @@
 //  client side helper functions
 
 // appending form on clicking login
-const loginForm = (type) => {
-  let form = `<form id="form-${type}" action="/users/${type}" method="POST">
+// const loginForm = (type) => {
+//   let form = `<form id="form-${type}" action="/users/${type}" method="POST">
 
-                ${
-                  type === "register"
-                    ? `<div class="test-form">
-                                <label for="name">Enter your name: </label>
-                                <input type="text" name="name" id="name" placeholder="name" required>
-                              </div>`
-                    : ""
-                }
+//                 ${
+//                   type === "register"
+//                     ? `<div class="test-form">
+//                                 <label for="name">Enter your name: </label>
+//                                 <input type="text" name="name" id="name" placeholder="name" required>
+//                               </div>`
+//                     : ""
+//                 }
 
-                <div class="test-form">
-                  <label for="email">Enter your email: </label>
-                  <input type="email" name="email" id="email" placeholder="email" required>
-                </div>
-                <div class="test-form">
-                  <label for="password">Enter your password: </label>
-                  <input type="password" name="password" id="password" placeholder="password" required>
-                </div>
-                <div class="test-form">
-                  <button id ="submit" type="submit">${type}</button>
-                </div>
-              </form>`;
+//                 <div class="test-form">
+//                   <label for="email">Enter your email: </label>
+//                   <input type="email" name="email" id="email" placeholder="email" required>
+//                 </div>
+//                 <div class="test-form">
+//                   <label for="password">Enter your password: </label>
+//                   <input type="password" name="password" id="password" placeholder="password" required>
+//                 </div>
+//                 <div class="test-form">
+//                   <button id ="submit" type="submit">${type}</button>
+//                 </div>
+//               </form>`;
 
-  return form;
-};
+//   return form;
+// };
 
 const bootstrapLoginForm = (type) => {
   let form = `
@@ -139,6 +139,8 @@ const generateStoryPage = (storyObj) => {
     </div>
 
   </header>
+
+
   <!-- Page-specific (main) content here -->
   <div class="content content_story">
     <section class="story">
@@ -156,15 +158,20 @@ const storyBranches = (storyObj) => {
   let storyBranches = "";
   for (let branch of storyObj.branches) {
     storyBranches += `
-        <div class="branch_marker" id="${branch.branch_point_id}">
-      <p>BRANCHED view all suggested branches</p>
+        <div class="branch_marker col_branch" id="${branch.branch_point_id}">
+          <p class="branch_marker_super">BRANCHED</p>
+          <p class="branch_marker_sub"> view all suggested branches</p>
+         </div>
 
-    </div>
 
-      <section class="story">
+
+      <section class="story story_branch">
         <div class="story_body">
           <p>${branch.content}</p>
         </div>
+                 <div class="branch_info">
+         <p class="branch_info_txt">${branch.name}</p>
+         </div>
       </section>
     `;
   }
@@ -193,9 +200,9 @@ const writing_box = () => {
 const headerHome = () => {
   const header = `<header id="top-header" class="header_home">
                     <form id="search">
-                    <div class="form-group test-form">
+                    <div class="form-group test-form div_search">
                       <input type="search" name="search" class="form-control">
-                      <button class="btn btn-primary btn_search">Search</button>
+                      <button class="btn btn-primary btn-search">Search</button>
                       </div>
                     </form>
                     </header>`;
@@ -205,21 +212,32 @@ const headerHome = () => {
 
 const generateBranchesPage = (branchObj) => {
   let branchesPage = `
-  <section class="card card_branch" id="${branchObj.id}">
-    <p>Written by ${branchObj.name}</p>
-    ${branchObj.owner ? `<button class="approve">Approve</button>` : ""}
-    <div class="card_top">
-      <button class="btn-${branchObj.userVote} btn-vote">${branchObj.userVote ? "Unlike" : "Like"}!</button>
+
+  <div id="${branchObj.id}" class="card card_branch text-center">
+  <div class="card-header">
+    ${branchObj.date_approved ? `<p class="chosen">Chosen branch!</p>` : ""}
+  </div>
+  <div ${
+    branchObj.date_approved ? 'id="branch_approved"' : ""
+  } class="card-body">
+    <h5 class="card-title">By ${branchObj.name}</h5>
+    <p class="card-text content content_branch">${branchObj.content}</p>
+     ${
+       branchObj.owner && !branchObj.date_approved
+         ? `<a href="#" class="btn btn-primary btn-approve">Approve</a>`
+         : ""
+     }
+  </div>
+  <div class="card-footer text-muted">
       <span>
         <p>Likes: </p>
         <p class="likes">${branchObj.vote_count}</p>
       </span>
-    </div>
-  </section>
-  <main class="content content_branch">
-    <p>${branchObj.content}</p>
-  </main>
-  ${branchObj.date_approved ? `<p>Chosen branch!</p>` : ""}
+      <button class="vote btn-vote">LIKE!</button>
+  </div>
+</div>
+
   `;
+
   return branchesPage;
 };

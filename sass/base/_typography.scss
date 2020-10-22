@@ -11,6 +11,10 @@ a {
   color: $col-orange;
 }
 
+.col_white {
+  color: $col-white;
+}
+
 .storytellr {
   font-family: $font-headings;
 }
@@ -23,4 +27,13 @@ a {
 
 #message {
   font-family: $font-headings;
+}
+
+.card-header {
+  font-size: 2rem;
+}
+
+.card-title {
+  font-style: italic;
+  color: grey;
 }
