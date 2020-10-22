@@ -78,7 +78,7 @@ a {
   .nav_story {
     border-bottom: 2rem solid #365585; }
   .nav_branch {
-    border-bottom: 2rem solid #ea9010; }
+    border-bottom: 2rem solid #0c090d; }
 
 #sidebar {
   position: fixed;
@@ -118,9 +118,6 @@ a {
   width: 95%;
   display: flex;
   flex-direction: column; }
-
-.card_branch {
-  display: none; }
 
 .card_story {
   width: 95vw;

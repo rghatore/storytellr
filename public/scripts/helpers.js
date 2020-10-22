@@ -146,11 +146,11 @@ const headerHome = () => {
 
 const generateBranchesPage = (branchObj) => {
   let branchesPage = `
-  <section class="card card_branch">
+  <section class="card card_branch" id="${branchObj.id}">
   <p>Written by ${branchObj.name}</p>
+  ${branchObj.owner ? `<button class="approve">Approve</button>` : ""}
   <div class="card_top">
-    <p>Likes</p>
-    <p>${branchObj.vote_count}</p>
+    <p>Likes: ${branchObj.vote_count}</p>
   </div>
   </section>
   <main class="content content_branch">
