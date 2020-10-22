@@ -64,10 +64,7 @@ $(document).ready(() => {
         $("#message").html(user.error);
       } else {
         $(".sidebar_content").empty();
-        $(".sidebar_content").append(`<span id="user">${user.name}</span>`);
-        $(".sidebar_content").append(
-          `<button type="button" id="logout">Logout</button>`
-        );
+        $(".sidebar_content").append(bootstrapUserMenu(user));
       }
     });
   });

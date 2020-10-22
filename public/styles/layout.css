@@ -43,7 +43,8 @@ a {
   font-family: "Fredoka One", cursive; }
 
 .btn-login,
-.btn-register {
+.btn-register,
+.btn-logout {
   background-color: #ef476f;
   font-family: "Fredoka One", cursive;
   border: none;

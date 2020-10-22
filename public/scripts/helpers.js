@@ -51,6 +51,33 @@ const bootstrapLoginForm = (type) => {
   return form;
 };
 
+const bootstrapUserMenu = (user) => {
+  let userMenu = `
+  <div class="sidebar_user_menu"
+  <div class="list-group">
+    <a href="#" class="list-group-item list-group-item-action active">
+      Cras justo odio
+    </a>
+    <a href="#" class="list-group-item list-group-item-action">
+      Dapibus ac facilisis in
+    </a>
+    <a href="#" class="list-group-item list-group-item-action">
+      Morbi leo risus
+    </a>
+    <a href="#" class="list-group-item list-group-item-action">
+      Porta ac consectetur ac
+    </a>
+    <a href="#" class="list-group-item list-group-item-action disabled">
+      Vestibulum at eros
+    </a>
+  </div>
+  <button type="button" class="btn-logout" id="logout">Logout</button>
+  </div>
+  `;
+
+  return userMenu;
+};
+
 // stories box
 const storyBox = (story) => {
   // console.log(story);
