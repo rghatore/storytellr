@@ -374,3 +374,20 @@ const revote = (vote) => {
 
 }
 exports.revote = revote;
+
+const checkVoteSync = (vote) => {
+  let queryString = `
+  SELECT up
+  FROM votes
+  WHERE user_id = $1
+  AND branch_id = $2;
+  `;
+
+  let queryParams =[vote.user_id, vote.branchId];
+
+  db
+    .query(queryString, queryParams)
+    .then(res => res.rows[0])
+    .catch(error => console.log(error));
+}
+exports.checkVoteSync = checkVoteSync;
