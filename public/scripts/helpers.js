@@ -200,7 +200,7 @@ const generateBranchesPage = (branchObj) => {
     ${branchObj.owner ? `<button class="approve">Approve</button>` : ""}
     <div class="card_top">
       <button class="vote">LIKE!</button>
-      <p>Likes: ${branchObj.vote_count}</p>
+      <p>Likes: ${branchObj.vote_count || 0}</p>
     </div>
   </section>
   <main class="content content_branch">

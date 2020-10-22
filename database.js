@@ -333,6 +333,7 @@ const checkVote = (vote) => {
   return db
     .query(queryString, queryParams)
     .then(res => res.rows[0])
+    .catch(error => console.log(error));
 }
 exports.checkVote = checkVote;
 
@@ -350,10 +351,12 @@ const unvote = (vote) => {
   return db
     .query(queryString, queryParams)
     .then(res => res.rows[0])
+    .catch(error => console.log(error));
+
 }
 exports.unvote = unvote;
 
-const revote = (id) => {
+const revote = (vote) => {
   let queryString = `
   UPDATE votes
   SET up = true
@@ -362,8 +365,12 @@ const revote = (id) => {
   RETURNING *;
   `;
 
+  let queryParams =[vote.user_id, vote.branchId];
+
   return db
-    .query(queryString, [id])
+    .query(queryString, queryParams)
     .then(res => res.rows[0])
+    .catch(error => console.log(error));
+
 }
 exports.revote = revote;
