@@ -29,6 +29,28 @@ const loginForm = (type) => {
   return form;
 };
 
+const bootstrapLoginForm = (type) => {
+  let form = `
+  <div class="form_wrapper">
+  <form id="form-${type}" action="/users/${type}" method="POST">
+    <div class="form-group test-form">
+      <input type="name" class="form-control name input_field" id="name" name="name" placeholder="name">
+    </div>
+    <div class="form-group test-form">
+      <input type="email" class="form-control email input_field" id="email" name="email" aria-describedby="emailHelp" placeholder="email">
+    </div>
+    <div class="form-group test-form">
+      <input type="password" class="form-control password input_field" id="password" name="password" placeholder="password">
+    </div>
+    <button id='submit' type="submit" class="btn btn-primary btn-${type}">${type}</button>
+    <p class="display_sign_up_form">No account yet?</p>
+</form>
+</div>
+  `;
+
+  return form;
+};
+
 // stories box
 const storyBox = (story) => {
   // console.log(story);

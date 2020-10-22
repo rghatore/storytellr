@@ -14,6 +14,9 @@ $(document).ready(() => {
     });
   });
 
+  // appends the login form to the sidebar
+  $(".sidebar_content").append(bootstrapLoginForm("login"));
+
   //handles the disappear / reappear of the nav
   let lastScrollTop = 0;
 
