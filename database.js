@@ -75,12 +75,12 @@ const addStory = (story) => {
         // storyData['testKey'] = 'testValue';
         // console.log(storyData);
         const queryString = `
-      INSERT INTO branch_points (story_id, title)
-      VALUES ($1, $2)
+      INSERT INTO branch_points (story_id)
+      VALUES ($1)
       RETURNING *
       `;
 
-        const queryParams = [storyData.id, storyData.title];
+        const queryParams = [storyData.id];
 
         return db.query(queryString, queryParams).then((response) => {
           const branchPointData = response.rows[0];
@@ -307,7 +307,8 @@ const updateBranch = (id) => {
   RETURNING *;
   `;
 
-  return db.query(queryString, [id]).then((res) => res.rows[0]);
+  return db.query(queryString, [id])
+  .then((res) => res.rows[0]);
 };
 exports.updateBranch = updateBranch;
 
@@ -391,3 +392,35 @@ const getVoteCountByBranchId = (branchId) => {
     .catch((error) => console.log(error));
 };
 exports.getVoteCountByBranchId = getVoteCountByBranchId;
+
+const getStoryIdByBranchPointId = (branch_point_id) => {
+  let queryString = `
+   SELECT stories.id
+   FROM stories
+   JOIN branch_points ON story_id = stories.id
+   WHERE branch_points.id = $1
+  `;
+
+  let queryParams = [branch_point_id];
+
+  return db
+  .query(queryString, queryParams)
+  .then(res => res.rows[0])
+  .catch(error => console.log(error));
+}
+exports.getStoryIdByBranchPointId = getStoryIdByBranchPointId;
+
+const addBranchPoint = (story_id) => {
+  let queryString = `
+  INSERT INTO branch_points (story_id)
+  VALUES ($1)
+  RETURNING *;
+ `;
+
+  let queryParams = [story_id];
+  return db
+  .query(queryString, queryParams)
+  .then(res => res.rows[0])
+  .catch(error => console.log(error));
+}
+exports.addBranchPoint = addBranchPoint;

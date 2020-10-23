@@ -40,7 +40,6 @@ $(document).ready(() => {
 
   $(document).on("click", "#writing_form_div p", (e) => {
     $("#writing_form").slideToggle("slow");
-
     if ($("#not_signed_in").length) {
       $("html, body").animate(
         {
@@ -68,6 +67,4 @@ $(document).ready(() => {
 
     event.stopPropagation();
   });
-
-  // });
 });

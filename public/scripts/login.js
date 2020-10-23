@@ -58,7 +58,7 @@ $(document).ready(() => {
       method: "POST",
       data: $(event.target).serialize(),
     }).then((user) => {
-      console.log(user);
+      // console.log(user);
       if (user.error) {
         // console.log(user.error);
         $(".error_message").text(user.error);

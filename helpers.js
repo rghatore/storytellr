@@ -54,7 +54,7 @@ const register = (name, email, password, database) => {
       return { name, email, password };
     })
     .then((user) => {
-      console.log("register function user: ", user);
+      // console.log("register function user: ", user);
       if (!user) {
         return null;
       }
