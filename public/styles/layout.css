@@ -244,23 +244,24 @@ a {
     #writing_form_div .toggle_textarea:hover {
       transform: translateY(-2px); }
 
-#writing_form {
+.writing_box_toggle {
   display: none; }
-  #writing_form .textarea_div {
+
+#writing_form .textarea_div {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+  #writing_form .textarea_div .submit_div {
+    width: 100vw;
+    background-color: #365585;
     display: flex;
-    flex-direction: column;
-    align-items: center; }
-    #writing_form .textarea_div .submit_div {
-      width: 100vw;
-      background-color: #365585;
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      height: 3rem;
-      color: #f5f5f5;
-      font-size: 2rem; }
-      #writing_form .textarea_div .submit_div .btn_submit {
-        font-family: "Fredoka One", cursive; }
+    align-items: center;
+    justify-content: space-around;
+    height: 3rem;
+    color: #f5f5f5;
+    font-size: 2rem; }
+    #writing_form .textarea_div .submit_div .btn_submit {
+      font-family: "Fredoka One", cursive; }
 
 #writing_box {
   width: 95%;

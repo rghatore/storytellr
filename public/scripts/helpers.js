@@ -182,10 +182,15 @@ const storyBranches = (storyObj) => {
 };
 
 const writing_box = (storyObj) => {
-  let writingBoxString = `
 
+  return `
     <div id="writing_form_div" class="writing_box">
       <p class="toggle_textarea">And then . . . </p>
+      <div class="writing_box_toggle">
+        <div class="branch_marker col_branch" id="${storyObj.open_branch_point}">
+          <p class="branch_marker_super">BRANCHED</p>
+          <p class="branch_marker_sub"> view all suggested branches</p>
+        </div>
       <form id="writing_form">
 
 
@@ -198,6 +203,7 @@ const writing_box = (storyObj) => {
           <div id="story_submit" class="submit_div">
             <p class="btn_submit">Submit</p>
             <i class="fas fa-angle-double-right"></i>
+          </div>
         </div>
       </div>
       `;
@@ -252,7 +258,9 @@ const generateBranchesPage = (branchObj) => {
         <p>Likes: </p>
         <p class="likes">${branchObj.vote_count}</p>
       </span>
-      <button class="vote btn-vote">LIKE!</button>
+      <button class="vote btn-vote btn-${branchObj.userVote ? "true" : "false"}">
+      ${branchObj.userVote ? "Unlike" : "Like"}!
+      </button>
   </div>
 </div>
 
