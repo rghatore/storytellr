@@ -65,12 +65,6 @@ $(document).ready(() => {
       } else {
         $(".sidebar_content").empty();
         $(".sidebar_content").append(bootstrapUserMenu(user));
-        if ($("#writing_form_div").length) {
-          $("#writing_form_div").remove();
-          let storyObj = { cookie: true };
-          $("#main").append(writing_box(storyObj));
-          // how to make the writing box automatically display?
-        }
       }
     });
   });
