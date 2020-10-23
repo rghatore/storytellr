@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS branch_points CASCADE;
 CREATE TABLE branch_points (
   id SERIAL PRIMARY KEY NOT NULL,
-  story_id INTEGER REFERENCES stories(id) ON DELETE CASCADE
+  story_id INTEGER REFERENCES stories(id) ON DELETE CASCADE,
+  title TEXT NOT NULL
 );

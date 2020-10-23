@@ -58,19 +58,13 @@ $(document).ready(() => {
       method: "POST",
       data: $(event.target).serialize(),
     }).then((user) => {
-      // console.log(user);
+      console.log(user);
       if (user.error) {
         // console.log(user.error);
         $(".error_message").text(user.error);
       } else {
         $(".sidebar_content").empty();
         $(".sidebar_content").append(bootstrapUserMenu(user));
-        if ($("#writing_form_div").length) {
-          $("#writing_form_div").remove();
-          let storyObj = { cookie: true };
-          $("#main").append(writing_box(storyObj));
-          // how to make the writing box automatically display?
-        }
       }
     });
   });
