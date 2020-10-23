@@ -97,7 +97,7 @@ const storyBox = (story) => {
             <div class="card_top">
               <p>${story.title}</p>
               <p>${story.name}</p>
-              <p>${!story.date_completed ? "Open" : "Complete"}</p>
+              <p>Tags</p>
             </div>
             <div class="card_bottom">
               <p>${story.summary}</p>
@@ -183,20 +183,18 @@ const storyBranches = (storyObj) => {
 
 const writing_box = (storyObj) => {
 
-  let writingBoxString = `
+  return `
     <div id="writing_form_div" class="writing_box">
       <p class="toggle_textarea">And then . . . </p>
+      <div class="writing_box_toggle">
+        <div class="branch_marker col_branch" id="${storyObj.open_branch_point}">
+          <p class="branch_marker_super">BRANCHED</p>
+          <p class="branch_marker_sub"> view all suggested branches</p>
+        </div>
       <form id="writing_form">
-    `
-      // <div class="writing_box_toggle">
-      //   <div class="branch_marker col_branch" id="${storyObj.open_branch_point}">
-      //     <p class="branch_marker_super">BRANCHED</p>
-      //     <p class="branch_marker_sub"> view all suggested branches</p>
-      //   </div>
-      // <form id="writing_form">
 
 
-      // `;
+      `;
 
   if (storyObj.cookie) {
     writingBoxString += `
@@ -207,6 +205,7 @@ const writing_box = (storyObj) => {
             <i class="fas fa-angle-double-right"></i>
           </div>
         </div>
+      </div>
       `;
   } else {
     writingBoxString += `

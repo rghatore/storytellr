@@ -48,13 +48,7 @@ $(document).ready(() => {
       },
       1000
     );
-    // console.log($("#story_submit"));
-    $("html, body").animate(
-      {
-        scrollTop: $("#story_submit").offset().top,
-      },
-      1000
-    );
+
   });
 
   $(document).on("click", "#not_signed_in", (event) => {
