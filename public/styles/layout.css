@@ -106,6 +106,10 @@ a {
 .div_search {
   display: flex; }
 
+.login_form_messages {
+  display: flex;
+  justify-content: space-between; }
+
 .header_story {
   display: flex;
   flex-direction: column;

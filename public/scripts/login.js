@@ -61,7 +61,7 @@ $(document).ready(() => {
       console.log(user);
       if (user.error) {
         // console.log(user.error);
-        $("#message").html(user.error);
+        $(".error_message").text(user.error);
       } else {
         $(".sidebar_content").empty();
         $(".sidebar_content").append(bootstrapUserMenu(user));
@@ -74,7 +74,6 @@ $(document).ready(() => {
     // console.log(req.session['user_id']);
     $(".sidebar_content").empty();
     $(".sidebar_content").append(bootstrapLoginForm("login"));
-
 
     // $("#sidebar").removeClass("active");
     // $(".overlay").removeClass("active");

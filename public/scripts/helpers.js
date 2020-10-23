@@ -43,7 +43,10 @@ const bootstrapLoginForm = (type) => {
       <input type="password" class="form-control password input_field" id="password" name="password" placeholder="password">
     </div>
     <button id='submit' type="submit" class="btn btn-primary btn-${type}">${type}</button>
-    <p class="display_sign_up_form">No account yet?</p>
+    <div class="login_form_messages">
+      <p class="display_sign_up_form">No account yet?</p>
+      <p class="error_message"></p>
+    </div>
 </form>
 </div>
   `;
