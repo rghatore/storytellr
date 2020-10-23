@@ -239,7 +239,9 @@ const generateBranchesPage = (branchObj) => {
         <p>Likes: </p>
         <p class="likes">${branchObj.vote_count}</p>
       </span>
-      <button class="vote btn-vote">Like!</button>
+      <button class="vote btn-vote btn-${branchObj.userVote ? "true" : "false"}">
+      ${branchObj.userVote ? "Unlike" : "Like"}!
+      </button>
   </div>
 </div>
 
