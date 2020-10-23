@@ -19,6 +19,21 @@ const getUserFromEmail = (email) => {
 };
 exports.getUserFromEmail = getUserFromEmail;
 
+const getPasswordFromUserId = (userId) => {
+  const queryString = `
+  SELECT password
+  FROM users
+  WHERE id = $1;
+  `;
+
+  const queryParams = [userId];
+
+  return db
+    .query(queryString, queryParams)
+    .then((response) => response.rows[0]);
+};
+exports.getPasswordFromUserId = getPasswordFromUserId;
+
 // add registration data to the database
 const addUser = (user) => {
   const queryString = `
@@ -371,13 +386,11 @@ const getVoteCountByBranchId = (branchId) => {
   `;
   let queryParams = [branchId];
 
-
   return db
-  .query(queryString, queryParams)
-  .then(res => res.rows[0])
-  .catch(error => console.log(error));
-
-}
+    .query(queryString, queryParams)
+    .then((res) => res.rows[0])
+    .catch((error) => console.log(error));
+};
 exports.getVoteCountByBranchId = getVoteCountByBranchId;
 
 const getStoryIdByBranchPointId = (branch_point_id) => {

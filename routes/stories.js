@@ -37,19 +37,19 @@ module.exports = (database) => {
     // console.log(req.body);
     // console.log(req.session);
     const story = req.body;
-
     story['user_id'] = req.session['user_id'];
     database.addStory(story)
     .then((data) => {
       console.log('add story data: ', data);
+
       res.send(data);
     });
   });
 
   // gets story + branch and keyword info by id
   router.get("/:storyId", (req, res) => {
-    // console.log(req.session['user_id']);
     //the first function call returns the stories object from the stories relation
+    console.log("cookie", req.session["user_id"]);
     database
       .getStoryById(req.params.storyId)
       .then((story) => {
@@ -80,6 +80,7 @@ module.exports = (database) => {
                     database.getBranchPointFromStoryPage(storyInfo)
                     .then((openBranchPointId) => {
                       story[0].open_branch_point = openBranchPointId.id;
+                      story[0].cookie = req.session["user_id"] ? true : false;
                       res.send(story);
                     })
                   });
@@ -90,13 +91,12 @@ module.exports = (database) => {
       .catch((error) => console.error(error.message));
   });
 
-  router.post('/branches', (req, res) => {
-
+  router.post("/branches", (req, res) => {
     const branch = req.body;
-    if(!req.session['user_id']) {
-      res.send({error: 'Please login to add branches.'});
+    if (!req.session["user_id"]) {
+      res.send({ error: "Please login to add branches." });
     } else {
-      branch['user_id'] = req.session['user_id'];
+      branch["user_id"] = req.session["user_id"];
       // console.log('branch: ', branch);
       // console.log(branch)
       database.getBranchPointFromStoryPage(branch)
@@ -113,10 +113,9 @@ module.exports = (database) => {
             res.send(data);
           })
         })
-      })
-      .catch(error => console.log(error.message));
+        .catch((error) => console.log(error.message));
     }
-  })
+  });
 
   router.get("/branches/:branch_point_id", (req, res) => {
   // console.log(req.params)
@@ -169,10 +168,12 @@ module.exports = (database) => {
               } else {
                 branches[item]['userVote'] = true;
               }
+              // console.log('first then; checking if user logged in is the owner of the story ', branches)
+              return branches; // new
+              // res.send(branches); // working
             }
-            // res.send(branches);
-            return branches;
           })
+
           // another promise all to add vote count
           .then(branches => {
             Promise.all(branches.map(branch => {
@@ -198,7 +199,6 @@ module.exports = (database) => {
 
   router.put("/branches", (req, res) => {
     // console.log(req.body)
-
     // updating branch date_approved
     database
     .updateBranch(req.body.branchId)
@@ -216,13 +216,13 @@ module.exports = (database) => {
         })
       })
       })
-      .catch(error => console.log(error));
-  })
+      .catch((error) => console.log(error));
+  });
 
-  router.post('/branches/votes', (req, res) => {
+  router.post("/branches/votes", (req, res) => {
     const vote = req.body;
-    if(!req.session['user_id']) {
-      res.send({error: 'Please login to vote.'});
+    if (!req.session["user_id"]) {
+      res.send({ error: "Please login to vote." });
     } else {
       vote['user_id'] = req.session['user_id'];
       // console.log(vote);
@@ -261,10 +261,8 @@ module.exports = (database) => {
         }
       })
       .catch(error => console.log(error));
-
     }
-  })
+  });
 
   return router;
 };
-
