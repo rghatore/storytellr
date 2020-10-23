@@ -188,6 +188,9 @@ const writing_box = (storyObj) => {
       <p class="toggle_textarea">And then . . . </p>
       <form id="writing_form">
 
+       <div class="branch_marker col_branch" id="thisBranchPoint">
+          <p class="branch_marker_sub"> view all suggested branches</p>
+         </div>
 
       `;
 
