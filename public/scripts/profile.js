@@ -1,16 +1,15 @@
 $(document).ready(() => {
   //  profile page request
-  $(document).on('click', '.user_menu_name', () => {
+  $(document).on('click', '#user', () => {
 
     // username instead of user id
-    const username = $('.user_menu_name').html();
+    const username = $('#user').html();
 
     $.ajax({
       url: `users/${username}`,
       method: "GET"
     })
     .then((data) => {
-      // console.log('data: ', data);
       $("#sidebar").removeClass("active");
       $(".overlay").removeClass("active");
       $(".container").empty()
@@ -34,7 +33,6 @@ $(document).on('submit', '.container .newStory', (event) => {
     data: $(event.target).serialize()
   })
   .then((story) => {
-    console.log('story: ', story);
     $.ajax({
       url: `stories/${story.id}`,
       method: "GET"
@@ -42,15 +40,10 @@ $(document).on('submit', '.container .newStory', (event) => {
     .then((response) => {
       const storyObj = response[0];
       // generateStoryPage is in scripts/helpers
-      let storyPage = generateStoryPage(storyObj);
-      storyPage += storyBranches(storyObj);
-      storyPage += writing_box(storyObj);
+      const storyPage = generateStoryPage(storyObj);
       $("#nav").removeClass("nav_home").addClass("nav_story");
       $("#main").empty();
       $("#main").append(storyPage);
-      $("#toggle_story_info").on("click", () => {
-      $(".story_wrapper").slideToggle("slow");
-      });
     });
   })
   })

@@ -18,7 +18,7 @@ router.use(
 module.exports = (database) => {
   // get all stories
   router.get("/", (req, res) => {
-    // console.log("Search: ", req.query);
+    console.log("Search: ", req.query);
     database
       // .getAllStories({ user_name: null, search: null }) // original working code
       .getAllStories(req.query) // changed - should be fine
@@ -37,11 +37,10 @@ module.exports = (database) => {
     // console.log(req.body);
     // console.log(req.session);
     const story = req.body;
-    story['user_id'] = req.session['user_id'];
-    database.addStory(story)
-    .then((data) => {
-      console.log('add story data: ', data);
 
+    story["user_id"] = req.session["user_id"];
+    database.addStory(story).then((data) => {
+      // console.log(data);
       res.send(data);
     });
   });
@@ -73,16 +72,8 @@ module.exports = (database) => {
                     // branchFilterAndSort is defined in helpers.js on the server side
                     let approvedBranches = branchFilterAndSort(branches);
                     story[0].branches = approvedBranches;
-                    const storyInfo = {
-                      storyTitle: story[0].title,
-                      storyOwner: story[0].user_name
-                    }
-                    database.getBranchPointFromStoryPage(storyInfo)
-                    .then((openBranchPointId) => {
-                      story[0].open_branch_point = openBranchPointId.id;
-                      story[0].cookie = req.session["user_id"] ? true : false;
-                      res.send(story);
-                    })
+                    story[0].cookie = req.session["user_id"] ? true : false;
+                    res.send(story);
                   });
               });
           });
@@ -99,122 +90,112 @@ module.exports = (database) => {
       branch["user_id"] = req.session["user_id"];
       // console.log('branch: ', branch);
       // console.log(branch)
-      database.getBranchPointFromStoryPage(branch)
-      .then(data => {
-        branch.lastBranchPoint = data.id;
-        // console.log('branch: ', branch)
-        database
-        .addBranch(branch)
+      database
+        .getBranchPointFromStoryPage(branch)
         .then((data) => {
-          database.getUsernameFromUserId(data.user_id)
-          .then((username) => {
-            data.name = username.name;
-            // console.log('data being sent: ', data);
-            res.send(data);
-          })
+          branch.lastBranchPoint = data.id;
+          console.log("branch: ", branch);
+          database.addBranch(branch).then((data) => {
+            database.getUsernameFromUserId(data.user_id).then((username) => {
+              data.name = username.name;
+              console.log("data being sent: ", data);
+              res.send(data);
+            });
+          });
         })
         .catch((error) => console.log(error.message));
     }
   });
 
   router.get("/branches/:branch_point_id", (req, res) => {
-  // console.log(req.params)
-  database
-    .getBranchesByBranchPointId(req.params.branch_point_id)
-    .then((branches) => {
-      console.log('branches by branch point id: ', branches)
-     if(branches.length === 0) {
-      res.send({error: "No branches"})
-     } else {
-    database.getUserIdByStoryId(branches[0].story_id)
-    .then((data) => {
-      // console.log(data.id)
-      // we can compare that user id to cookie id
-      if (branches.length < 1) {
-        res.send({ error: "empty library" });
-      } else {
-        for (const branch of branches) {
-          if (data.id === req.session.user_id) {
-            branch['owner'] = true;
-          } else {
-            branch['owner'] = false;
-          }
-        }
-        // console.log('first then; checking if user logged in is the owner of the story ', branches)
-        return branches  // new
-        // res.send(branches); // working
-      }
-    })
-    //
-    // })
-    .then(branches => {
-      // console.log('receieved from first then: ', branches); // working until here
-      const loggedInUser = req.session['user_id'];
-      // console.log('branches inside final then: ', branches);
-      let vote = {user_id: loggedInUser}
-      // loop through branches array
-      // --
-      Promise.all(branches.map((branch) => {
-        vote['branchId'] = branch.id;
-        return database.checkVote(vote);
-      }))
-        .then(data => {
-            for (const item in data) {
-              // console.log('item: ', item);
-              if (!data[item]) {
-                branches[item]['userVote'] = false;
-              } else if (!data[item].up) {
-                branches[item]['userVote'] = false;
-              } else {
-                branches[item]['userVote'] = true;
+    // console.log(req.params)
+    database
+      .getBranchesByBranchPointId(req.params.branch_point_id)
+      .then((branches) => {
+        database
+          .getUserIdByStoryId(branches[0].story_id)
+          .then((data) => {
+            // console.log(data.id)
+            // we can compare that user id to cookie id
+            if (branches.length < 1) {
+              res.send({ error: "empty library" });
+            } else {
+              for (const branch of branches) {
+                if (data.id === req.session.user_id) {
+                  branch["owner"] = true;
+                } else {
+                  branch["owner"] = false;
+                }
               }
               // console.log('first then; checking if user logged in is the owner of the story ', branches)
               return branches; // new
               // res.send(branches); // working
             }
           })
-
-          // another promise all to add vote count
-          .then(branches => {
-            Promise.all(branches.map(branch => {
-              // console.
-              // vote['branchId'] = branch.id;
-              return database.getVoteCountByBranchId(branch.id);
-            }))
-            .then(data => {
-              // console.log('vote count data: ', data);
-              for (const item in data) {
-                branches[item]['vote_count'] = data[item].vote_count;
-              }
-              // console.log('final branches: ', branches);
-            res.send(branches);
-            })
-        })
-        .catch(error => console.log(error))
-    })
-  }
-  })
-  .catch((error) => res.send(error.message));
-});
+          //
+          // })
+          .then((branches) => {
+            // console.log('receieved from first then: ', branches); // working until here
+            const loggedInUser = req.session["user_id"];
+            // console.log('branches inside final then: ', branches);
+            let vote = { user_id: loggedInUser };
+            // loop through branches array
+            // --
+            Promise.all(
+              branches.map((branch) => {
+                vote["branchId"] = branch.id;
+                return database.checkVote(vote);
+              })
+            )
+              .then((data) => {
+                console.log("response data: ", data);
+                console.log("branches :", branches);
+                //  data can be empty array with length 0
+                //  for loop wouldn't run
+                //  we're getting an array [undefined]
+                for (const item in data) {
+                  console.log("item: ", item); //data.up at index 0 = branches.userVote at index 0
+                  if (!data[item]) {
+                    branches[item]["userVote"] = false;
+                  } else if (!data[item].up) {
+                    branches[item]["userVote"] = false;
+                  } else {
+                    branches[item]["userVote"] = true;
+                  }
+                }
+                // res.send(branches);
+                return branches;
+              })
+              // another promise all to add vote count
+              .then((branches) => {
+                Promise.all(
+                  branches.map((branch) => {
+                    // console.
+                    // vote['branchId'] = branch.id;
+                    return database.getVoteCountByBranchId(branch.id);
+                  })
+                ).then((data) => {
+                  console.log("vote count data: ", data);
+                  for (const item in data) {
+                    branches[item]["vote_count"] = data[item].vote_count;
+                  }
+                  console.log("final branches: ", branches);
+                  res.send(branches);
+                });
+              })
+              .catch((error) => console.log(error));
+          });
+      })
+      .catch((error) => res.send(error.message));
+  });
 
   router.put("/branches", (req, res) => {
-    // console.log(req.body)
-    // updating branch date_approved
+    console.log(req.body);
+
     database
-    .updateBranch(req.body.branchId)
-    .then((data) => {
-      console.log("approved: " , data)
-      database.getStoryIdByBranchPointId(data.branch_point_id)
-      .then(story_id => {
-        console.log('second then data: ', data);
-        console.log('second then story_id: ', story_id);
-        //  add a new branch point
-        database.addBranchPoint(story_id.id)
-        .then(() => {
-          data['story_id'] = story_id.id;
-          res.send(data);
-        })
-      })
+      .updateBranch(req.body.branchId)
+      .then((data) => {
+        console.log("approved", data);
       })
       .catch((error) => console.log(error));
   });
@@ -224,43 +205,37 @@ module.exports = (database) => {
     if (!req.session["user_id"]) {
       res.send({ error: "Please login to vote." });
     } else {
-      vote['user_id'] = req.session['user_id'];
-      // console.log(vote);
+      vote["user_id"] = req.session["user_id"];
+      console.log(vote);
       database
-      // checks if there is a vote by this user on this branch
-      .checkVote(vote)
-      .then((data) => {
-        // console.log('vote status: ', data);
-        if(data) {
-          // if there is a vote by this user on this branch it will...
-          // ... change the vote status to null to "unvote" the branch
-          if(data.up) {
-            database
-            .unvote(vote)
-            .then((data) => {
-            // console.log('unvote vote:', data)
-            // res.send("remove")
-            })
-            // ... or change the null vote to true to "revote" the branch
-          } else if(data.up === null) {
-            database
-            .revote(vote)
-            .then((data) => {
-            // console.log('up vote:', data)
-            // res.send("add")
-            })
+        // checks if there is a vote by this user on this branch
+        .checkVote(vote)
+        .then((data) => {
+          console.log("vote status: ", data);
+          if (data) {
+            // if there is a vote by this user on this branch it will...
+            // ... change the vote status to null to "unvote" the branch
+            if (data.up) {
+              database.unvote(vote).then((data) => {
+                console.log("unvote vote:", data);
+                // res.send("remove")
+              });
+              // ... or change the null vote to true to "revote" the branch
+            } else if (data.up === null) {
+              database.revote(vote).then((data) => {
+                console.log("up vote:", data);
+                // res.send("add")
+              });
+            }
+            // if the user has not voted on this branch it will add the vote to the database and change the vote status to true
+          } else {
+            database.addVote(vote).then((data) => {
+              console.log("add vote:", data);
+              // res.send("add")
+            });
           }
-          // if the user has not voted on this branch it will add the vote to the database and change the vote status to true
-        } else {
-          database
-          .addVote(vote)
-          .then((data) => {
-            // console.log('add vote:', data)
-            // res.send("add")
-          })
-        }
-      })
-      .catch(error => console.log(error));
+        })
+        .catch((error) => console.log(error));
     }
   });
 
