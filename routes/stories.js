@@ -123,6 +123,7 @@ module.exports = (database) => {
   database
     .getBranchesByBranchPointId(req.params.branch_point_id)
     .then((branches) => {
+      console.log('branches by branch point id: ', branches)
      if(branches.length === 0) {
       res.send({error: "No branches"})
      } else {
@@ -207,9 +208,12 @@ module.exports = (database) => {
       .then(story_id => {
         console.log('second then data: ', data);
         console.log('second then story_id: ', story_id);
-
-        data['story_id'] = story_id.id;
-        res.send(data);
+        //  add a new branch point
+        database.addBranchPoint(story_id.id)
+        .then(() => {
+          data['story_id'] = story_id.id;
+          res.send(data);
+        })
       })
       })
       .catch(error => console.log(error));
