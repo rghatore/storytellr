@@ -7,7 +7,7 @@ $(document).ready(() => {
     }).then((stories) => {
       $("#main").empty();
       $("#main").append(headerHome());
-      console.log(headerHome());
+      // console.log(headerHome());
       $("#nav").removeClass("nav_story nav_branch").addClass("nav_home");
       for (const story of stories) {
         $("#main").append(storyBox(story));

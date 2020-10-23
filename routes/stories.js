@@ -18,7 +18,7 @@ router.use(
 module.exports = (database) => {
   // get all stories
   router.get("/", (req, res) => {
-    console.log("Search: ", req.query);
+    // console.log("Search: ", req.query);
     database
       // .getAllStories({ user_name: null, search: null }) // original working code
       .getAllStories(req.query) // changed - should be fine
@@ -41,14 +41,14 @@ module.exports = (database) => {
     story['user_id'] = req.session['user_id'];
     database.addStory(story)
     .then((data) => {
-      // console.log(data);
+      console.log('add story data: ', data);
       res.send(data);
     });
   });
 
   // gets story + branch and keyword info by id
   router.get("/:storyId", (req, res) => {
-    console.log(req.session['user_id']);
+    // console.log(req.session['user_id']);
     //the first function call returns the stories object from the stories relation
     database
       .getStoryById(req.params.storyId)
@@ -73,7 +73,15 @@ module.exports = (database) => {
                     // branchFilterAndSort is defined in helpers.js on the server side
                     let approvedBranches = branchFilterAndSort(branches);
                     story[0].branches = approvedBranches;
-                    res.send(story);
+                    const storyInfo = {
+                      storyTitle: story[0].title,
+                      storyOwner: story[0].user_name
+                    }
+                    database.getBranchPointFromStoryPage(storyInfo)
+                    .then((openBranchPointId) => {
+                      story[0].open_branch_point = openBranchPointId.id;
+                      res.send(story);
+                    })
                   });
               });
           });
@@ -94,14 +102,14 @@ module.exports = (database) => {
       database.getBranchPointFromStoryPage(branch)
       .then(data => {
         branch.lastBranchPoint = data.id;
-        console.log('branch: ', branch)
+        // console.log('branch: ', branch)
         database
         .addBranch(branch)
         .then((data) => {
           database.getUsernameFromUserId(data.user_id)
           .then((username) => {
             data.name = username.name;
-            console.log('data being sent: ', data);
+            // console.log('data being sent: ', data);
             res.send(data);
           })
         })
@@ -110,11 +118,14 @@ module.exports = (database) => {
     }
   })
 
-router.get("/branches/:branch_point_id", (req, res) => {
+  router.get("/branches/:branch_point_id", (req, res) => {
   // console.log(req.params)
   database
     .getBranchesByBranchPointId(req.params.branch_point_id)
     .then((branches) => {
+     if(branches.length === 0) {
+      res.send({error: "No branches"})
+     } else {
     database.getUserIdByStoryId(branches[0].story_id)
     .then((data) => {
       // console.log(data.id)
@@ -148,13 +159,8 @@ router.get("/branches/:branch_point_id", (req, res) => {
         return database.checkVote(vote);
       }))
         .then(data => {
-            console.log('response data: ', data)
-            console.log('branches :', branches)
-            //  data can be empty array with length 0
-            //  for loop wouldn't run
-            //  we're getting an array [undefined]
             for (const item in data) {
-              console.log('item: ', item); //data.up at index 0 = branches.userVote at index 0
+              // console.log('item: ', item);
               if (!data[item]) {
                 branches[item]['userVote'] = false;
               } else if (!data[item].up) {
@@ -174,27 +180,37 @@ router.get("/branches/:branch_point_id", (req, res) => {
               return database.getVoteCountByBranchId(branch.id);
             }))
             .then(data => {
-              console.log('vote count data: ', data);
+              // console.log('vote count data: ', data);
               for (const item in data) {
                 branches[item]['vote_count'] = data[item].vote_count;
               }
-              console.log('final branches: ', branches);
+              // console.log('final branches: ', branches);
             res.send(branches);
             })
         })
         .catch(error => console.log(error))
     })
+  }
   })
   .catch((error) => res.send(error.message));
 });
 
   router.put("/branches", (req, res) => {
-    console.log(req.body)
+    // console.log(req.body)
 
+    // updating branch date_approved
     database
-      .updateBranch(req.body.branchId)
-      .then((data) => {
-        console.log("approved" ,data)
+    .updateBranch(req.body.branchId)
+    .then((data) => {
+      console.log("approved: " , data)
+      database.getStoryIdByBranchPointId(data.branch_point_id)
+      .then(story_id => {
+        console.log('second then data: ', data);
+        console.log('second then story_id: ', story_id);
+
+        data['story_id'] = story_id.id;
+        res.send(data);
+      })
       })
       .catch(error => console.log(error));
   })
@@ -205,12 +221,12 @@ router.get("/branches/:branch_point_id", (req, res) => {
       res.send({error: 'Please login to vote.'});
     } else {
       vote['user_id'] = req.session['user_id'];
-      console.log(vote);
+      // console.log(vote);
       database
       // checks if there is a vote by this user on this branch
       .checkVote(vote)
       .then((data) => {
-        console.log('vote status: ', data);
+        // console.log('vote status: ', data);
         if(data) {
           // if there is a vote by this user on this branch it will...
           // ... change the vote status to null to "unvote" the branch
@@ -218,7 +234,7 @@ router.get("/branches/:branch_point_id", (req, res) => {
             database
             .unvote(vote)
             .then((data) => {
-            console.log('unvote vote:', data)
+            // console.log('unvote vote:', data)
             // res.send("remove")
             })
             // ... or change the null vote to true to "revote" the branch
@@ -226,7 +242,7 @@ router.get("/branches/:branch_point_id", (req, res) => {
             database
             .revote(vote)
             .then((data) => {
-            console.log('up vote:', data)
+            // console.log('up vote:', data)
             // res.send("add")
             })
           }
@@ -235,7 +251,7 @@ router.get("/branches/:branch_point_id", (req, res) => {
           database
           .addVote(vote)
           .then((data) => {
-            console.log('add vote:', data)
+            // console.log('add vote:', data)
             // res.send("add")
           })
         }

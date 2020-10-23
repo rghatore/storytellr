@@ -4,7 +4,7 @@ $(document).ready(() => {
   $(document).on('submit', '#search', (event) => {
 
     event.preventDefault();
-    console.log($(event.target).serialize());
+    // console.log($(event.target).serialize());
     const data = $(event.target).serialize();
 
     $.ajax({

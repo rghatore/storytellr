@@ -13,8 +13,12 @@
   }
 }
 
-#writing_form {
+.writing_box_toggle{
   display: none;
+}
+
+#writing_form {
+  // display: none;
   .textarea_div {
     display: flex;
     flex-direction: column;

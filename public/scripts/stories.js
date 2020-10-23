@@ -26,7 +26,7 @@ $(document).ready(() => {
       // generateStoryPage is in scripts/helpers
       let storyPage = generateStoryPage(storyObj);
       storyPage += storyBranches(storyObj);
-      storyPage += writing_box();
+      storyPage += writing_box(storyObj);
       $("#nav").removeClass("nav_home").addClass("nav_story");
       $("#main").empty();
       $("#main").append(storyPage);
@@ -35,16 +35,24 @@ $(document).ready(() => {
       });
 
       //toggle the writing form
-      $("#writing_form_div p").on("click", () => {
-        $("#writing_form").slideToggle("slow");
-        $("html, body").animate(
-          {
-            scrollTop: $("#story_submit").offset().top,
-          },
-          1000
-        );
+      // $("#writing_form_div p").on("click", () => {
+      //   $(".writing_box_toggle").slideToggle("slow");
+      //   $("html, body").animate(
+      //     {
+      //       scrollTop: $("#story_submit").offset().top,
+      //     },
+      //     1000
+      //   );
       });
     });
   });
-  // });
+
+  $(document).on('click', "#writing_form_div p", () => {
+    $(".writing_box_toggle").slideToggle("slow");
+    $("html, body").animate(
+      {
+        scrollTop: $("#story_submit").offset().top,
+      },
+      1000
+    );
 });
