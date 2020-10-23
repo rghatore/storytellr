@@ -82,13 +82,15 @@ module.exports = (database) => {
                       .then((openBranchPointId) => {
                         story[0].open_branch_point = openBranchPointId.id;
                         story[0].cookie = req.session["user_id"] ? true : false;
+                        story[0].owner = (req.session["user_id"] === story[0].user_id) ? true : false;
                         res.send(story);
+
+                      });
                   });
               });
-          });
-        }
-      })
-      .catch((error) => console.error(error.message));
+            })
+            .catch((error) => console.error(error.message));
+      }
   });
 
   router.post("/branches", (req, res) => {
@@ -266,4 +268,5 @@ module.exports = (database) => {
   });
 
   return router;
-};
+});
+}
