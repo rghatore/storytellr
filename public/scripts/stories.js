@@ -48,8 +48,16 @@ $(document).ready(() => {
       },
       1000
     );
-
+    // } else {
+    // console.log($("#story_submit"));
+    $("html, body").animate(
+      {
+        scrollTop: $("#story_submit").offset().top,
+      },
+      1000
+    );
   });
+  // });
 
   $(document).on("click", "#not_signed_in", (event) => {
     console.log("click!");
@@ -59,4 +67,6 @@ $(document).ready(() => {
 
     event.stopPropagation();
   });
+
+  // });
 });
