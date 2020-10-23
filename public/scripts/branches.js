@@ -143,10 +143,14 @@ $(document).ready(() => {
         data: data
       })
       .then(data => {
-        // if true = red, else = white
-        if (data[0].userVote) {
-          // $(event.target).addClass("voted");
+        if (data.error) {
+          $("#main").empty();
+          $("#main").append(data.error);
         }
+        // if true = red, else = white
+        // if (data[0].userVote) {
+          // $(event.target).addClass("voted");
+        // }
       })
     })
 
