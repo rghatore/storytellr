@@ -15,6 +15,7 @@ const {
   assertPasswordMatch,
 } = require("../helpers");
 const cookieSession = require("cookie-session");
+const { renderSync } = require("node-sass");
 router.use(
   cookieSession({
     name: "session",
@@ -55,6 +56,7 @@ module.exports = (database) => {
         }
         //  assign cookie
         req.session["user_id"] = user.id;
+        console.log("cookie", req.session["user_id"]);
         // send user object to ajax request
         // console.log({user: {name: user.name, email: user.email, id: user.id}});
         res.send(user);
@@ -117,6 +119,15 @@ module.exports = (database) => {
 
     // res.send('profilePage');
   });
+
+  // router.get("/writingform", (req, res) => {
+  //   console.log("writingform cookie", req.session["user_id"]);
+  //   if (req.session["user_id"]) {
+  //     res.send({ signed_in: true });
+  //   } else {
+  //     res.send({ error: "Sign in to write a story!" });
+  //   }
+  // });
 
   return router;
 };
