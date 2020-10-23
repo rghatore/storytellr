@@ -6,7 +6,7 @@ $(document).ready(() => {
   }).then((stories) => {
     // console.log(stories);
     // target is .container .content
-
+    $("#main").append(headerHome());
     for (const story of stories) {
       $("#main").append(storyBox(story));
     }
