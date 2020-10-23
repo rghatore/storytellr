@@ -77,11 +77,10 @@ module.exports = (database) => {
                   });
               });
           });
-        })
+        }
       })
       .catch((error) => console.error(error.message));
-    });
-})
+  });
 
   router.post("/branches", (req, res) => {
     const branch = req.body;
