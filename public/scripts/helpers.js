@@ -43,7 +43,10 @@ const bootstrapLoginForm = (type) => {
       <input type="password" class="form-control password input_field" id="password" name="password" placeholder="password">
     </div>
     <button id='submit' type="submit" class="btn btn-primary btn-${type}">${type}</button>
-    <p class="display_sign_up_form">No account yet?</p>
+    <div class="login_form_messages">
+      <p class="display_sign_up_form">No account yet?</p>
+      <p class="error_message"></p>
+    </div>
 </form>
 </div>
   `;
@@ -178,22 +181,38 @@ const storyBranches = (storyObj) => {
   return storyBranches;
 };
 
-const writing_box = () => {
-  return `
+const writing_box = (storyObj) => {
+  let writingBoxString = `
 
     <div id="writing_form_div" class="writing_box">
       <p class="toggle_textarea">And then . . . </p>
       <form id="writing_form">
-        <div class="textarea_div">
+
+
+      `;
+
+  if (storyObj.cookie) {
+    writingBoxString += `
+                <div class="textarea_div">
           <textarea name="content" id="writing_box" cols="30" rows="10" placeholder="Write in me ..."></textarea>
           <div id="story_submit" class="submit_div">
             <p class="btn_submit">Submit</p>
             <i class="fas fa-angle-double-right"></i>
         </div>
       </div>
-    </form>
-  </div>
       `;
+  } else {
+    writingBoxString += `
+      <a class="btn btn-primary" id="not_signed_in">Sign in to write what comes next!</a>
+      `;
+  }
+
+  writingBoxString += `
+        </form>
+  </div>
+  `;
+
+  return writingBoxString;
 };
 
 // homepage header

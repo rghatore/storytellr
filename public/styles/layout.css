@@ -80,7 +80,6 @@ a {
 .btn-true {
   background-color: #ef476f; }
 
-
 .form_wrapper {
   display: flex;
   flex-direction: column;
@@ -106,6 +105,10 @@ a {
 
 .div_search {
   display: flex; }
+
+.login_form_messages {
+  display: flex;
+  justify-content: space-between; }
 
 .header_story {
   display: flex;

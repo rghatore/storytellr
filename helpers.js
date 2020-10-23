@@ -4,18 +4,44 @@ const bcrypt = require("bcrypt");
 const salt = bcrypt.genSaltSync(10);
 
 // login user if exists, else return error
-const login = (email, password, database) => {
+const checkForUser = (email, database) => {
   return database.getUserFromEmail(email).then((existingUser) => {
     // console.log('user in database:', existingUser);
-    if (existingUser && bcrypt.compareSync(password, existingUser.password)) {
-      // if (password = 'password') {
+    if (existingUser) {
       return existingUser;
+    } else {
+      return null;
+    }
+  });
+};
+
+const assertPasswordMatch = (user, password, database) => {
+  return database.getPasswordFromUserId(user.id).then((correctPassword) => {
+    if (bcrypt.compareSync(password, correctPassword)) {
+      return user;
     } else {
       return null;
     }
   });
   // .catch((error) => console.log(error.message));
 };
+
+const login = (email, password, database) => {
+  return database.getUserFromEmail(email).then((existingUser) => {
+    // console.log('user in database:', existingUser);
+    if (existingUser) {
+      if (bcrypt.compareSync(password, existingUser.password)) {
+        return existingUser;
+      } else {
+        return "That's not your password!";
+      }
+    } else {
+      return "User not found! Please register";
+    }
+  });
+  // .catch((error) => console.log(error.message));
+};
+
 // register user if new, else return error
 const register = (name, email, password, database) => {
   return database
@@ -64,5 +90,7 @@ module.exports = {
   login,
   register,
   branchFilterAndSort,
+  checkForUser,
+  assertPasswordMatch,
   // populateKeywordArray,
 };

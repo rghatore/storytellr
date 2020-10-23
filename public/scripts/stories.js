@@ -6,7 +6,7 @@ $(document).ready(() => {
   }).then((stories) => {
     // console.log(stories);
     // target is .container .content
-
+    $("#main").append(headerHome());
     for (const story of stories) {
       $("#main").append(storyBox(story));
     }
@@ -26,25 +26,47 @@ $(document).ready(() => {
       // generateStoryPage is in scripts/helpers
       let storyPage = generateStoryPage(storyObj);
       storyPage += storyBranches(storyObj);
-      storyPage += writing_box();
+      storyPage += writing_box(storyObj);
       $("#nav").removeClass("nav_home").addClass("nav_story");
       $("#main").empty();
       $("#main").append(storyPage);
       $("#toggle_story_info").on("click", () => {
         $(".story_wrapper").slideToggle("slow");
       });
-
-      //toggle the writing form
-      $("#writing_form_div p").on("click", () => {
-        $("#writing_form").slideToggle("slow");
-        $("html, body").animate(
-          {
-            scrollTop: $("#story_submit").offset().top,
-          },
-          1000
-        );
-      });
     });
   });
+
+  //toggle the writing form
+
+  $(document).on("click", "#writing_form_div p", (e) => {
+    $("#writing_form").slideToggle("slow");
+    // if ($("#not_signed_in")) {
+    //   console.log("yes");
+    $("html, body").animate(
+      {
+        scrollTop: $("#not_signed_in").offset().top,
+      },
+      1000
+    );
+    // } else {
+    // console.log($("#story_submit"));
+    $("html, body").animate(
+      {
+        scrollTop: $("#story_submit").offset().top,
+      },
+      1000
+    );
+  });
+  // });
+
+  $(document).on("click", "#not_signed_in", (event) => {
+    console.log("click!");
+    $("#sidebar").addClass("active");
+    $(".overlay").addClass("active");
+    // $(".sidebar_content").append(`<button type="button" id="register">Register</button>`);
+
+    event.stopPropagation();
+  });
+
   // });
 });
