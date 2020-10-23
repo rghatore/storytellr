@@ -40,24 +40,25 @@ $(document).ready(() => {
 
   $(document).on("click", "#writing_form_div p", (e) => {
     $("#writing_form").slideToggle("slow");
-    // if ($("#not_signed_in")) {
-    //   console.log("yes");
-    $("html, body").animate(
-      {
-        scrollTop: $("#not_signed_in").offset().top,
-      },
-      1000
-    );
-    // } else {
-    // console.log($("#story_submit"));
-    $("html, body").animate(
-      {
-        scrollTop: $("#story_submit").offset().top,
-      },
-      1000
-    );
+
+    if ($("#not_signed_in").length) {
+      $("html, body").animate(
+        {
+          scrollTop: $("#not_signed_in").offset().top,
+        },
+        1000
+      );
+    }
+
+    if ($("#story_submit").length) {
+      $("html, body").animate(
+        {
+          scrollTop: $("#story_submit").offset().top,
+        },
+        1000
+      );
+    }
   });
-  // });
 
   $(document).on("click", "#not_signed_in", (event) => {
     console.log("click!");
