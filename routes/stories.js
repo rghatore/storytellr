@@ -72,8 +72,17 @@ module.exports = (database) => {
                     // branchFilterAndSort is defined in helpers.js on the server side
                     let approvedBranches = branchFilterAndSort(branches);
                     story[0].branches = approvedBranches;
-                    story[0].cookie = req.session["user_id"] ? true : false;
-                    res.send(story);
+                    const storyInfo = {
+                      storyTitle: story[0].title,
+                      storyOwner: story[0].user_name,
+                    };
+                    database
+                      .getBranchPointFromStoryPage(storyInfo)
+                      .then((openBranchPointId) => {
+                        story[0].open_branch_point = openBranchPointId.id;
+                        story[0].cookie = req.session["user_id"] ? true : false;
+                        res.send(story);
+                      });
                   });
               });
           });
