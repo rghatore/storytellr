@@ -121,82 +121,157 @@ module.exports = (database) => {
     database
       .getBranchesByBranchPointId(req.params.branch_point_id)
       .then((branches) => {
-        database
-          .getUserIdByStoryId(branches[0].story_id)
-          .then((data) => {
-            // console.log(data.id)
-            // we can compare that user id to cookie id
-            if (branches.length < 1) {
-              res.send({ error: "empty library" });
-            } else {
-              for (const branch of branches) {
-                if (data.id === req.session.user_id) {
-                  branch["owner"] = true;
-                } else {
-                  branch["owner"] = false;
-                }
-              }
-              // console.log('first then; checking if user logged in is the owner of the story ', branches)
-              return branches; // new
-              // res.send(branches); // working
-            }
-          })
-          //
-          // })
-          .then((branches) => {
-            // console.log('receieved from first then: ', branches); // working until here
-            const loggedInUser = req.session["user_id"];
-            // console.log('branches inside final then: ', branches);
-            let vote = { user_id: loggedInUser };
-            // loop through branches array
-            // --
-            Promise.all(
-              branches.map((branch) => {
-                vote["branchId"] = branch.id;
-                return database.checkVote(vote);
-              })
-            )
-              .then((data) => {
-                console.log("response data: ", data);
-                console.log("branches :", branches);
-                //  data can be empty array with length 0
-                //  for loop wouldn't run
-                //  we're getting an array [undefined]
-                for (const item in data) {
-                  console.log("item: ", item); //data.up at index 0 = branches.userVote at index 0
-                  if (!data[item]) {
-                    branches[item]["userVote"] = false;
-                  } else if (!data[item].up) {
-                    branches[item]["userVote"] = false;
+        console.log("branches by branch point id: ", branches);
+        if (branches.length === 0) {
+          res.send({ error: "No branches" });
+        } else {
+          database
+            .getUserIdByStoryId(branches[0].story_id)
+            .then((data) => {
+              // console.log(data.id)
+              // we can compare that user id to cookie id
+              if (branches.length < 1) {
+                res.send({ error: "empty library" });
+              } else {
+                for (const branch of branches) {
+                  if (data.id === req.session.user_id) {
+                    branch["owner"] = true;
                   } else {
-                    branches[item]["userVote"] = true;
+                    branch["owner"] = false;
                   }
                 }
-                // res.send(branches);
-                return branches;
-              })
-              // another promise all to add vote count
-              .then((branches) => {
-                Promise.all(
-                  branches.map((branch) => {
-                    // console.
-                    // vote['branchId'] = branch.id;
-                    return database.getVoteCountByBranchId(branch.id);
-                  })
-                ).then((data) => {
-                  console.log("vote count data: ", data);
+                // console.log('first then; checking if user logged in is the owner of the story ', branches)
+                return branches; // new
+                // res.send(branches); // working
+              }
+            })
+            //
+            // })
+            .then((branches) => {
+              // console.log('receieved from first then: ', branches); // working until here
+              const loggedInUser = req.session["user_id"];
+              // console.log('branches inside final then: ', branches);
+              let vote = { user_id: loggedInUser };
+              // loop through branches array
+              // --
+              Promise.all(
+                branches.map((branch) => {
+                  vote["branchId"] = branch.id;
+                  return database.checkVote(vote);
+                })
+              )
+                .then((data) => {
                   for (const item in data) {
-                    branches[item]["vote_count"] = data[item].vote_count;
+                    // console.log('item: ', item);
+                    if (!data[item]) {
+                      branches[item]["userVote"] = false;
+                    } else if (!data[item].up) {
+                      branches[item]["userVote"] = false;
+                    } else {
+                      branches[item]["userVote"] = true;
+                      // // console.log(req.params)
+                      // database
+                      //   .getBranchesByBranchPointId(req.params.branch_point_id)
+                      //   .then((branches) => {
+                      //     database
+                      //       .getUserIdByStoryId(branches[0].story_id)
+                      //       .then((data) => {
+                      //         // console.log(data.id)
+                      //         // we can compare that user id to cookie id
+                      //         if (branches.length < 1) {
+                      //           res.send({ error: "empty library" });
+                      //         } else {
+                      //           for (const branch of branches) {
+                      //             if (data.id === req.session.user_id) {
+                      //               branch["owner"] = true;
+                      //             } else {
+                      //               branch["owner"] = false;
+                      //             }
+                    }
+                    // console.log('first then; checking if user logged in is the owner of the story ', branches)
+                    return branches; // new
+                    // res.send(branches); // working
                   }
-                  console.log("final branches: ", branches);
-                  res.send(branches);
-                });
-              })
-              .catch((error) => console.log(error));
-          });
+                })
+                // another promise all to add vote count
+                .then((branches) => {
+                  Promise.all(
+                    branches.map((branch) => {
+                      // console.
+                      // vote['branchId'] = branch.id;
+                      return database.getVoteCountByBranchId(branch.id);
+                    })
+                  ).then((data) => {
+                    // console.log('vote count data: ', data);
+                    for (const item in data) {
+                      branches[item]["vote_count"] = data[item].vote_count;
+                    }
+                    // console.log('final branches: ', branches);
+                    res.send(branches);
+                  });
+                })
+                .catch((error) => console.log(error));
+            });
+        }
       })
       .catch((error) => res.send(error.message));
   });
+  //
+  //         // })
+  //         .then((branches) => {
+  //           // console.log('receieved from first then: ', branches); // working until here
+  //           const loggedInUser = req.session["user_id"];
+  //           // console.log('branches inside final then: ', branches);
+  //           let vote = { user_id: loggedInUser };
+  //           // loop through branches array
+  //           // --
+  //           Promise.all(
+  //             branches.map((branch) => {
+  //               vote["branchId"] = branch.id;
+  //               return database.checkVote(vote);
+  //             })
+  //           )
+  //             .then((data) => {
+  //               console.log("response data: ", data);
+  //               console.log("branches :", branches);
+  //               //  data can be empty array with length 0
+  //               //  for loop wouldn't run
+  //               //  we're getting an array [undefined]
+  //               for (const item in data) {
+  //                 console.log("item: ", item); //data.up at index 0 = branches.userVote at index 0
+  //                 if (!data[item]) {
+  //                   branches[item]["userVote"] = false;
+  //                 } else if (!data[item].up) {
+  //                   branches[item]["userVote"] = false;
+  //                 } else {
+  //                   branches[item]["userVote"] = true;
+  //                 }
+  //               }
+  //               // res.send(branches);
+  //               return branches;
+  //             })
+  //             // another promise all to add vote count
+  //             .then((branches) => {
+  //               Promise.all(
+  //                 branches.map((branch) => {
+  //                   // console.
+  //                   // vote['branchId'] = branch.id;
+  //                   return database.getVoteCountByBranchId(branch.id);
+  //                 })
+  //               ).then((data) => {
+  //                 console.log("vote count data: ", data);
+  //                 for (const item in data) {
+  //                   branches[item]["vote_count"] = data[item].vote_count;
+  //                 }
+  //                 console.log("final branches: ", branches);
+  //                 res.send(branches);
+  //               });
+  //             })
+  //             .catch((error) => console.log(error));
+  //         });
+  //     })
+  //     .catch((error) => res.send(error.message));
+  // });
 
   router.put("/branches", (req, res) => {
     console.log(req.body);
@@ -204,7 +279,21 @@ module.exports = (database) => {
     database
       .updateBranch(req.body.branchId)
       .then((data) => {
-        console.log("approved", data);
+        console.log("approved: ", data);
+        database
+          .getStoryIdByBranchPointId(data.branch_point_id)
+          .then((story_id) => {
+            console.log("second then data: ", data);
+            console.log("second then story_id: ", story_id);
+            //  add a new branch point
+            database.addBranchPoint(story_id.id).then(() => {
+              data["story_id"] = story_id.id;
+              res.send(data);
+            });
+          });
+        // .updateBranch(req.body.branchId)
+        // .then((data) => {
+        //   console.log("approved", data);
       })
       .catch((error) => console.log(error));
   });
@@ -218,28 +307,52 @@ module.exports = (database) => {
       console.log(vote);
       database
         // checks if there is a vote by this user on this branch
+        // .checkVote(vote)
+        // .then((data) => {
+        //   console.log("vote status: ", data);
+        //   if (data) {
+        //     // if there is a vote by this user on this branch it will...
+        //     // ... change the vote status to null to "unvote" the branch
+        //     if (data.up) {
+        //       database.unvote(vote).then((data) => {
+        //         console.log("unvote vote:", data);
+        //         // res.send("remove")
+        //       });
+        //       // ... or change the null vote to true to "revote" the branch
+        //     } else if (data.up === null) {
+        //       database.revote(vote).then((data) => {
+        //         console.log("up vote:", data);
+        //         // res.send("add")
+        //       });
+        //     }
+        //     // if the user has not voted on this branch it will add the vote to the database and change the vote status to true
+        //   } else {
+        //     database.addVote(vote).then((data) => {
+        //       console.log("add vote:", data);
+        //       // res.send("add")
+        //     });
+        // checks if there is a vote by this user on this branch
         .checkVote(vote)
         .then((data) => {
-          console.log("vote status: ", data);
+          // console.log('vote status: ', data);
           if (data) {
             // if there is a vote by this user on this branch it will...
             // ... change the vote status to null to "unvote" the branch
             if (data.up) {
               database.unvote(vote).then((data) => {
-                console.log("unvote vote:", data);
+                // console.log('unvote vote:', data)
                 // res.send("remove")
               });
               // ... or change the null vote to true to "revote" the branch
             } else if (data.up === null) {
               database.revote(vote).then((data) => {
-                console.log("up vote:", data);
+                // console.log('up vote:', data)
                 // res.send("add")
               });
             }
-            // if the user has not voted on this branch it will add the vote to the database and change the vote status to true
           } else {
             database.addVote(vote).then((data) => {
-              console.log("add vote:", data);
+              // console.log('add vote:', data)
               // res.send("add")
             });
           }
